@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-cyan: #14f1d9;
+  --color-brand-dark: #050505;
+}
+
+:root {
+  --sh-bg: #030303;
+  --sh-panel: rgba(28, 28, 28, 0.5);
+  --sh-panel-border: rgba(255, 255, 255, 0.08);
+  --sh-text: #ffffff;
+  --sh-text-muted: #8e8e8e;
+  --sh-accent: #14f1d9;
+  --sh-accent-muted: rgba(20, 241, 217, 0.2);
+  --sh-glow-orange: rgba(255, 120, 40, 0.12);
+  --sh-glow-cyan: rgba(20, 241, 217, 0.08);
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 10%, var(--sh-glow-orange), transparent 40%),
+    radial-gradient(circle at 90% 90%, var(--sh-glow-cyan), transparent 40%),
+    #050505;
+  color: var(--sh-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.glass {
+  background: var(--sh-panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--sh-panel-border);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card {
+  background: rgba(45, 45, 45, 0.25);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-icon {
+  @apply w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300;
+}
+
+/* Custom scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
