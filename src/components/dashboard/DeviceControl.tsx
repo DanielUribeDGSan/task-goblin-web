@@ -41,28 +41,30 @@ interface DeviceControlProps {
 
 export const DeviceControl = ({ icon, label, sublabel, active, onToggle, statusText, percentage }: DeviceControlProps) => {
     return (
-        <div className="flex items-center justify-between group">
-            <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between gap-3 group min-w-0">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
                 <div className={cn(
-                    "w-12 h-12 rounded-xl flex items-center justify-center transition-colors shadow-inner",
+                    "w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl flex items-center justify-center transition-colors shadow-inner",
                     active ? "bg-white/10 text-white" : "bg-white/5 text-sh-text-muted"
                 )}>
                     {icon}
                 </div>
-                <div>
-                    <h4 className="text-sm font-bold text-white leading-tight">{label}</h4>
+                <div className="min-w-0 flex-1">
+                    <h4 className="text-sm font-bold text-white leading-tight break-words">{label}</h4>
                     {statusText && (
                         <div className="flex items-center gap-2 mt-0.5">
-                            <div className="w-8 h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div className="w-8 h-2 bg-white/10 rounded-full overflow-hidden shrink-0">
                                 <div className="h-full bg-brand-cyan transition-all duration-500" style={{ width: `${percentage}%` }} />
                             </div>
-                            <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-wider">{percentage}%</span>
+                            <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-wider shrink-0">{percentage}%</span>
                         </div>
                     )}
-                    {sublabel && <p className="text-xs text-sh-text-muted">{sublabel}</p>}
+                    {sublabel && <p className="text-xs text-sh-text-muted break-words">{sublabel}</p>}
                 </div>
             </div>
-            <Switch checked={active} onChange={onToggle} />
+            <span className="shrink-0">
+                <Switch checked={active} onChange={onToggle} />
+            </span>
         </div>
     );
 };

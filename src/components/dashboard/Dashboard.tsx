@@ -1,111 +1,269 @@
-import { Sidebar } from './Sidebar';
-import { TopBar } from './TopBar';
-import { RoomCard } from './RoomCard';
-import { DeviceControl } from './DeviceControl';
-import { BottomBar } from './BottomBar';
-import { useDashboardState } from '../../hooks/useDashboardState.ts';
-import { Camera, Zap, Wind } from 'lucide-react';
+import { Sidebar } from "./Sidebar";
+import { TopBar } from "./TopBar";
+import { RoomCard } from "./RoomCard";
+import { DeviceControl } from "./DeviceControl";
+import { BottomBar } from "./BottomBar";
+import { useDashboardState } from "../../hooks/useDashboardState.ts";
+import { Camera, Zap, Wind } from "lucide-react";
+import type { MediaSlide, RoomCardAspectRatio } from "./RoomCard";
+
+type RightColumnRoom =
+  | {
+      id: string;
+      title: string;
+      distance: string;
+      icon: string;
+      mediaItems: MediaSlide[];
+      aspectRatio: RoomCardAspectRatio;
+      children: null;
+    }
+  | {
+      id: string;
+      title: string;
+      distance: string;
+      icon: string;
+      image: string;
+      aspectRatio: RoomCardAspectRatio;
+      children: ((
+        devices: ReturnType<typeof useDashboardState>["devices"],
+        toggle: ReturnType<typeof useDashboardState>["toggleDevice"],
+      ) => React.ReactNode) | null;
+    };
+
+/** Habitaciones de la columna derecha en masonry. */
+const RIGHT_COLUMN_ROOMS: RightColumnRoom[] = [
+  {
+    id: "move-mouse",
+    title: "Move Mouse",
+    distance: "",
+    icon: "/icon/move.gif",
+    aspectRatio: "4/3",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/mouse/video.mp4",
+        poster: "/mouse/image-1.png",
+      },
+      { type: "image", src: "/mouse/image-1.png" },
+    ],
+    children: null,
+  },
+  {
+    id: "whatsapp-msg",
+    title: "WhatsApp Msg",
+    distance: "",
+    icon: "/icon/chat.gif",
+    aspectRatio: "square",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/whatsaap/video.mp4",
+        poster: "/whatsaap/image-1.png",
+      },
+      { type: "image", src: "/whatsaap/image-1.png" },
+      { type: "image", src: "/whatsaap/image-2.png" },
+    ],
+    children: null,
+  },
+];
+
+/** Tarjetas de la fila inferior en masonry: video + imagen(es) por carpeta. */
+const BOTTOM_ROW_ROOMS: {
+  id: string;
+  title: string;
+  distance: string;
+  icon: string;
+  mediaItems: MediaSlide[];
+  aspectRatio: RoomCardAspectRatio;
+}[] = [
+  {
+    id: "screenshot-to-text",
+    title: "Screenshot to Text",
+    distance: "",
+    icon: "/icon/copy.gif",
+    aspectRatio: "4/3",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/capture-text/video.mp4",
+        poster: "/capture-text/image-1.png",
+      },
+      { type: "image", src: "/capture-text/image-1.png" },
+    ],
+  },
+  {
+    id: "close-all-apps",
+    title: "Close All Apps",
+    distance: "",
+    icon: "/icon/close.gif",
+    aspectRatio: "4/3",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/closed-apss/video.mp4",
+        poster: "/closed-apss/image-1.png",
+      },
+      { type: "image", src: "/closed-apss/image-1.png" },
+    ],
+  },
+  {
+    id: "schedule-shutdown",
+    title: "Schedule Shutdown",
+    distance: "",
+    icon: "/icon/off.gif",
+    aspectRatio: "4/3",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/shutdown/video.mp4",
+        poster: "/shutdown/image-1.png",
+      },
+      { type: "image", src: "/shutdown/image-1.png" },
+    ],
+  },
+  {
+    id: "convert-pdf-to-word",
+    title: "Convert PDF to Word",
+    distance: "",
+    icon: "/icon/note.gif",
+    aspectRatio: "4/3",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/pdf-word/video.mp4",
+        poster: "/pdf-word/image-1.png",
+      },
+      { type: "image", src: "/pdf-word/image-1.png" },
+    ],
+  },
+  {
+    id: "color-extractor",
+    title: "Color Extractor",
+    distance: "",
+    icon: "/icon/palette.gif",
+    aspectRatio: "4/3",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/color-extractor/video.mp4",
+        poster: "/color-extractor/image-1.png",
+      },
+      { type: "image", src: "/color-extractor/image-1.png" },
+    ],
+  },
+  {
+    id: "paint",
+    title: "Paint",
+    distance: "",
+    icon: "/icon/paint.gif",
+    aspectRatio: "4/3",
+    mediaItems: [
+      {
+        type: "video",
+        src: "/paint/video.mp4",
+        poster: "/paint/image-1.png",
+      },
+      { type: "image", src: "/paint/image-1.png" },
+    ],
+  },
+];
 
 export const Dashboard = () => {
-    const { devices, toggleDevice } = useDashboardState();
+  const { devices, toggleDevice } = useDashboardState();
 
-    return (
-        <div className="flex bg-[#020202] text-white h-screen overflow-hidden p-2 lg:p-4">
-            <div className="flex w-full h-full glass rounded-[2.5rem] overflow-hidden shadow-2xl relative">
-                <Sidebar />
+  return (
+    <div className="flex bg-[#020202] text-white h-screen overflow-hidden p-2 lg:p-4">
+      <div className="flex w-full h-full glass rounded-[2.5rem] overflow-hidden shadow-2xl relative">
+        <Sidebar />
 
-                <div className="flex-1 flex flex-col min-w-0">
-                    <TopBar />
+        <div className="flex-1 flex flex-col min-w-0">
+          <TopBar />
 
-                    <div className="flex-1 overflow-y-auto px-6 pb-6 pt-2 scrollbar-hide">
-                        <div className="grid grid-cols-12 gap-3 max-w-[1600px] mx-auto auto-rows-min">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-4 sm:pb-6 pt-2 scrollbar-hide min-h-0">
+            {/* Masonry: 1 col móvil, 2 tablet, 3 escritorio */}
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-x-3 max-w-[1600px] mx-auto">
+              {/* Cada ítem no se parte entre columnas; margen abajo para separación vertical */}
+              <div className="break-inside-avoid mb-3">
+                <RoomCard
+                  title="Video of the application"
+                  distance=""
+                  icon="/icon/bot.gif"
+                  aspectRatio="video"
+                  mediaItems={[
+                    {
+                      type: "video",
+                      src: "/home/video.mp4",
+                      poster: "/home/image-1.png",
+                    },
+                    { type: "image", src: "/home/image-1.png" },
+                    { type: "image", src: "/home/image-2.png" },
+                  ]}
+                  className="w-full"
+                >
+                  <div className="grid grid-cols-1 gap-3 pt-2">
+                    <DeviceControl
+                      icon={<Camera size={18} />}
+                      label="Camera CCTV"
+                      statusText="82%"
+                      percentage={82}
+                      active={devices.livingRoomCamera}
+                      onToggle={() => toggleDevice("livingRoomCamera")}
+                    />
+                    <DeviceControl
+                      icon={<Zap size={18} />}
+                      label="Lightning"
+                      sublabel="Chandelier, Dimmers"
+                      active={devices.livingRoomLighting}
+                      onToggle={() => toggleDevice("livingRoomLighting")}
+                    />
+                    <DeviceControl
+                      icon={<Wind size={18} />}
+                      label="Vacuum Cleaner"
+                      statusText="58%"
+                      percentage={58}
+                      active={devices.livingRoomVacuum}
+                      onToggle={() => toggleDevice("livingRoomVacuum")}
+                    />
+                  </div>
+                </RoomCard>
+              </div>
 
-                            {/* Main Area: Living Room */}
-                            <div className="col-span-12 lg:col-span-8">
-                                <RoomCard
-                                    title="Living Room"
-                                    distance="41 m"
-                                    stats={{ temp: "22°C", humidity: "55%" }}
-                                    image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&h=800&auto=format&fit=crop"
-                                >
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 pt-2">
-                                        <DeviceControl
-                                            icon={<Camera size={18} />}
-                                            label="Camera CCTV"
-                                            statusText="82%"
-                                            percentage={82}
-                                            active={devices.livingRoomCamera}
-                                            onToggle={() => toggleDevice('livingRoomCamera')}
-                                        />
-                                        <DeviceControl
-                                            icon={<Zap size={18} />}
-                                            label="Lightning"
-                                            sublabel="Chandelier, Dimmers"
-                                            active={devices.livingRoomLighting}
-                                            onToggle={() => toggleDevice('livingRoomLighting')}
-                                        />
-                                        <DeviceControl
-                                            icon={<Wind size={18} />}
-                                            label="Vacuum Cleaner"
-                                            statusText="58%"
-                                            percentage={58}
-                                            active={devices.livingRoomVacuum}
-                                            onToggle={() => toggleDevice('livingRoomVacuum')}
-                                        />
-                                    </div>
-                                </RoomCard>
-                            </div>
-
-                            {/* Right Panel: Kitchen */}
-                            <div className="col-span-12 lg:col-span-4">
-                                <RoomCard
-                                    title="Kitchen"
-                                    distance="24 m"
-                                    image="https://images.unsplash.com/photo-1556911223-e4524c73c480?q=80&w=800&h=1200&auto=format&fit=crop"
-                                    className="h-full"
-                                >
-                                    <DeviceControl
-                                        icon={<Camera size={18} />}
-                                        label="Camera CCTV"
-                                        statusText="82%"
-                                        percentage={82}
-                                        active={devices.kitchenCamera}
-                                        onToggle={() => toggleDevice('kitchenCamera')}
-                                    />
-                                </RoomCard>
-                            </div>
-
-                            {/* Bottom Grid: Bedroom, Cinema, Courtyard */}
-                            <div className="col-span-12 lg:col-span-4 lg:row-start-2">
-                                <RoomCard
-                                    title="Bedroom"
-                                    distance="18 m"
-                                    image="https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=800&h=600&auto=format&fit=crop"
-                                />
-                            </div>
-
-                            <div className="col-span-12 lg:col-span-4 lg:row-start-2">
-                                <RoomCard
-                                    title="Cinema"
-                                    distance="27 m"
-                                    image="https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=800&h=600&auto=format&fit=crop"
-                                />
-                            </div>
-
-                            <div className="col-span-12 lg:col-span-4 lg:row-start-2">
-                                <RoomCard
-                                    title="Courtyard"
-                                    distance="160 m"
-                                    image="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=800&h=600&auto=format&fit=crop"
-                                />
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <BottomBar />
+              {RIGHT_COLUMN_ROOMS.map((room) => (
+                <div key={room.id} className="break-inside-avoid mb-3">
+                  <RoomCard
+                    title={room.title}
+                    distance={room.distance}
+                    icon={room.icon}
+                    image={"image" in room ? room.image : undefined}
+                    mediaItems={"mediaItems" in room ? room.mediaItems : undefined}
+                    aspectRatio={room.aspectRatio}
+                    className="w-full overflow-visible"
+                  >
+                    {"image" in room && room.children
+                      ? room.children(devices, toggleDevice)
+                      : null}
+                  </RoomCard>
                 </div>
+              ))}
+
+              {BOTTOM_ROW_ROOMS.map((room) => (
+                <div key={room.id} className="break-inside-avoid mb-3">
+                  <RoomCard
+                    title={room.title}
+                    distance={room.distance}
+                    icon={room.icon}
+                    mediaItems={room.mediaItems}
+                    aspectRatio={room.aspectRatio}
+                    className="w-full"
+                  />
+                </div>
+              ))}
             </div>
+          </div>
+
+          <BottomBar />
         </div>
-    );
+      </div>
+    </div>
+  );
 };

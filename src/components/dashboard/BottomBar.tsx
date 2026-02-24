@@ -1,54 +1,55 @@
-import { Play, SkipBack, SkipForward, Pause, Lock, Unlock } from 'lucide-react';
+import { Apple, Lock, Unlock } from "lucide-react";
+
+/** Icono tipo logo de Windows (4 cuadrantes) */
+const WindowsIcon = ({ size = 24 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden
+  >
+    <path d="M3 3h8.5v8.5H3V3zm0 9.5H11.5V21H3v-8.5zM12.5 3H21v8.5H12.5V3zm0 9.5H21V21h-8.5v-8.5z" />
+  </svg>
+);
 
 export const BottomBar = () => {
-    return (
-        <div className="flex items-center justify-between p-6">
-            <div className="flex items-center gap-4">
-                {[
-                    { name: 'Robert T.', atHome: true, img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100&h=100&auto=format&fit=crop' },
-                    { name: 'Bessie S.', atHome: true, img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&h=100&auto=format&fit=crop' },
-                    { name: 'Devon O.', atHome: true, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&h=100&auto=format&fit=crop' },
-                    { name: 'Annette I.', atHome: true, img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&auto=format&fit=crop' },
-                ].map((user) => (
-                    <div key={user.name} className="flex items-center gap-3 px-4 py-2 rounded-2xl glass hover:bg-white/10 transition-colors cursor-pointer group">
-                        <div className="relative w-10 h-10 rounded-xl overflow-hidden">
-                            <img src={user.img} alt={user.name} className="w-full h-full object-cover" />
-                            <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-black rounded-full" />
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold text-white">{user.name}</p>
-                            <p className="text-[10px] text-green-500 font-medium">At home</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            <div className="flex items-center gap-12">
-                <div className="flex items-center gap-6 glass rounded-[1.5rem] p-2 pr-8">
-                    <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg">
-                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=100&h=100&auto=format&fit=crop" alt="Song cover" className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                        <h4 className="text-sm font-bold text-brand-cyan leading-tight">I Took A Ride</h4>
-                        <p className="text-xs text-sh-text-muted">Caroline Rose</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-sh-text-muted ml-4">
-                        <SkipBack size={20} className="hover:text-white cursor-pointer" />
-                        <SkipForward size={20} className="hover:text-white cursor-pointer" />
-                        <button className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                            <Pause size={18} fill="currentColor" />
-                        </button>
-                    </div>
-                </div>
-
-                <div className="flex flex-col items-center gap-1">
-                    <button className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted hover:text-sh-accent transition-all group">
-                        <Unlock size={20} className="group-hover:hidden" />
-                        <Lock size={20} className="hidden group-hover:block" />
-                    </button>
-                    <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">Unlocked</span>
-                </div>
-            </div>
+  return (
+    <div className="flex items-center justify-end p-6">
+      <div className="flex items-center gap-12">
+        <div className="flex items-center gap-6 glass rounded-[1.5rem] px-6 py-3">
+          <a
+            href="#download-mac"
+            className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
+            aria-label="Descargar para Mac"
+          >
+            <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
+              <Apple size={22} />
+            </span>
+            <span className="text-sm font-semibold">Mac</span>
+          </a>
+          <a
+            href="#download-windows"
+            className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
+            aria-label="Descargar para Windows"
+          >
+            <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
+              <WindowsIcon size={20} />
+            </span>
+            <span className="text-sm font-semibold">Windows</span>
+          </a>
         </div>
-    );
+
+        <div className="flex flex-col items-center gap-1">
+          <button className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted hover:text-sh-accent transition-all group">
+            <Unlock size={20} className="group-hover:hidden" />
+            <Lock size={20} className="hidden group-hover:block" />
+          </button>
+          <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
+            Obtain license
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 };
