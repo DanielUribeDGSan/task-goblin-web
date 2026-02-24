@@ -244,7 +244,6 @@ export const RoomCard = ({
                   className="w-full h-full object-contain"
                   playsInline
                   muted
-                  loop
                   onClick={togglePlayPause}
                 />
                 <button
