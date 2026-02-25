@@ -1,4 +1,30 @@
-import { Apple, Lock, Unlock } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Apple, Lock, Unlock, ChevronDown, Tag, DollarSign } from "lucide-react";
+
+// URLs resueltas solo en runtime para no exponer el destino en el DOM
+const b = (s: string) => (typeof atob !== "undefined" ? atob(s) : "");
+const _ = [
+  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV9hYXJjaDY0LmRtZw==",
+  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV94NjQuZG1n",
+  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV94NjQtc2V0dXAuZXhl",
+];
+const url = (i: number) => b(_[i]);
+
+const triggerDownload = (index: number) => {
+  const u = url(index);
+  const a = document.createElement("a");
+  a.href = u;
+  a.download = "";
+  a.rel = "noopener noreferrer";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+};
+
+const PRICE_MXN = 249;
+const PRICE_ORIGINAL_MXN = 299;
+const PRICE_USD = 13; // equivalente aprox. de 249 MXN
+const PRICE_ORIGINAL_USD = 16; // equivalente aprox. de 299 MXN
 
 /** Icono tipo logo de Windows (4 cuadrantes) */
 const WindowsIcon = ({ size = 24 }: { size?: number }) => (
@@ -14,22 +40,113 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
 );
 
 export const BottomBar = () => {
+  const [macMenuOpen, setMacMenuOpen] = useState(false);
+  const [showUsd, setShowUsd] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const close = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMacMenuOpen(false);
+      }
+    };
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, []);
+
   return (
-    <div className="flex items-center justify-end p-6">
+    <div className="flex items-center justify-end p-6 gap-6 flex-wrap">
+      <div className="flex items-center gap-3 glass rounded-[1.5rem] px-4 py-2.5">
+        <Tag size={18} className="shrink-0 text-sh-text-muted" aria-hidden />
+        <div className="flex items-center gap-2">
+          {showUsd ? (
+            <p className="text-sm font-bold text-white whitespace-nowrap">
+              <span className="line-through text-sh-text-muted font-normal mr-1">
+                ${PRICE_ORIGINAL_USD}
+              </span>{" "}
+              ${PRICE_USD}{" "}
+              <span className="text-sh-text-muted font-normal text-xs">USD</span>
+              <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
+                Promoción
+              </span>
+            </p>
+          ) : (
+            <p className="text-sm font-bold text-white whitespace-nowrap">
+              <span className="line-through text-sh-text-muted font-normal mr-1">
+                ${PRICE_ORIGINAL_MXN}
+              </span>{" "}
+              ${PRICE_MXN}{" "}
+              <span className="text-sh-text-muted font-normal text-xs">MXN</span>
+              <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
+                Promoción
+              </span>
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={() => setShowUsd((v) => !v)}
+            className="p-1.5 rounded-lg text-sh-text-muted hover:text-brand-cyan hover:bg-white/10 transition-colors"
+            aria-label={showUsd ? "Ver precio en MXN" : "Ver precio en USD"}
+            title={showUsd ? "Ver en MXN" : "Ver en USD"}
+          >
+            <DollarSign size={16} />
+          </button>
+        </div>
+      </div>
+
       <div className="flex items-center gap-12">
         <div className="flex items-center gap-6 glass rounded-[1.5rem] px-6 py-3">
-          <a
-            href="#download-mac"
-            className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
-            aria-label="Descargar para Mac"
-          >
-            <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
-              <Apple size={22} />
-            </span>
-            <span className="text-sm font-semibold">Mac</span>
-          </a>
-          <a
-            href="#download-windows"
+          <div className="relative" ref={menuRef}>
+            <button
+              type="button"
+              onClick={() => setMacMenuOpen((o) => !o)}
+              className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
+              aria-label="Descargar para Mac"
+              aria-expanded={macMenuOpen}
+              aria-haspopup="true"
+            >
+              <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
+                <Apple size={22} />
+              </span>
+              <span className="text-sm font-semibold">Mac</span>
+              <ChevronDown
+                size={16}
+                className={`transition-transform ${macMenuOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {macMenuOpen && (
+              <div
+                className="absolute bottom-full left-0 mb-2 min-w-[200px] rounded-xl py-2 shadow-xl z-50 border border-white/10 bg-[#1c1c1c]"
+                role="menu"
+              >
+                <button
+                  type="button"
+                  role="menuitem"
+                  className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
+                  onClick={() => {
+                    triggerDownload(0);
+                    setMacMenuOpen(false);
+                  }}
+                >
+                  Apple Silicon (M1/M2/M3)
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
+                  onClick={() => {
+                    triggerDownload(1);
+                    setMacMenuOpen(false);
+                  }}
+                >
+                  Intel
+                </button>
+              </div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => triggerDownload(2)}
             className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
             aria-label="Descargar para Windows"
           >
@@ -37,7 +154,7 @@ export const BottomBar = () => {
               <WindowsIcon size={20} />
             </span>
             <span className="text-sm font-semibold">Windows</span>
-          </a>
+          </button>
         </div>
 
         <div className="flex flex-col items-center gap-1">

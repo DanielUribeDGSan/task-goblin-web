@@ -12,12 +12,26 @@ export const useDashboardState = () => {
         courtyardCamera: true,
     });
 
+    const [permissions, setPermissions] = useState({
+        accessibility: false,
+        contacts: false,
+        screenRecording: false,
+        notifications: false,
+        automationWhatsApp: false,
+    });
+
     const toggleDevice = (id: keyof typeof devices) => {
         setDevices(prev => ({ ...prev, [id]: !prev[id] }));
+    };
+
+    const togglePermission = (id: keyof typeof permissions) => {
+        setPermissions(prev => ({ ...prev, [id]: !prev[id] }));
     };
 
     return {
         devices,
         toggleDevice,
+        permissions,
+        togglePermission,
     };
 };
