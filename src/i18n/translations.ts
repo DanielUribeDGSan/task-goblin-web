@@ -151,6 +151,8 @@ export const translations = {
       windows: "Windows",
       appleSilicon: "Apple Silicon (M1/M2/M3)",
       intel: "Intel",
+      mobileDownloadNotice:
+        "Downloads are not available on mobile. Please use the website on a computer to download the app.",
     },
   },
   es: {
@@ -304,6 +306,8 @@ export const translations = {
       windows: "Windows",
       appleSilicon: "Apple Silicon (M1/M2/M3)",
       intel: "Intel",
+      mobileDownloadNotice:
+        "No puedes descargar en móvil. Usa el sitio web en un ordenador para descargar la aplicación.",
     },
   },
 } as const;

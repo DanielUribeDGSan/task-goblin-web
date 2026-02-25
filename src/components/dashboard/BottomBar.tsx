@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Apple, Lock, Unlock, ChevronDown, Tag } from "lucide-react";
+import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useLayout } from "../../contexts/LayoutContext";
+
+const MOBILE_BREAKPOINT = 768;
 
 // URLs resueltas solo en runtime para no exponer el destino en el DOM
 const b = (s: string) => (typeof atob !== "undefined" ? atob(s) : "");
@@ -43,6 +46,7 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
 
 export const BottomBar = () => {
   const { t, lang } = useLanguage();
+  const { isMobile, bottomBarOpen, toggleBottomBar } = useLayout();
   const [macMenuOpen, setMacMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const showUsd = lang === "en";
@@ -57,10 +61,74 @@ export const BottomBar = () => {
     return () => document.removeEventListener("click", close);
   }, []);
 
+  if (isMobile && !bottomBarOpen) {
+    return (
+      <div className="flex justify-end p-4">
+        <motion.button
+          type="button"
+          onClick={toggleBottomBar}
+          className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-white shadow-lg hover:bg-white/10 transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          aria-label={t.bottomBar.promotion}
+        >
+          <Tag size={24} />
+        </motion.button>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex items-center justify-end p-6 gap-6 flex-wrap">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end p-4 sm:p-6 gap-4 sm:gap-6 w-full max-w-full overflow-hidden">
+      {isMobile && (
+        <div className="flex items-center gap-2 w-full sm:hidden">
+          <motion.div
+            className="flex flex-1 items-center justify-center sm:justify-start gap-3 glass rounded-xl sm:rounded-[1.5rem] px-3 sm:px-4 py-2 sm:py-2.5 min-w-0 shrink-0"
+            whileHover={{
+              scale: 1.02,
+              transition: { type: "spring", stiffness: 400, damping: 25 },
+            }}
+          >
+            <Tag size={18} className="shrink-0 text-sh-text-muted" aria-hidden />
+            <div className="flex items-center gap-2">
+              {showUsd ? (
+                <p className="text-sm font-bold text-white whitespace-nowrap">
+                  <span className="line-through text-sh-text-muted font-normal mr-1">
+                    ${PRICE_ORIGINAL_USD}
+                  </span>{" "}
+                  ${PRICE_USD}{" "}
+                  <span className="text-sh-text-muted font-normal text-xs">USD</span>
+                  <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
+                    {t.bottomBar.promotion}
+                  </span>
+                </p>
+              ) : (
+                <p className="text-sm font-bold text-white whitespace-nowrap">
+                  <span className="line-through text-sh-text-muted font-normal mr-1">
+                    ${PRICE_ORIGINAL_MXN}
+                  </span>{" "}
+                  ${PRICE_MXN}{" "}
+                  <span className="text-sh-text-muted font-normal text-xs">MXN</span>
+                  <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
+                    {t.bottomBar.promotion}
+                  </span>
+                </p>
+              )}
+            </div>
+          </motion.div>
+          <button
+            type="button"
+            onClick={toggleBottomBar}
+            className="w-10 h-10 shrink-0 rounded-xl glass flex items-center justify-center text-white/70 hover:text-white"
+            aria-label="Cerrar"
+          >
+            <ChevronUp size={20} />
+          </button>
+        </div>
+      )}
+      {!isMobile && (
       <motion.div
-        className="flex items-center gap-3 glass rounded-[1.5rem] px-4 py-2.5"
+        className="flex items-center justify-center sm:justify-start gap-3 glass rounded-xl sm:rounded-[1.5rem] px-3 sm:px-4 py-2 sm:py-2.5 min-w-0 shrink-0"
         whileHover={{
           scale: 1.04,
           transition: { type: "spring", stiffness: 400, damping: 25 },
@@ -93,16 +161,25 @@ export const BottomBar = () => {
           )}
         </div>
       </motion.div>
+      )}
 
-      <div className="flex items-center gap-12">
-        <motion.div
-          className="flex items-center gap-6 glass rounded-[1.5rem] px-6 py-3"
-          whileHover={{
-            scale: 1.02,
-            transition: { type: "spring", stiffness: 400, damping: 25 },
-          }}
-        >
-          <div className="relative" ref={menuRef}>
+      {isMobile ? (
+        <div className="flex items-center gap-3 glass rounded-xl sm:rounded-[1.5rem] px-4 py-3 text-center">
+          <Smartphone size={20} className="shrink-0 text-brand-cyan" />
+          <p className="text-xs sm:text-sm text-sh-text-muted">
+            {t.bottomBar.mobileDownloadNotice}
+          </p>
+        </div>
+      ) : (
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-12">
+          <motion.div
+            className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 glass rounded-xl sm:rounded-[1.5rem] px-4 sm:px-6 py-3 min-w-0"
+            whileHover={{
+              scale: 1.02,
+              transition: { type: "spring", stiffness: 400, damping: 25 },
+            }}
+          >
+            <div className="relative" ref={menuRef}>
             <button
               type="button"
             onClick={() => setMacMenuOpen((o) => !o)}
@@ -161,18 +238,19 @@ export const BottomBar = () => {
             </span>
             <span className="text-sm font-semibold">{t.bottomBar.windows}</span>
           </button>
-        </motion.div>
+          </motion.div>
 
-        <div className="flex flex-col items-center gap-1">
-          <button className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted hover:text-sh-accent transition-all group">
-            <Unlock size={20} className="group-hover:hidden" />
-            <Lock size={20} className="hidden group-hover:block" />
-          </button>
-          <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
-            {t.bottomBar.obtainLicense}
-          </span>
+          <div className="flex flex-col items-center gap-1">
+            <button className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted hover:text-sh-accent transition-all group">
+              <Unlock size={20} className="group-hover:hidden" />
+              <Lock size={20} className="hidden group-hover:block" />
+            </button>
+            <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
+              {t.bottomBar.obtainLicense}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

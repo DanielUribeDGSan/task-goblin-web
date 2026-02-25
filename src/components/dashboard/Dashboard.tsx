@@ -4,6 +4,7 @@ import { RoomCard } from "./RoomCard";
 import { BottomBar } from "./BottomBar";
 import { useDashboardState } from "../../hooks/useDashboardState.ts";
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
+import { LayoutProvider } from "../../contexts/LayoutContext";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
@@ -222,7 +223,9 @@ const INFO_MODAL_ICONS = [
 export const Dashboard = () => {
   return (
     <LanguageProvider>
-      <DashboardContent />
+      <LayoutProvider>
+        <DashboardContent />
+      </LayoutProvider>
     </LanguageProvider>
   );
 };
