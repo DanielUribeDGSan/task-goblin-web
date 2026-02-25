@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Apple, Lock, Unlock, ChevronDown, Tag } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
@@ -58,7 +59,13 @@ export const BottomBar = () => {
 
   return (
     <div className="flex items-center justify-end p-6 gap-6 flex-wrap">
-      <div className="flex items-center gap-3 glass rounded-[1.5rem] px-4 py-2.5">
+      <motion.div
+        className="flex items-center gap-3 glass rounded-[1.5rem] px-4 py-2.5"
+        whileHover={{
+          scale: 1.04,
+          transition: { type: "spring", stiffness: 400, damping: 25 },
+        }}
+      >
         <Tag size={18} className="shrink-0 text-sh-text-muted" aria-hidden />
         <div className="flex items-center gap-2">
           {showUsd ? (
@@ -85,10 +92,16 @@ export const BottomBar = () => {
             </p>
           )}
         </div>
-      </div>
+      </motion.div>
 
       <div className="flex items-center gap-12">
-        <div className="flex items-center gap-6 glass rounded-[1.5rem] px-6 py-3">
+        <motion.div
+          className="flex items-center gap-6 glass rounded-[1.5rem] px-6 py-3"
+          whileHover={{
+            scale: 1.02,
+            transition: { type: "spring", stiffness: 400, damping: 25 },
+          }}
+        >
           <div className="relative" ref={menuRef}>
             <button
               type="button"
@@ -148,7 +161,7 @@ export const BottomBar = () => {
             </span>
             <span className="text-sm font-semibold">{t.bottomBar.windows}</span>
           </button>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col items-center gap-1">
           <button className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted hover:text-sh-accent transition-all group">

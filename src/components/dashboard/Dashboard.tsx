@@ -6,6 +6,7 @@ import { useDashboardState } from "../../hooks/useDashboardState.ts";
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
 import {
   MousePointer2,
   Users,
@@ -242,9 +243,29 @@ function DashboardContent() {
 
           <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-4 sm:pb-6 pt-2 scrollbar-hide min-h-0">
             {/* Masonry: 1 col móvil, 2 tablet, 3 escritorio */}
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-x-3 max-w-[1600px] mx-auto">
+            <motion.div
+              className="columns-1 sm:columns-2 lg:columns-3 gap-x-3 max-w-[1600px] mx-auto"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.07, delayChildren: 0.05 },
+                },
+              }}
+            >
               {/* Cada ítem no se parte entre columnas; margen abajo para separación vertical */}
-              <div className="break-inside-avoid mb-3">
+              <motion.div
+                className="break-inside-avoid mb-3 overflow-visible"
+                variants={{
+                  hidden: { opacity: 0, y: 18, scale: 0.97 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: { type: "spring", stiffness: 380, damping: 30 },
+                  },
+                }}
+              >
                 <RoomCard
                   title={t.videoCardTitle}
                   distance=""
@@ -459,10 +480,22 @@ function DashboardContent() {
                       document.body,
                     )}
                 </RoomCard>
-              </div>
+              </motion.div>
 
               {RIGHT_COLUMN_ROOMS.map((room) => (
-                <div key={room.id} className="break-inside-avoid mb-3">
+                <motion.div
+                  key={room.id}
+                  className="break-inside-avoid mb-3 overflow-visible"
+                  variants={{
+                    hidden: { opacity: 0, y: 18, scale: 0.97 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { type: "spring", stiffness: 380, damping: 30 },
+                    },
+                  }}
+                >
                   <RoomCard
                     title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
                     distance={room.distance}
@@ -484,11 +517,23 @@ function DashboardContent() {
                           )
                         : null}
                   </RoomCard>
-                </div>
+                </motion.div>
               ))}
 
               {BOTTOM_ROW_ROOMS.map((room) => (
-                <div key={room.id} className="break-inside-avoid mb-3">
+                <motion.div
+                  key={room.id}
+                  className="break-inside-avoid mb-3 overflow-visible"
+                  variants={{
+                    hidden: { opacity: 0, y: 18, scale: 0.97 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { type: "spring", stiffness: 380, damping: 30 },
+                    },
+                  }}
+                >
                   <RoomCard
                     title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
                     distance={room.distance}
@@ -503,9 +548,9 @@ function DashboardContent() {
                       </p>
                     ) : null}
                   </RoomCard>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           <BottomBar />

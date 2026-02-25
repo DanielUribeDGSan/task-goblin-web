@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Armchair,
   ChevronRight,
@@ -173,11 +174,17 @@ export const RoomCard = ({
   }, []);
 
   return (
-    <div
+    <motion.div
       className={cn(
-        "glass rounded-[2rem] p-5 flex flex-col gap-4 group transition-all duration-500 hover:bg-white/[0.08]",
+        "glass rounded-[2rem] p-5 flex flex-col gap-4 group transition-colors duration-300 hover:bg-white/[0.08] origin-center",
         className,
       )}
+      whileHover={{
+        scale: 1.02,
+        zIndex: 10,
+        transition: { type: "spring", stiffness: 400, damping: 28 },
+      }}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -370,6 +377,6 @@ export const RoomCard = ({
         )}
         <div className="mt-3">{children}</div>
       </div>
-    </div>
+    </motion.div>
   );
 };
