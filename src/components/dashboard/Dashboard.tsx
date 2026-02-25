@@ -3,6 +3,7 @@ import { TopBar } from "./TopBar";
 import { RoomCard } from "./RoomCard";
 import { BottomBar } from "./BottomBar";
 import { useDashboardState } from "../../hooks/useDashboardState.ts";
+import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -197,136 +198,36 @@ const BOTTOM_ROW_ROOMS: {
   },
 ];
 
-const APP_PERMISSIONS = [
-  {
-    id: "accessibility" as const,
-    label: "Accessibility",
-    purpose:
-      'Required for the "Move Mouse" feature to simulate physical mouse movement.',
-    icon: MousePointer2,
-  },
-  {
-    id: "contacts" as const,
-    label: "Contacts",
-    purpose:
-      "Used to fetch your contact list so you can easily select a recipient for WhatsApp messages.",
-    icon: Users,
-  },
-  {
-    id: "screenRecording" as const,
-    label: "Screen Recording",
-    purpose:
-      'Necessary for the "Screenshot to Text" feature to capture screen content for OCR.',
-    icon: Monitor,
-  },
-  {
-    id: "notifications" as const,
-    label: "Notifications",
-    purpose:
-      "Used to confirm actions like scheduled messages or successful text captures.",
-    icon: Bell,
-  },
-  {
-    id: "automationWhatsApp" as const,
-    label: "Automation (WhatsApp)",
-    purpose:
-      "Allows the app to control WhatsApp to automatically type and send scheduled messages.",
-    icon: MessageCircle,
-  },
+const APP_PERMISSION_ICONS = [
+  MousePointer2,
+  Users,
+  Monitor,
+  Bell,
+  MessageCircle,
 ];
 
-const FEATURES_LIST = [
-  "Movimiento automático del mouse",
-  "Programar mensajes de WhatsApp",
-  "Screenshot to Text",
-  "Cierre rápido de todas las aplicaciones",
-  "Apagado programado",
-  "Conversión de PDF a Word",
-  "Extractor de colores (HEX, RGB, HSL)",
-  "Dibujo y anotaciones en pantalla",
-  "Conversión y compresión de imágenes",
+const INFO_MODAL_ICONS = [
+  "/icon/move.gif",
+  "/icon/chat.gif",
+  "/icon/copy.gif",
+  "/icon/close.gif",
+  "/icon/off.gif",
+  "/icon/note.gif",
+  "/icon/palette.gif",
+  "/icon/paint.gif",
+  "/icon/camera.gif",
 ];
-
-const INFO_MODAL_FEATURES = [
-  {
-    icon: "/icon/move.gif",
-    title: "Movimiento automático del mouse",
-    description:
-      "Mantén tu estado activo en aplicaciones como Microsoft Teams moviendo el mouse de forma automática cuando no estás usando la computadora.",
-  },
-  {
-    icon: "/icon/chat.gif",
-    title: "Programar mensajes de WhatsApp por fecha y hora",
-    description:
-      "Envía mensajes de WhatsApp de forma programada indicando fecha y hora exacta, ideal para recordatorios, avisos o mensajes repetitivos sin tener que enviarlos manualmente.",
-  },
-  {
-    icon: "/icon/copy.gif",
-    title: "Screenshot to Text",
-    description:
-      "Obtén texto de cualquier imagen, video o parte de tu pantalla. Convierte cualquier texto visible en tu pantalla en texto editable y copiable. Selecciona el área que quieras y TaskGoblin extrae el contenido automáticamente.\n\n¿Cómo funciona?\n\n• Activa Screenshot to Text.\n• Selecciona con el mouse el área de la pantalla que contiene el texto.\n• TaskGoblin reconoce el contenido y lo copia automáticamente al portapapeles.",
-  },
-  {
-    icon: "/icon/close.gif",
-    title: "Cerrar todas las aplicaciones",
-    description:
-      "Cierra todas las apps abiertas con un solo clic para apagar tu computadora más rápido, sin hacerlo una por una.",
-  },
-  {
-    icon: "/icon/off.gif",
-    title: "Programar apagado",
-    description:
-      "Programa el apagado automático de tu computadora después de un tiempo determinado. Ideal para dejar procesos corriendo sin preocuparte.",
-  },
-  {
-    icon: "/icon/note.gif",
-    title: "Convertir PDF a Word",
-    description:
-      "Convierte archivos PDF a Word fácilmente para editarlos sin complicaciones.",
-  },
-  {
-    icon: "/icon/palette.gif",
-    title: "Extractor de color",
-    description:
-      "Obtén los colores de cualquier imagen y cópialos en HEX, RGB o HSL, perfecto para diseño y desarrollo.",
-  },
-  {
-    icon: "/icon/paint.gif",
-    title: "Dibujar y resaltar en pantalla",
-    description:
-      "Dibuja, escribe texto, resalta zonas y agrega figuras directamente sobre la pantalla. Ideal para explicar ideas, grabar videos o dar soporte.",
-  },
-  {
-    icon: "/icon/camera.gif",
-    title: "Conversión y compresión de imágenes",
-    description:
-      "Convierte imágenes a múltiples formatos y reduce su peso sin perder calidad.",
-  },
-];
-
-/** Descripción por id de card (mismo texto que el modal, tamaño text-sm como la primera card). */
-const CARD_DESCRIPTIONS: Record<string, string> = {
-  "move-mouse":
-    "Mantén tu estado activo en aplicaciones como Microsoft Teams moviendo el mouse de forma automática cuando no estás usando la computadora.",
-  "whatsapp-msg":
-    "Envía mensajes de WhatsApp de forma programada indicando fecha y hora exacta, ideal para recordatorios, avisos o mensajes repetitivos sin tener que enviarlos manualmente.",
-  "screenshot-to-text":
-    "Obtén texto de cualquier imagen, video o parte de tu pantalla. Convierte cualquier texto visible en tu pantalla en texto editable y copiable. Selecciona el área que quieras y TaskGoblin extrae el contenido automáticamente.",
-  "close-all-apps":
-    "Cierra todas las apps abiertas con un solo clic para apagar tu computadora más rápido, sin hacerlo una por una.",
-  "schedule-shutdown":
-    "Programa el apagado automático de tu computadora después de un tiempo determinado. Ideal para dejar procesos corriendo sin preocuparte.",
-  "convert-pdf-to-word":
-    "Convierte archivos PDF a Word fácilmente para editarlos sin complicaciones.",
-  "color-extractor":
-    "Obtén los colores de cualquier imagen y cópialos en HEX, RGB o HSL, perfecto para diseño y desarrollo.",
-  paint:
-    "Dibuja, escribe texto, resalta zonas y agrega figuras directamente sobre la pantalla. Ideal para explicar ideas, grabar videos o dar soporte.",
-  "image-converter":
-    "Convierte imágenes a múltiples formatos y reduce su peso sin perder calidad.",
-};
 
 export const Dashboard = () => {
+  return (
+    <LanguageProvider>
+      <DashboardContent />
+    </LanguageProvider>
+  );
+};
+
+function DashboardContent() {
+  const { t } = useLanguage();
   const { devices, toggleDevice } = useDashboardState();
   const [permissionsModalOpen, setPermissionsModalOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
@@ -345,7 +246,7 @@ export const Dashboard = () => {
               {/* Cada ítem no se parte entre columnas; margen abajo para separación vertical */}
               <div className="break-inside-avoid mb-3">
                 <RoomCard
-                  title="Video of the application"
+                  title={t.videoCardTitle}
                   distance=""
                   icon="/icon/bot.gif"
                   aspectRatio="video"
@@ -370,7 +271,7 @@ export const Dashboard = () => {
                         <ShieldCheck size={20} />
                       </span>
                       <span className="text-sm font-bold text-white">
-                        Permisos solicitados en la aplicación
+                        {t.permissionsCard.title}
                       </span>
                     </div>
                     <ChevronRight
@@ -381,10 +282,10 @@ export const Dashboard = () => {
 
                   <div className="pt-2">
                     <p className="text-base font-bold text-white mb-3">
-                      Todo lo que necesitas, en una sola app:
+                      {t.permissionsCard.featuresTitle}
                     </p>
                     <ul className="list-disc list-inside text-sm text-sh-text-muted space-y-1.5 mb-3">
-                      {FEATURES_LIST.map((item) => (
+                      {t.featuresList.map((item) => (
                         <li key={item} className="break-words">
                           {item}
                         </li>
@@ -393,7 +294,7 @@ export const Dashboard = () => {
                     <div className="flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 py-2 mb-4">
                       <Sparkles size={18} className="shrink-0 text-brand-cyan" />
                       <p className="text-sm text-sh-text-muted">
-                        Se agregarán más opciones próximamente.
+                        {t.permissionsCard.moreOptionsComing}
                       </p>
                     </div>
                     <button
@@ -401,7 +302,7 @@ export const Dashboard = () => {
                       onClick={() => setInfoModalOpen(true)}
                       className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand-cyan/20 border border-brand-cyan/40 py-2.5 text-sm font-semibold text-white hover:bg-brand-cyan/30 transition-colors cursor-pointer"
                     >
-                      Obtener más información
+                      {t.permissionsCard.getMoreInfo}
                       <ChevronRight size={18} />
                     </button>
                   </div>
@@ -426,7 +327,7 @@ export const Dashboard = () => {
                                 id="permissions-modal-title"
                                 className="text-lg font-bold text-white"
                               >
-                                Permisos solicitados en la aplicación
+                                {t.modalPermissions.title}
                               </h2>
                               <button
                                 type="button"
@@ -438,25 +339,29 @@ export const Dashboard = () => {
                               </button>
                             </div>
                             <div className="p-5 flex flex-col gap-4">
-                              {APP_PERMISSIONS.map(
-                                ({ id, label, purpose, icon: Icon }) => (
-                                  <div
-                                    key={id}
-                                    className="flex flex-col gap-1.5 rounded-xl bg-white/5 border border-white/10 p-3 min-w-0"
-                                  >
-                                    <div className="flex items-center gap-3 min-w-0">
-                                      <div className="w-10 h-10 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-white">
-                                        <Icon size={18} />
+                              {t.modalPermissions.permissions.map(
+                                (perm, i) => {
+                                  const Icon =
+                                    APP_PERMISSION_ICONS[i];
+                                  return (
+                                    <div
+                                      key={perm.label}
+                                      className="flex flex-col gap-1.5 rounded-xl bg-white/5 border border-white/10 p-3 min-w-0"
+                                    >
+                                      <div className="flex items-center gap-3 min-w-0">
+                                        <div className="w-10 h-10 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                                          <Icon size={18} />
+                                        </div>
+                                        <h4 className="text-sm font-bold text-white break-words">
+                                          {perm.label}
+                                        </h4>
                                       </div>
-                                      <h4 className="text-sm font-bold text-white break-words">
-                                        {label}
-                                      </h4>
+                                      <p className="text-xs text-sh-text-muted leading-relaxed break-words">
+                                        {perm.purpose}
+                                      </p>
                                     </div>
-                                    <p className="text-xs text-sh-text-muted leading-relaxed break-words">
-                                      {purpose}
-                                    </p>
-                                  </div>
-                                ),
+                                  );
+                                },
                               )}
                             </div>
                           </div>
@@ -485,7 +390,7 @@ export const Dashboard = () => {
                                 id="info-modal-title"
                                 className="text-lg font-bold text-white"
                               >
-                                TaskGoblin
+                                {t.modalInfo.title}
                               </h2>
                               <button
                                 type="button"
@@ -499,30 +404,25 @@ export const Dashboard = () => {
                             <div className="p-5 flex flex-col gap-5">
                               <div>
                                 <p className="text-base font-semibold text-white mb-1">
-                                  La app multitarea que automatiza las pequeñas
-                                  tareas de tu día a día
+                                  {t.modalInfo.subtitle}
                                 </p>
                                 <p className="text-sm text-sh-text-muted leading-relaxed break-words">
-                                  TaskGoblin es una aplicación de productividad
-                                  para macOS y Windows que reúne en un solo
-                                  lugar herramientas útiles para automatizar
-                                  tareas comunes, ahorrar tiempo y trabajar de
-                                  forma más eficiente.
+                                  {t.modalInfo.intro}
                                 </p>
                               </div>
 
                               <div>
                                 <h3 className="text-base font-bold text-white mb-3">
-                                  🚀 Funciones principales
+                                  {t.modalInfo.featuresTitle}
                                 </h3>
                                 <ul className="flex flex-col gap-3">
-                                  {INFO_MODAL_FEATURES.map((f) => (
+                                  {t.modalInfo.features.map((f, i) => (
                                     <li
                                       key={f.title}
                                       className="rounded-xl bg-white/5 border border-white/10 p-3 flex gap-3"
                                     >
                                       <img
-                                        src={f.icon}
+                                        src={INFO_MODAL_ICONS[i]}
                                         alt=""
                                         className="w-9 h-9 shrink-0 rounded-xl object-contain"
                                       />
@@ -538,17 +438,18 @@ export const Dashboard = () => {
                                   ))}
                                 </ul>
                                 <p className="text-sm text-sh-text-muted mt-2 px-1">
-                                  Se agregarán más opciones próximamente.
+                                  {t.modalInfo.moreOptionsComing}
                                 </p>
                               </div>
 
                               <div className="rounded-xl bg-white/5 border border-white/10 p-3">
                                 <h3 className="text-base font-bold text-white mb-2">
-                                  ✅ Compatible con
+                                  {t.modalInfo.compatibleWith}
                                 </h3>
                                 <ul className="text-sm text-sh-text-muted space-y-1">
-                                  <li>✔ macOS (Intel y Apple Silicon)</li>
-                                  <li>✔ Windows</li>
+                                  {t.modalInfo.compatibleItems.map((item) => (
+                                    <li key={item}>{item}</li>
+                                  ))}
                                 </ul>
                               </div>
                             </div>
@@ -563,7 +464,7 @@ export const Dashboard = () => {
               {RIGHT_COLUMN_ROOMS.map((room) => (
                 <div key={room.id} className="break-inside-avoid mb-3">
                   <RoomCard
-                    title={room.title}
+                    title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
                     distance={room.distance}
                     icon={room.icon}
                     image={"image" in room ? room.image : undefined}
@@ -575,10 +476,10 @@ export const Dashboard = () => {
                   >
                     {"image" in room && room.children
                       ? room.children(devices, toggleDevice)
-                      : CARD_DESCRIPTIONS[room.id]
+                      : t.cardDescriptions[room.id as keyof typeof t.cardDescriptions]
                         ? (
                             <p className="text-sm text-sh-text-muted leading-relaxed break-words pt-2">
-                              {CARD_DESCRIPTIONS[room.id]}
+                              {t.cardDescriptions[room.id as keyof typeof t.cardDescriptions]}
                             </p>
                           )
                         : null}
@@ -589,16 +490,16 @@ export const Dashboard = () => {
               {BOTTOM_ROW_ROOMS.map((room) => (
                 <div key={room.id} className="break-inside-avoid mb-3">
                   <RoomCard
-                    title={room.title}
+                    title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
                     distance={room.distance}
                     icon={room.icon}
                     mediaItems={room.mediaItems}
                     aspectRatio={room.aspectRatio}
                     className="w-full"
                   >
-                    {CARD_DESCRIPTIONS[room.id] ? (
+                    {t.cardDescriptions[room.id as keyof typeof t.cardDescriptions] ? (
                       <p className="text-sm text-sh-text-muted leading-relaxed break-words pt-2">
-                        {CARD_DESCRIPTIONS[room.id]}
+                        {t.cardDescriptions[room.id as keyof typeof t.cardDescriptions]}
                       </p>
                     ) : null}
                   </RoomCard>

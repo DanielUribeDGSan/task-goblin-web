@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Apple, Lock, Unlock, ChevronDown, Tag, DollarSign } from "lucide-react";
+import { Apple, Lock, Unlock, ChevronDown, Tag } from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 // URLs resueltas solo en runtime para no exponer el destino en el DOM
 const b = (s: string) => (typeof atob !== "undefined" ? atob(s) : "");
@@ -40,9 +41,10 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
 );
 
 export const BottomBar = () => {
+  const { t, lang } = useLanguage();
   const [macMenuOpen, setMacMenuOpen] = useState(false);
-  const [showUsd, setShowUsd] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const showUsd = lang === "en";
 
   useEffect(() => {
     const close = (e: MouseEvent) => {
@@ -67,7 +69,7 @@ export const BottomBar = () => {
               ${PRICE_USD}{" "}
               <span className="text-sh-text-muted font-normal text-xs">USD</span>
               <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
-                Promoción
+                {t.bottomBar.promotion}
               </span>
             </p>
           ) : (
@@ -78,19 +80,10 @@ export const BottomBar = () => {
               ${PRICE_MXN}{" "}
               <span className="text-sh-text-muted font-normal text-xs">MXN</span>
               <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
-                Promoción
+                {t.bottomBar.promotion}
               </span>
             </p>
           )}
-          <button
-            type="button"
-            onClick={() => setShowUsd((v) => !v)}
-            className="p-1.5 rounded-lg text-sh-text-muted hover:text-brand-cyan hover:bg-white/10 transition-colors"
-            aria-label={showUsd ? "Ver precio en MXN" : "Ver precio en USD"}
-            title={showUsd ? "Ver en MXN" : "Ver en USD"}
-          >
-            <DollarSign size={16} />
-          </button>
         </div>
       </div>
 
@@ -99,16 +92,16 @@ export const BottomBar = () => {
           <div className="relative" ref={menuRef}>
             <button
               type="button"
-              onClick={() => setMacMenuOpen((o) => !o)}
-              className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
-              aria-label="Descargar para Mac"
-              aria-expanded={macMenuOpen}
-              aria-haspopup="true"
-            >
-              <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
-                <Apple size={22} />
-              </span>
-              <span className="text-sm font-semibold">Mac</span>
+            onClick={() => setMacMenuOpen((o) => !o)}
+            className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
+            aria-label={t.bottomBar.downloadMac}
+            aria-expanded={macMenuOpen}
+            aria-haspopup="true"
+          >
+            <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
+              <Apple size={22} />
+            </span>
+            <span className="text-sm font-semibold">{t.bottomBar.mac}</span>
               <ChevronDown
                 size={16}
                 className={`transition-transform ${macMenuOpen ? "rotate-180" : ""}`}
@@ -128,7 +121,7 @@ export const BottomBar = () => {
                     setMacMenuOpen(false);
                   }}
                 >
-                  Apple Silicon (M1/M2/M3)
+                  {t.bottomBar.appleSilicon}
                 </button>
                 <button
                   type="button"
@@ -139,7 +132,7 @@ export const BottomBar = () => {
                     setMacMenuOpen(false);
                   }}
                 >
-                  Intel
+                  {t.bottomBar.intel}
                 </button>
               </div>
             )}
@@ -148,12 +141,12 @@ export const BottomBar = () => {
             type="button"
             onClick={() => triggerDownload(2)}
             className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
-            aria-label="Descargar para Windows"
+            aria-label={t.bottomBar.downloadWindows}
           >
             <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
               <WindowsIcon size={20} />
             </span>
-            <span className="text-sm font-semibold">Windows</span>
+            <span className="text-sm font-semibold">{t.bottomBar.windows}</span>
           </button>
         </div>
 
@@ -163,7 +156,7 @@ export const BottomBar = () => {
             <Lock size={20} className="hidden group-hover:block" />
           </button>
           <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
-            Obtain license
+            {t.bottomBar.obtainLicense}
           </span>
         </div>
       </div>
