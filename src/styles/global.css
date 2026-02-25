@@ -28,6 +28,8 @@ body {
   margin: 0;
   overflow: hidden;
   height: 100vh;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
 }
 
 .glass {
@@ -59,4 +61,19 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Flex hijo con scroll: evita que Safari (y otros) corten el contenido */
+.safari-flex-shrink {
+  min-height: 0;
+  -webkit-flex: 1 1 0%;
+  flex: 1 1 0%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Columnas masonry: evita que las cards se corten en Safari */
+.safari-column-avoid {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }

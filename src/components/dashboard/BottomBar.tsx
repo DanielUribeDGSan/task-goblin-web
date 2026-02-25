@@ -214,39 +214,50 @@ export const BottomBar = () => {
             </button>
             {macMenuOpen && dropdownRect &&
               createPortal(
-                <div
-                  ref={dropdownRef}
-                  role="menu"
-                  className="fixed min-w-[200px] rounded-xl py-2 shadow-2xl z-[9997] border border-white/10 bg-[#1c1c1c]"
-                  style={{
-                    top: dropdownRect.top,
-                    left: dropdownRect.left,
-                    transform: "translateY(-100%)",
-                  }}
-                >
+                <>
                   <button
                     type="button"
-                    role="menuitem"
-                    className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
-                    onClick={() => {
-                      triggerDownload(0);
-                      setMacMenuOpen(false);
+                    aria-hidden
+                    tabIndex={-1}
+                    className="fixed inset-0 z-[99998] cursor-default"
+                    style={{ background: "transparent" }}
+                    onClick={() => setMacMenuOpen(false)}
+                  />
+                  <div
+                    ref={dropdownRef}
+                    role="menu"
+                    className="fixed min-w-[200px] rounded-xl py-2 shadow-2xl z-[99999] border border-white/10 bg-[#1c1c1c]"
+                    style={{
+                      top: dropdownRect.top,
+                      left: dropdownRect.left,
+                      transform: "translate3d(0, -100%, 0)",
+                      isolation: "isolate",
                     }}
                   >
-                    {t.bottomBar.appleSilicon}
-                  </button>
-                  <button
-                    type="button"
-                    role="menuitem"
-                    className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
-                    onClick={() => {
-                      triggerDownload(1);
-                      setMacMenuOpen(false);
-                    }}
-                  >
-                    {t.bottomBar.intel}
-                  </button>
-                </div>,
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
+                      onClick={() => {
+                        triggerDownload(0);
+                        setMacMenuOpen(false);
+                      }}
+                    >
+                      {t.bottomBar.appleSilicon}
+                    </button>
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
+                      onClick={() => {
+                        triggerDownload(1);
+                        setMacMenuOpen(false);
+                      }}
+                    >
+                      {t.bottomBar.intel}
+                    </button>
+                  </div>
+                </>,
                 document.body,
               )}
           </div>
