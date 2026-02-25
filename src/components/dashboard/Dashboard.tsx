@@ -556,7 +556,9 @@ function DashboardContent() {
             </motion.div>
           </div>
 
-          <BottomBar />
+          <div className="relative z-[500] shrink-0">
+            <BottomBar />
+          </div>
         </div>
       </div>
     </div>

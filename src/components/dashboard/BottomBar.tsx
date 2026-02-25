@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -49,11 +50,24 @@ export const BottomBar = () => {
   const { isMobile, bottomBarOpen, toggleBottomBar } = useLayout();
   const [macMenuOpen, setMacMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const macButtonRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownRect, setDropdownRect] = useState<{ top: number; left: number } | null>(null);
   const showUsd = lang === "en";
 
   useEffect(() => {
+    if (!macMenuOpen || !macButtonRef.current) return;
+    const rect = macButtonRef.current.getBoundingClientRect();
+    setDropdownRect({ top: rect.top - 8, left: rect.left });
+  }, [macMenuOpen]);
+
+  useEffect(() => {
     const close = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (
+        menuRef.current && !menuRef.current.contains(target) &&
+        dropdownRef.current && !dropdownRef.current.contains(target)
+      ) {
         setMacMenuOpen(false);
       }
     };
@@ -181,6 +195,7 @@ export const BottomBar = () => {
           >
             <div className="relative" ref={menuRef}>
             <button
+              ref={macButtonRef}
               type="button"
             onClick={() => setMacMenuOpen((o) => !o)}
             className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors"
@@ -197,35 +212,43 @@ export const BottomBar = () => {
                 className={`transition-transform ${macMenuOpen ? "rotate-180" : ""}`}
               />
             </button>
-            {macMenuOpen && (
-              <div
-                className="absolute bottom-full left-0 mb-2 min-w-[200px] rounded-xl py-2 shadow-xl z-50 border border-white/10 bg-[#1c1c1c]"
-                role="menu"
-              >
-                <button
-                  type="button"
-                  role="menuitem"
-                  className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
-                  onClick={() => {
-                    triggerDownload(0);
-                    setMacMenuOpen(false);
+            {macMenuOpen && dropdownRect &&
+              createPortal(
+                <div
+                  ref={dropdownRef}
+                  role="menu"
+                  className="fixed min-w-[200px] rounded-xl py-2 shadow-2xl z-[9997] border border-white/10 bg-[#1c1c1c]"
+                  style={{
+                    top: dropdownRect.top,
+                    left: dropdownRect.left,
+                    transform: "translateY(-100%)",
                   }}
                 >
-                  {t.bottomBar.appleSilicon}
-                </button>
-                <button
-                  type="button"
-                  role="menuitem"
-                  className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
-                  onClick={() => {
-                    triggerDownload(1);
-                    setMacMenuOpen(false);
-                  }}
-                >
-                  {t.bottomBar.intel}
-                </button>
-              </div>
-            )}
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
+                    onClick={() => {
+                      triggerDownload(0);
+                      setMacMenuOpen(false);
+                    }}
+                  >
+                    {t.bottomBar.appleSilicon}
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors"
+                    onClick={() => {
+                      triggerDownload(1);
+                      setMacMenuOpen(false);
+                    }}
+                  >
+                    {t.bottomBar.intel}
+                  </button>
+                </div>,
+                document.body,
+              )}
           </div>
           <button
             type="button"
