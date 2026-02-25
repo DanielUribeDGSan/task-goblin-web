@@ -1,6 +1,12 @@
 ---
 import { Dashboard } from "../components/dashboard/Dashboard";
 import "../styles/global.css";
+
+const title = "Task Goblin — Automatiza tareas en Mac y Windows";
+const description =
+  "Task Goblin es la app que automatiza el día a día: mover el ratón, programar WhatsApp, convertir PDF a Word, extraer colores, captura a texto y más. Descarga para Mac y Windows.";
+const ogImage = `${Astro.site}/icon/TaskGoblin.png`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <html lang="es">
@@ -10,19 +16,50 @@ import "../styles/global.css";
     <link rel="icon" href="/icon/TaskGoblin.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO: Google, Bing (Edge), Safari -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Task Goblin, automatización, Mac, Windows, app, mover ratón, WhatsApp programado, PDF a Word, extractor de colores, screenshot to text" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph (Facebook, Safari, muchos buscadores) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Task Goblin" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Sitemap para buscadores -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Task Goblin</title>
-    <meta
-      name="description"
-      content="Task Goblin es una aplicación que te ayuda a automatizar tareas en Mac y Windows. Desde mover el ratón, enviar mensajes de WhatsApp, convertir PDFs, extraer colores y más."
-    />
   </head>
   <body class="antialiased font-sans bg-black">
     <Dashboard client:load />
+
+    <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Task Goblin",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "macOS, Windows",
+      "description": description,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    })} />
   </body>
 </html>
