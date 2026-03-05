@@ -22,7 +22,7 @@ export const TopBar = () => {
             <div className="w-9 h-9 rounded-xl overflow-hidden glass shrink-0">
               <img
                 src="/icon/TaskGoblin.png"
-                alt=""
+                alt="Task Goblin logo"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -37,22 +37,20 @@ export const TopBar = () => {
             <button
               type="button"
               onClick={() => setLang("es")}
-              className={`px-3 py-2 text-sm font-medium transition-colors ${
-                lang === "es"
+              className={`px-3 py-2 text-sm font-medium transition-colors ${lang === "es"
                   ? "bg-brand-cyan text-black"
                   : "text-sh-text-muted hover:text-white"
-              }`}
+                }`}
             >
               ES
             </button>
             <button
               type="button"
               onClick={() => setLang("en")}
-              className={`px-3 py-2 text-sm font-medium transition-colors ${
-                lang === "en"
+              className={`px-3 py-2 text-sm font-medium transition-colors ${lang === "en"
                   ? "bg-brand-cyan text-black"
                   : "text-sh-text-muted hover:text-white"
-              }`}
+                }`}
             >
               EN
             </button>
@@ -68,7 +66,7 @@ export const TopBar = () => {
         <div className="w-10 h-10 rounded-xl overflow-hidden glass">
           <img
             src="/icon/TaskGoblin.png"
-            alt="Task Goblin"
+            alt="Task Goblin logo"
             className="w-full h-full object-cover"
           />
         </div>
@@ -84,22 +82,20 @@ export const TopBar = () => {
           <button
             type="button"
             onClick={() => setLang("es")}
-            className={`px-3 py-1.5 text-sm font-medium transition-colors ${
-              lang === "es"
+            className={`px-3 py-1.5 text-sm font-medium transition-colors ${lang === "es"
                 ? "bg-brand-cyan text-black"
                 : "text-sh-text-muted hover:text-white"
-            }`}
+              }`}
           >
             ES
           </button>
           <button
             type="button"
             onClick={() => setLang("en")}
-            className={`px-3 py-1.5 text-sm font-medium transition-colors ${
-              lang === "en"
+            className={`px-3 py-1.5 text-sm font-medium transition-colors ${lang === "en"
                 ? "bg-brand-cyan text-black"
                 : "text-sh-text-muted hover:text-white"
-            }`}
+              }`}
           >
             EN
           </button>

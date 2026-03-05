@@ -4,7 +4,7 @@ import "../styles/global.css";
 
 const title = "Task Goblin — Automatiza tareas en Mac y Windows";
 const description =
-  "Task Goblin es la app que automatiza el día a día: mover el ratón, programar WhatsApp, convertir PDF a Word, extraer colores, captura a texto y más. Descarga para Mac y Windows.";
+  "Task Goblin es la app que automatiza tu día a día en Mac y Windows: mover el ratón (auto clicker), programar mensajes de WhatsApp, Screenshot to Text (OCR), apagado programado, cerrar todas las apps, convertir PDF a Word, extraer colores, y más. Descárgala ahora.";
 const ogImage = `${Astro.site}/icon/TaskGoblin.png`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
@@ -20,8 +20,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <!-- SEO: Google, Bing (Edge), Safari -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="Task Goblin, automatización, Mac, Windows, app, mover ratón, WhatsApp programado, PDF a Word, extractor de colores, screenshot to text" />
+    <meta
+      name="keywords"
+      content="Task Goblin, automatización, Mac, Windows, app, mover ratón, WhatsApp programado, PDF a Word, extractor de colores, screenshot to text, utilidades, herramientas, auto clicker"
+    />
     <link rel="canonical" href={canonical} />
+
+    <!-- Idiomas alternativos -->
+    <link rel="alternate" hreflang="es" href={`${Astro.site}`} />
+    <link rel="alternate" hreflang="en" href={`${Astro.site}en`} />
+    <link rel="alternate" hreflang="x-default" href={`${Astro.site}`} />
 
     <!-- Open Graph (Facebook, Safari, muchos buscadores) -->
     <meta property="og:type" content="website" />
@@ -51,15 +59,48 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <body class="antialiased font-sans bg-black">
     <Dashboard client:load />
 
-    <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication) -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Task Goblin",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "macOS, Windows",
-      "description": description,
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-    })} />
+    <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication, WebSite, Organization) -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://task-goblin.com/#website",
+            url: "https://task-goblin.com/",
+            name: "Task Goblin",
+            description: description,
+            publisher: {
+              "@type": "Organization",
+              name: "Task Goblin",
+              logo: {
+                "@type": "ImageObject",
+                url: ogImage,
+              },
+            },
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://task-goblin.com/#software",
+            name: "Task Goblin",
+            applicationCategory: "UtilitiesApplication",
+            operatingSystem: "macOS, Windows",
+            description: description,
+            image: ogImage,
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            featureList: [
+              "Auto mouse mover",
+              "WhatsApp scheduler",
+              "Screenshot to Text OCR",
+              "Schedule shutdown",
+              "Close all apps",
+              "PDF to Word",
+              "Color extractor",
+            ],
+          },
+        ],
+      })}
+    />
   </body>
 </html>

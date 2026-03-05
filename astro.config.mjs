@@ -6,7 +6,7 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
-const SITE = 'https://task-goblin.netlify.app';
+const SITE = 'https://task-goblin.com';
 
 export default defineConfig({
   site: SITE,
