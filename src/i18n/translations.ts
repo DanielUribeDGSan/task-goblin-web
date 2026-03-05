@@ -19,7 +19,7 @@ export const translations = {
       "Convert PDF to Word",
       "Color extractor (HEX, RGB, HSL)",
       "Drawing and annotations on screen",
-      "Image conversion and compression",
+      "Image conversion, compression and PDF",
     ],
     modalPermissions: {
       title: "Permissions required in the app",
@@ -102,9 +102,9 @@ export const translations = {
             "Draw, write text, highlight areas, and add shapes directly on the screen. Ideal for explaining ideas, recording videos, or giving support.",
         },
         {
-          title: "Image conversion and compression",
+          title: "Image conversion, compression and PDF",
           description:
-            "Convert images to multiple formats and reduce their size without losing quality.",
+            "Convert images to multiple formats, including PDF, and reduce their size without losing quality.",
         },
       ],
     },
@@ -117,7 +117,7 @@ export const translations = {
       "convert-pdf-to-word": "Convert PDF to Word",
       "color-extractor": "Color Extractor",
       paint: "Paint",
-      "image-converter": "Image Converter",
+      "image-converter": "Image & PDF Converter",
     },
     cardDescriptions: {
       "move-mouse":
@@ -137,7 +137,7 @@ export const translations = {
       paint:
         "Draw, write text, highlight areas, and add shapes directly on the screen. Ideal for explaining ideas, recording videos, or giving support.",
       "image-converter":
-        "Convert images to multiple formats and reduce their size without losing quality.",
+        "Convert images to multiple formats, including PDF, and reduce their size without losing quality.",
     },
     bottomBar: {
       price: "Price",
@@ -173,7 +173,7 @@ export const translations = {
       "Conversión de PDF a Word",
       "Extractor de colores (HEX, RGB, HSL)",
       "Dibujo y anotaciones en pantalla",
-      "Conversión y compresión de imágenes",
+      "Conversión y compresión de imágenes y PDF",
     ],
     modalPermissions: {
       title: "Permisos solicitados en la aplicación",
@@ -257,9 +257,9 @@ export const translations = {
             "Dibuja, escribe texto, resalta zonas y agrega figuras directamente sobre la pantalla. Ideal para explicar ideas, grabar videos o dar soporte.",
         },
         {
-          title: "Conversión y compresión de imágenes",
+          title: "Conversión y compresión de imágenes y PDF",
           description:
-            "Convierte imágenes a múltiples formatos y reduce su peso sin perder calidad.",
+            "Convierte imágenes a múltiples formatos, incluyendo PDF, y reduce su peso sin perder calidad.",
         },
       ],
     },
@@ -272,7 +272,7 @@ export const translations = {
       "convert-pdf-to-word": "Convertir PDF a Word",
       "color-extractor": "Extractor de color",
       paint: "Paint",
-      "image-converter": "Conversor de imágenes",
+      "image-converter": "Conversor de imágenes y PDF",
     },
     cardDescriptions: {
       "move-mouse":
@@ -292,7 +292,7 @@ export const translations = {
       paint:
         "Dibuja, escribe texto, resalta zonas y agrega figuras directamente sobre la pantalla. Ideal para explicar ideas, grabar videos o dar soporte.",
       "image-converter":
-        "Convierte imágenes a múltiples formatos y reduce su peso sin perder calidad.",
+        "Convierte imágenes a múltiples formatos, incluyendo PDF, y reduce su peso sin perder calidad.",
     },
     bottomBar: {
       price: "Precio",

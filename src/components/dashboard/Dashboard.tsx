@@ -184,7 +184,7 @@ const BOTTOM_ROW_ROOMS: {
     },
     {
       id: "image-converter",
-      title: "Image Converter",
+      title: "Image & PDF Converter",
       distance: "",
       icon: "/icon/camera.gif",
       aspectRatio: "4/3",
