@@ -1,6 +1,6 @@
 import { isRemotePath } from '@astrojs/internal-helpers/path';
 import { isRemoteAllowed } from '@astrojs/internal-helpers/remote';
-import { t as toStyleString, A as AstroError, N as NoImageMetadata, F as FailedToFetchRemoteImageDimensions, R as RemoteImageNotAllowed, E as ExpectedImageOptions, a as ExpectedImage, b as ExpectedNotESMImage, I as InvalidImageService, c as createAstro, d as createComponent, e as ImageMissingAlt, m as maybeRenderHead, f as addAttribute, s as spreadAttributes, r as renderTemplate, g as ExperimentalFontsNotEnabled, h as FontFamilyNotFound, u as unescapeHTML } from '../chunks/astro/server_hNLg-tYg.mjs';
+import { t as toStyleString, A as AstroError, N as NoImageMetadata, F as FailedToFetchRemoteImageDimensions, R as RemoteImageNotAllowed, E as ExpectedImageOptions, a as ExpectedImage, b as ExpectedNotESMImage, I as InvalidImageService, c as createAstro, d as createComponent, e as ImageMissingAlt, m as maybeRenderHead, f as addAttribute, s as spreadAttributes, r as renderTemplate, g as ExperimentalFontsNotEnabled, h as FontFamilyNotFound, u as unescapeHTML } from '../chunks/astro/server_Dxp9Hdrt.mjs';
 import 'clsx';
 import * as mime from 'mrmime';
 import 'piccolore';
