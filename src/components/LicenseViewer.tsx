@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Search, Copy, CheckCircle, AlertCircle, Home } from "lucide-react";
-import { useLanguage } from "../contexts/LanguageContext";
+import { Copy, CheckCircle, AlertCircle, Home, Mail, Search } from "lucide-react";
+import { useLanguage, LanguageProvider } from "../contexts/LanguageContext";
 
 export const LicenseViewer: React.FC = () => {
     const { t } = useLanguage();
@@ -245,5 +245,13 @@ export const LicenseViewer: React.FC = () => {
                 )}
             </AnimatePresence>
         </div>
+    );
+};
+
+export const LicenseApp: React.FC = () => {
+    return (
+        <LanguageProvider>
+            <LicenseViewer />
+        </LanguageProvider>
     );
 };

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
-import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp } from "lucide-react";
+import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp, Search } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
 import { PaymentModal } from "../PaymentModal";
@@ -281,7 +281,7 @@ export const BottomBar = () => {
             onClick={() => setIsPaymentModalOpen(true)}
             className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none"
           >
-            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all">
+            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all font-bold">
               <Unlock size={20} className="group-hover:hidden" />
               <Lock size={20} className="hidden group-hover:block" />
             </div>
@@ -289,6 +289,18 @@ export const BottomBar = () => {
               {t.bottomBar.obtainLicense}
             </span>
           </button>
+
+          <a
+            href="/license"
+            className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none no-underline"
+          >
+            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-brand-cyan transition-all">
+              <Search size={20} />
+            </div>
+            <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
+              {t.bottomBar.checkLicense}
+            </span>
+          </a>
         </div>
       )}
 

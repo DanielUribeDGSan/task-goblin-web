@@ -1,10 +1,10 @@
 import { c as createAstro, d as createComponent, f as addAttribute, i as renderHead, j as renderComponent, r as renderTemplate } from '../chunks/astro/server_Dxp9Hdrt.mjs';
 import 'piccolore';
-import { jsxs, jsx } from 'react/jsx-runtime';
+import { jsx, jsxs } from 'react/jsx-runtime';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Search, Mail, CheckCircle, Copy, AlertCircle } from 'lucide-react';
-import { u as useLanguage } from '../chunks/LanguageContext_Dlz_OKNW.mjs';
+import { L as LanguageProvider, u as useLanguage } from '../chunks/LanguageContext_Nzj8teUG.mjs';
 /* empty css                                 */
 export { renderers } from '../renderers.mjs';
 
@@ -236,6 +236,9 @@ const LicenseViewer = () => {
     ) })
   ] });
 };
+const LicenseApp = () => {
+  return /* @__PURE__ */ jsx(LanguageProvider, { children: /* @__PURE__ */ jsx(LicenseViewer, {}) });
+};
 
 const $$Astro = createAstro("https://task-goblin.com");
 const $$License = createComponent(($$result, $$props, $$slots) => {
@@ -244,7 +247,7 @@ const $$License = createComponent(($$result, $$props, $$slots) => {
   const title = "License Recovery | Task Goblin";
   const description = "Recover your Task Goblin license key using your purchased email address.";
   const canonical = new URL(Astro2.url.pathname, Astro2.site).toString();
-  return renderTemplate`<html lang="es"> <head><meta charset="utf-8"><link rel="icon" type="image/svg+xml" href="/icon/TaskGoblin.png"><link rel="icon" href="/icon/TaskGoblin.png"><meta name="viewport" content="width=device-width"><meta name="generator"${addAttribute(Astro2.generator, "content")}><!-- SEO --><title>${title}</title><meta name="description"${addAttribute(description, "content")}><link rel="canonical"${addAttribute(canonical, "href")}><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">${renderHead()}</head> <body class="antialiased font-sans bg-black"> <main class="min-h-screen bg-[#060606] relative overflow-hidden flex items-center justify-center p-4"> <div class="absolute inset-0 z-0"> <div class="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-brand-cyan/10 rounded-full blur-[120px] mix-blend-screen animate-blob"></div> <div class="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] bg-blue-500/10 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"></div> </div> <div class="z-10 w-full relative"> ${renderComponent($$result, "LicenseViewer", LicenseViewer, { "client:load": true, "client:component-hydration": "load", "client:component-path": "/Users/uribe/Documents/uribe-desarrollo/task-goblin-apps/task-goblin/src/components/LicenseViewer", "client:component-export": "LicenseViewer" })} </div> </main> </body></html>`;
+  return renderTemplate`<html lang="es"> <head><meta charset="utf-8"><link rel="icon" type="image/svg+xml" href="/icon/TaskGoblin.png"><link rel="icon" href="/icon/TaskGoblin.png"><meta name="viewport" content="width=device-width"><meta name="generator"${addAttribute(Astro2.generator, "content")}><!-- SEO --><title>${title}</title><meta name="description"${addAttribute(description, "content")}><link rel="canonical"${addAttribute(canonical, "href")}><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">${renderHead()}</head> <body class="antialiased font-sans bg-black"> <main class="min-h-screen bg-[#060606] relative overflow-hidden flex items-center justify-center p-4"> <div class="absolute inset-0 z-0"> <div class="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-brand-cyan/10 rounded-full blur-[120px] mix-blend-screen animate-blob"></div> <div class="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] bg-blue-500/10 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"></div> </div> <div class="z-10 w-full relative"> ${renderComponent($$result, "LicenseApp", LicenseApp, { "client:load": true, "client:component-hydration": "load", "client:component-path": "/Users/uribe/Documents/uribe-desarrollo/task-goblin-apps/task-goblin/src/components/LicenseViewer", "client:component-export": "LicenseApp" })} </div> </main> </body></html>`;
 }, "/Users/uribe/Documents/uribe-desarrollo/task-goblin-apps/task-goblin/src/pages/license.astro", void 0);
 
 const $$file = "/Users/uribe/Documents/uribe-desarrollo/task-goblin-apps/task-goblin/src/pages/license.astro";

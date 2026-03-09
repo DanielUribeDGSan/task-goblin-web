@@ -1,12 +1,12 @@
 import { c as createAstro, d as createComponent, r as renderTemplate, u as unescapeHTML, j as renderComponent, i as renderHead, f as addAttribute } from '../chunks/astro/server_Dxp9Hdrt.mjs';
 import 'piccolore';
 import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
-import { X, LayoutDashboard, PanelLeft, Languages, Armchair, Thermometer, Droplets, Smile, ChevronRight, Maximize2, ChevronLeft, CreditCard, Mail, CheckCircle, AlertCircle, Tag, ChevronUp, Smartphone, Apple, ChevronDown, Unlock, Lock, MousePointer2, Users, Monitor, Bell, MessageCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { X, LayoutDashboard, PanelLeft, Languages, Armchair, Thermometer, Droplets, Smile, ChevronRight, Maximize2, ChevronLeft, CreditCard, Mail, CheckCircle, AlertCircle, Tag, ChevronUp, Smartphone, Apple, ChevronDown, Unlock, Lock, Search, MousePointer2, Users, Monitor, Bell, MessageCircle, ShieldCheck, Sparkles } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import React, { createContext, useState, useEffect, useCallback, useContext, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { u as useLanguage, L as LanguageProvider } from '../chunks/LanguageContext_Dlz_OKNW.mjs';
+import { u as useLanguage, L as LanguageProvider } from '../chunks/LanguageContext_Nzj8teUG.mjs';
 import { motion, AnimatePresence } from 'framer-motion';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -960,11 +960,22 @@ const BottomBar = () => {
           onClick: () => setIsPaymentModalOpen(true),
           className: "flex flex-col items-center gap-1 group cursor-pointer focus:outline-none",
           children: [
-            /* @__PURE__ */ jsxs("div", { className: "w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all", children: [
+            /* @__PURE__ */ jsxs("div", { className: "w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all font-bold", children: [
               /* @__PURE__ */ jsx(Unlock, { size: 20, className: "group-hover:hidden" }),
               /* @__PURE__ */ jsx(Lock, { size: 20, className: "hidden group-hover:block" })
             ] }),
             /* @__PURE__ */ jsx("span", { className: "text-[10px] font-bold text-sh-text-muted uppercase tracking-widest", children: t.bottomBar.obtainLicense })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs(
+        "a",
+        {
+          href: "/license",
+          className: "flex flex-col items-center gap-1 group cursor-pointer focus:outline-none no-underline",
+          children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-brand-cyan transition-all", children: /* @__PURE__ */ jsx(Search, { size: 20 }) }),
+            /* @__PURE__ */ jsx("span", { className: "text-[10px] font-bold text-sh-text-muted uppercase tracking-widest", children: t.bottomBar.checkLicense })
           ]
         }
       )

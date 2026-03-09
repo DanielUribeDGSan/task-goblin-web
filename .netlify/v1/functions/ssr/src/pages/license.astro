@@ -1,5 +1,5 @@
 ---
-import { LicenseViewer } from "../components/LicenseViewer";
+import { LicenseApp } from "../components/LicenseViewer";
 import "../styles/global.css";
 
 const title = "License Recovery | Task Goblin";
@@ -44,7 +44,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
             </div>
 
             <div class="z-10 w-full relative">
-                <LicenseViewer client:load />
+                <LicenseApp client:load />
             </div>
         </main>
     </body>
