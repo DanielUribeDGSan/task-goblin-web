@@ -1,0 +1,101 @@
+---
+import { Dashboard } from "../components/dashboard/Dashboard";
+import "../styles/global.css";
+
+const title = "Task Goblin — Automatiza tareas en Mac y Windows";
+const description =
+  "Task Goblin es la app que automatiza tu día a día en Mac y Windows: mover el ratón (auto clicker), programar mensajes de WhatsApp, Screenshot to Text (OCR), apagado programado, cerrar todas las apps, convertir PDF a Word, extraer colores, y más. Descárgala ahora.";
+const ogImage = `${Astro.site}/icon/TaskGoblin.png`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon/TaskGoblin.png" />
+    <link rel="icon" href="/icon/TaskGoblin.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO: Google, Bing (Edge), Safari -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="Task Goblin, automatización, Mac, Windows, app, mover ratón, WhatsApp programado, PDF a Word, extractor de colores, screenshot to text, utilidades, herramientas, auto clicker"
+    />
+    <link rel="canonical" href="https://task-goblin.com/" />
+
+    <!-- Open Graph (Facebook, Safari, muchos buscadores) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Task Goblin" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Sitemap para buscadores -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="antialiased font-sans bg-black">
+    <Dashboard client:load />
+
+    <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication, WebSite, Organization) -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://task-goblin.com/#website",
+            url: "https://task-goblin.com/",
+            name: "Task Goblin",
+            description: description,
+            publisher: {
+              "@type": "Organization",
+              name: "Task Goblin",
+              logo: {
+                "@type": "ImageObject",
+                url: ogImage,
+              },
+            },
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://task-goblin.com/#software",
+            name: "Task Goblin",
+            applicationCategory: "UtilitiesApplication",
+            operatingSystem: "macOS, Windows",
+            description: description,
+            image: ogImage,
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            featureList: [
+              "Auto mouse mover",
+              "WhatsApp scheduler",
+              "Screenshot to Text OCR",
+              "Schedule shutdown",
+              "Close all apps",
+              "PDF to Word",
+              "Color extractor",
+            ],
+          },
+        ],
+      })}
+    />
+  </body>
+</html>
