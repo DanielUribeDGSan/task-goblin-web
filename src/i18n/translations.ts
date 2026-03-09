@@ -154,6 +154,18 @@ export const translations = {
       mobileDownloadNotice:
         "Downloads are not available on mobile. Please use the website on a computer to download the app.",
     },
+    paymentModal: {
+      title: "Obtain License",
+      description: "Enter your email to proceed with the secure payment.",
+      emailLabel: "Email address",
+      emailPlaceholder: "you@example.com",
+      checkoutButton: "Checkout securely",
+      processing: "Processing...",
+      successTitle: "Payment Successful!",
+      successMessage: "This payment is unique and for life. Your license can only be used on one device.",
+      errorMessage: "There was an error processing your payment.",
+      closeButton: "Close",
+    },
   },
   es: {
     appName: "Task Goblin",
@@ -308,6 +320,18 @@ export const translations = {
       intel: "Intel",
       mobileDownloadNotice:
         "No puedes descargar en móvil. Usa el sitio web en un ordenador para descargar la aplicación.",
+    },
+    paymentModal: {
+      title: "Obtener Licencia",
+      description: "Ingresa tu correo electrónico para proceder con el pago seguro.",
+      emailLabel: "Correo electrónico",
+      emailPlaceholder: "tu@ejemplo.com",
+      checkoutButton: "Pagar de forma segura",
+      processing: "Procesando...",
+      successTitle: "¡Pago Exitoso!",
+      successMessage: "Este pago es único y de por vida. Tu licencia solo se podrá usar en un solo dispositivo.",
+      errorMessage: "Hubo un error al procesar tu pago.",
+      closeButton: "Cerrar",
     },
   },
 } as const;

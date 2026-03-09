@@ -1,11 +1,11 @@
 import {
   LayoutDashboard,
-  Bath,
-  Armchair,
-  Bed,
-  Microwave,
-  Users,
-  Home,
+  // Bath,
+  // Armchair,
+  // Bed,
+  // Microwave,
+  // Users,
+  // Home,
   X,
 } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
@@ -19,12 +19,12 @@ function cn(...inputs: ClassValue[]) {
 
 const icons = [
   { id: "dashboard", icon: LayoutDashboard },
-  { id: "bath", icon: Bath },
-  { id: "living", icon: Armchair },
-  { id: "bedroom", icon: Bed },
-  { id: "kitchen", icon: Microwave },
-  { id: "courtyard", icon: Users },
-  { id: "home", icon: Home },
+  // { id: "bath", icon: Bath },
+  // { id: "living", icon: Armchair },
+  // { id: "bedroom", icon: Bed },
+  // { id: "kitchen", icon: Microwave },
+  // { id: "courtyard", icon: Users },
+  // { id: "home", icon: Home },
 ];
 
 const SidebarContent = ({

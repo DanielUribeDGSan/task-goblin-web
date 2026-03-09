@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
+import { PaymentModal } from "../PaymentModal";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -54,6 +55,7 @@ export const BottomBar = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownRect, setDropdownRect] = useState<{ top: number; left: number } | null>(null);
   const showUsd = lang === "en";
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   useEffect(() => {
     if (!macMenuOpen || !macButtonRef.current) return;
@@ -274,7 +276,11 @@ export const BottomBar = () => {
             </button>
           </motion.div>
 
-          <button className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none">
+          <button
+            type="button"
+            onClick={() => setIsPaymentModalOpen(true)}
+            className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none"
+          >
             <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all">
               <Unlock size={20} className="group-hover:hidden" />
               <Lock size={20} className="hidden group-hover:block" />
@@ -285,6 +291,11 @@ export const BottomBar = () => {
           </button>
         </div>
       )}
+
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+      />
     </div>
   );
 };
