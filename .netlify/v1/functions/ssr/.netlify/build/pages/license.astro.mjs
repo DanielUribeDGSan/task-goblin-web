@@ -1,7 +1,7 @@
 import { c as createAstro, d as createComponent, f as addAttribute, i as renderHead, j as renderComponent, r as renderTemplate } from '../chunks/astro/server_Dxp9Hdrt.mjs';
 import 'piccolore';
 import { jsxs, jsx } from 'react/jsx-runtime';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Search, Mail, CheckCircle, Copy, AlertCircle } from 'lucide-react';
 import { u as useLanguage } from '../chunks/LanguageContext_Dlz_OKNW.mjs';
@@ -13,11 +13,17 @@ const LicenseViewer = () => {
   const [email, setEmail] = useState("");
   const [step, setStep] = useState("search");
   const [errorMessage, setErrorMessage] = useState("");
-  const [licenseKey, setLicenseKey] = useState("");
-  const [copied, setCopied] = useState(false);
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!email) return;
+  const [licenseKeys, setLicenseKeys] = useState([]);
+  const [copiedIndex, setCopiedIndex] = useState(null);
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get("email");
+    if (emailParam) {
+      setEmail(emailParam);
+      performSearch(emailParam);
+    }
+  }, []);
+  const performSearch = async (targetEmail) => {
     setStep("loading");
     setErrorMessage("");
     try {
@@ -26,7 +32,7 @@ const LicenseViewer = () => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email: targetEmail })
       });
       if (!response.ok) {
         if (response.status === 404) {
@@ -35,7 +41,7 @@ const LicenseViewer = () => {
         throw new Error(t.licensePage.errorGeneric);
       }
       const data = await response.json();
-      setLicenseKey(data.licenseKey);
+      setLicenseKeys(data.licenseKeys || []);
       setStep("success");
     } catch (error) {
       console.error(error);
@@ -43,11 +49,16 @@ const LicenseViewer = () => {
       setStep("error");
     }
   };
-  const copyToClipboard = async () => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    await performSearch(email);
+  };
+  const copyToClipboard = async (text, index) => {
     try {
-      await navigator.clipboard.writeText(licenseKey);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3e3);
+      await navigator.clipboard.writeText(text);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 3e3);
     } catch (err) {
       console.error("Failed to copy:", err);
     }
@@ -146,20 +157,20 @@ const LicenseViewer = () => {
                       /* @__PURE__ */ jsx("span", { className: "text-sm text-white/60", children: t.licensePage.emailLabel }),
                       /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white max-w-[200px] truncate", title: email, children: email })
                     ] }),
-                    /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                      /* @__PURE__ */ jsx("span", { className: "text-sm text-brand-cyan/80 font-medium block", children: t.licensePage.licenseKeyLabel }),
-                      /* @__PURE__ */ jsxs("div", { className: "flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden", children: [
-                        /* @__PURE__ */ jsx("code", { className: "px-4 py-3 text-sm text-white/90 font-mono tracking-wider truncate w-full", children: licenseKey }),
+                    /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-sm text-brand-cyan/80 font-medium block", children: licenseKeys.length > 1 ? t.licensePage.licenseKeyLabel + " (" + licenseKeys.length + ")" : t.licensePage.licenseKeyLabel }),
+                      /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar", children: licenseKeys.map((key, i) => /* @__PURE__ */ jsxs("div", { className: "flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden", children: [
+                        /* @__PURE__ */ jsx("code", { className: "px-4 py-3 text-sm text-white/90 font-mono tracking-wider truncate w-full", children: key }),
                         /* @__PURE__ */ jsx(
                           "button",
                           {
-                            onClick: copyToClipboard,
+                            onClick: () => copyToClipboard(key, i),
                             className: "px-4 py-3 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors border-l border-white/10 flex items-center justify-center shrink-0",
                             title: "Copy",
-                            children: copied ? /* @__PURE__ */ jsx(CheckCircle, { size: 18, className: "text-green-400" }) : /* @__PURE__ */ jsx(Copy, { size: 18 })
+                            children: copiedIndex === i ? /* @__PURE__ */ jsx(CheckCircle, { size: 18, className: "text-green-400" }) : /* @__PURE__ */ jsx(Copy, { size: 18 })
                           }
                         )
-                      ] })
+                      ] }, key)) })
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxs("div", { className: "glass bg-white/5 rounded-xl p-4 text-sm", children: [
@@ -210,7 +221,7 @@ const LicenseViewer = () => {
         ]
       }
     ),
-    /* @__PURE__ */ jsx(AnimatePresence, { children: copied && /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx(AnimatePresence, { children: copiedIndex !== null && /* @__PURE__ */ jsxs(
       motion.div,
       {
         initial: { opacity: 0, y: 50, x: "-50%" },

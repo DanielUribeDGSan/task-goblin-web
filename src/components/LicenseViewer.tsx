@@ -8,13 +8,20 @@ export const LicenseViewer: React.FC = () => {
     const [email, setEmail] = useState("");
     const [step, setStep] = useState<"search" | "loading" | "success" | "error">("search");
     const [errorMessage, setErrorMessage] = useState("");
-    const [licenseKey, setLicenseKey] = useState("");
-    const [copied, setCopied] = useState(false);
+    const [licenseKeys, setLicenseKeys] = useState<string[]>([]);
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
-    const handleSearch = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!email) return;
+    React.useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const emailParam = params.get("email");
+        if (emailParam) {
+            setEmail(emailParam);
+            // Trigger automatic search
+            performSearch(emailParam);
+        }
+    }, []);
 
+    const performSearch = async (targetEmail: string) => {
         setStep("loading");
         setErrorMessage("");
 
@@ -24,7 +31,7 @@ export const LicenseViewer: React.FC = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({ email: targetEmail })
             });
 
             if (!response.ok) {
@@ -35,7 +42,7 @@ export const LicenseViewer: React.FC = () => {
             }
 
             const data = await response.json();
-            setLicenseKey(data.licenseKey);
+            setLicenseKeys(data.licenseKeys || []);
             setStep("success");
         } catch (error: any) {
             console.error(error);
@@ -44,11 +51,17 @@ export const LicenseViewer: React.FC = () => {
         }
     };
 
-    const copyToClipboard = async () => {
+    const handleSearch = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email) return;
+        await performSearch(email);
+    };
+
+    const copyToClipboard = async (text: string, index: number) => {
         try {
-            await navigator.clipboard.writeText(licenseKey);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 3000);
+            await navigator.clipboard.writeText(text);
+            setCopiedIndex(index);
+            setTimeout(() => setCopiedIndex(null), 3000);
         } catch (err) {
             console.error("Failed to copy:", err);
         }
@@ -148,21 +161,26 @@ export const LicenseViewer: React.FC = () => {
                                     <span className="text-sm font-medium text-white max-w-[200px] truncate" title={email}>{email}</span>
                                 </div>
 
-                                <div className="space-y-2">
+                                <div className="space-y-3">
                                     <span className="text-sm text-brand-cyan/80 font-medium block">
-                                        {t.licensePage.licenseKeyLabel}
+                                        {licenseKeys.length > 1 ? t.licensePage.licenseKeyLabel + " (" + licenseKeys.length + ")" : t.licensePage.licenseKeyLabel}
                                     </span>
-                                    <div className="flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden">
-                                        <code className="px-4 py-3 text-sm text-white/90 font-mono tracking-wider truncate w-full">
-                                            {licenseKey}
-                                        </code>
-                                        <button
-                                            onClick={copyToClipboard}
-                                            className="px-4 py-3 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors border-l border-white/10 flex items-center justify-center shrink-0"
-                                            title="Copy"
-                                        >
-                                            {copied ? <CheckCircle size={18} className="text-green-400" /> : <Copy size={18} />}
-                                        </button>
+
+                                    <div className="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
+                                        {licenseKeys.map((key, i) => (
+                                            <div key={key} className="flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden">
+                                                <code className="px-4 py-3 text-sm text-white/90 font-mono tracking-wider truncate w-full">
+                                                    {key}
+                                                </code>
+                                                <button
+                                                    onClick={() => copyToClipboard(key, i)}
+                                                    className="px-4 py-3 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors border-l border-white/10 flex items-center justify-center shrink-0"
+                                                    title="Copy"
+                                                >
+                                                    {copiedIndex === i ? <CheckCircle size={18} className="text-green-400" /> : <Copy size={18} />}
+                                                </button>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +232,7 @@ export const LicenseViewer: React.FC = () => {
 
             {/* Toast for Copy Success */}
             <AnimatePresence>
-                {copied && (
+                {copiedIndex !== null && (
                     <motion.div
                         initial={{ opacity: 0, y: 50, x: "-50%" }}
                         animate={{ opacity: 1, y: 0, x: "-50%" }}

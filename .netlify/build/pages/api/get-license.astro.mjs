@@ -18,11 +18,12 @@ const POST = async ({ request }) => {
     const supaKey = undefined                                          || "sb_publishable_v69cNViHMfA1aDWphcDxPg_3-Ml0IIR";
     if (!supaUrl || !supaKey) ;
     const supabase = createClient(supaUrl, supaKey);
-    const { data, error } = await supabase.from("licenses").select("license_key").eq("email", email).single();
-    if (error || !data) {
+    const { data, error } = await supabase.from("licenses").select("license_key, created_at").eq("email", email).order("created_at", { ascending: false });
+    if (error || !data || data.length === 0) {
       return new Response(JSON.stringify({ error: "License not found" }), { status: 404 });
     }
-    return new Response(JSON.stringify({ licenseKey: data.license_key }), {
+    const keys = data.map((record) => record.license_key);
+    return new Response(JSON.stringify({ licenseKeys: keys }), {
       status: 200,
       headers: {
         "Content-Type": "application/json"
