@@ -130,6 +130,15 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
                                         </p>
                                     </div>
 
+                                    <div className="glass bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl p-4 flex gap-3">
+                                        <div className="text-brand-cyan shrink-0">
+                                            <AlertCircle size={20} />
+                                        </div>
+                                        <p className="text-xs text-white/70 leading-relaxed text-left">
+                                            {t.paymentModal.emailWarning}
+                                        </p>
+                                    </div>
+
                                     <form onSubmit={handleCheckout} className="space-y-4">
                                         <div className="space-y-2">
                                             <label htmlFor="email" className="block text-sm font-medium text-white/80">
