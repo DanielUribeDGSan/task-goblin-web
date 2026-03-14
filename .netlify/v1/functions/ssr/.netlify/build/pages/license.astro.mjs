@@ -4,7 +4,7 @@ import { jsx, jsxs } from 'react/jsx-runtime';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Search, Mail, CheckCircle, Copy, AlertCircle } from 'lucide-react';
-import { L as LanguageProvider, u as useLanguage } from '../chunks/LanguageContext_Nzj8teUG.mjs';
+import { L as LanguageProvider, u as useLanguage } from '../chunks/LanguageContext_CbH206Qi.mjs';
 /* empty css                                 */
 export { renderers } from '../renderers.mjs';
 

@@ -77,21 +77,8 @@ export const BottomBar = () => {
     return () => document.removeEventListener("click", close);
   }, []);
 
-  if (isMobile && !bottomBarOpen) {
-    return (
-      <div className="flex justify-end p-4">
-        <motion.button
-          type="button"
-          onClick={toggleBottomBar}
-          className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-white shadow-lg hover:bg-white/10 transition-colors"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          aria-label={t.bottomBar.promotion}
-        >
-          <Tag size={24} />
-        </motion.button>
-      </div>
-    );
+  if (isMobile) {
+    return null;
   }
 
   return (

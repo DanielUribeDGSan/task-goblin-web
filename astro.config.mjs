@@ -12,7 +12,15 @@ const SITE = 'https://task-goblin.com';
 
 export default defineConfig({
   site: SITE,
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      customPages: [
+        'https://task-goblin.com/task-goblin-app',
+        'https://task-goblin.com/license',
+      ],
+    }),
+  ],
   output: 'server',
   adapter: netlify(),
 
