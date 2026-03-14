@@ -423,6 +423,35 @@ function DashboardContent() {
   const { devices, toggleDevice } = useDashboardState();
   const [permissionsModalOpen, setPermissionsModalOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
+  
+  const [showTopBar, setShowTopBar] = useState(true);
+  const lastScrollY = useRef(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const currentScrollY = container.scrollTop;
+      
+      // Only trigger if we've scrolled more than a small threshold (e.g. 10px)
+      if (Math.abs(currentScrollY - lastScrollY.current) < 10) return;
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down and past a threshold
+        setShowTopBar(false);
+      } else {
+        // Scrolling up
+        setShowTopBar(true);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="flex bg-[#020202] text-white h-screen overflow-hidden p-2 lg:p-4">
@@ -430,9 +459,12 @@ function DashboardContent() {
         <Sidebar />
 
         <div className="flex-1 flex flex-col min-w-0">
-          <TopBar />
+          <TopBar isVisible={showTopBar} />
 
-          <div className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32">
+          <div 
+            ref={scrollContainerRef}
+            className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32"
+          >
             <MasonryLayout
               devices={devices}
               toggleDevice={toggleDevice}
