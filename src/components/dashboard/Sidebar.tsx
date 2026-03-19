@@ -41,7 +41,7 @@ const SidebarContent = ({
     <div className={cn("flex-1 flex flex-col gap-3", isOverlay && "p-4")}>
       {icons.map(({ id, icon: Icon, path }) => {
         const config = APP_CONFIGS[id as keyof typeof APP_CONFIGS];
-        const accentColor = config?.accentColor || "#7562AB";
+        const accentColor = config?.accentColor || "#AA7915";
         const isActive = activeId === id;
 
         return (

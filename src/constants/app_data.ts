@@ -199,8 +199,8 @@ export const APP_CONFIGS = {
   "task-goblin": {
     name: "TaskGoblin",
     iconPath: "/icon/TaskGoblin.png",
-    accentColor: "#7562AB",
-    secondaryColor: "#212124",
+    accentColor: "#AA7915",
+    secondaryColor: "#1a1a2e",
     rooms: TASK_GOBLIN_ROOMS,
     heroIcon: "/icon/bot.gif",
     heroVideo: "/home/video.mp4",
@@ -211,7 +211,7 @@ export const APP_CONFIGS = {
   "nexo": {
     name: "Nexo",
     iconPath: "/icon/computer.png",
-    accentColor: "#7562AB",
+    accentColor: "#AA7915",
     secondaryColor: "#09090b",
     rooms: NEXO_ROOMS,
     heroIcon: "/icon/computer.png",

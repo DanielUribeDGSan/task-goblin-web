@@ -13,6 +13,7 @@ import ExtensionIcon from '@mui/icons-material/Extension';
 import DevicesIcon from '@mui/icons-material/Devices';
 import { triggerSecureDownload } from '../utils/download';
 import { DownloadModal, type Platform } from './DownloadModal';
+import { APP_CONFIGS } from '../constants/app_data';
 import type { ReactNode } from 'react';
 
 const actions: { icon: ReactNode; label: string; beta?: boolean }[] = [
@@ -44,8 +45,9 @@ export default function HeroPanel({ appType = 'task-goblin' }: { appType?: 'task
   };
 
   const isNexo = appType === 'nexo';
-  const name = isNexo ? 'Nexo' : 'TaskGoblin';
-  const accentColor = isNexo ? '#7562AB' : 'var(--tg-accent)';
+  const config = APP_CONFIGS[appType];
+  const name = config.name;
+  const accentColor = config.accentColor;
   const iconText = isNexo ? 'N' : 'T';
 
   return (

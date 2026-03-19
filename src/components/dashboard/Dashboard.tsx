@@ -320,11 +320,11 @@ function DashboardContent({ appType }: { appType: AppType }) {
   }, []);
 
   return (
-    <div className="flex bg-[#020202] text-white h-screen overflow-hidden p-2 lg:p-4">
-      <div className="flex w-full h-full glass rounded-[2.5rem] overflow-hidden shadow-2xl relative">
+    <div className="flex bg-[#0e0e0e] text-white h-screen overflow-hidden p-2 lg:p-4">
+      <div className="flex w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl relative bg-[#0e0e0e] border border-white/10">
         <Sidebar activeId={appType} />
 
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 bg-[#0e0e0e]">
           <TopBar isVisible={showTopBar} appType={appType} />
 
           <div 

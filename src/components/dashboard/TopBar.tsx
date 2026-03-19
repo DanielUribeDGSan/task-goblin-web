@@ -25,13 +25,13 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
               <button
                 type="button"
                 onClick={toggleSidebar}
-                className="w-10 h-10 shrink-0 rounded-xl glass flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+                className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center text-white hover:bg-white/10 transition-colors"
                 aria-label="Abrir menú"
               >
                 <PanelLeft size={22} />
               </button>
               <div className="flex items-center min-w-0">
-                <div className="w-9 h-9 rounded-xl overflow-hidden glass shrink-0 p-1.5">
+                <div className="w-9 h-9 rounded-xl overflow-hidden glass shrink-0 p-1.5 flex items-center justify-center">
                   <img
                     src={appIcon}
                     alt={`${appName} logo`}
