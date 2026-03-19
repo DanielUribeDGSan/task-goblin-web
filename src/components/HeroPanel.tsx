@@ -45,7 +45,7 @@ export default function HeroPanel({ appType = 'task-goblin' }: { appType?: 'task
 
   const isNexo = appType === 'nexo';
   const name = isNexo ? 'Nexo' : 'TaskGoblin';
-  const accentColor = isNexo ? '#00f1d9' : 'var(--tg-accent)';
+  const accentColor = isNexo ? '#7562AB' : 'var(--tg-accent)';
   const iconText = isNexo ? 'N' : 'T';
 
   return (

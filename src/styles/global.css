@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-cyan: #14f1d9;
+  --color-brand-cyan: #7562AB;
   --color-brand-dark: #050505;
 }
 
@@ -11,10 +11,10 @@
   --sh-panel-border: rgba(255, 255, 255, 0.08);
   --sh-text: #ffffff;
   --sh-text-muted: #8e8e8e;
-  --sh-accent: #14f1d9;
-  --sh-accent-muted: rgba(20, 241, 217, 0.2);
+  --sh-accent: #7562AB;
+  --sh-accent-muted: rgba(117, 98, 171, 0.2);
   --sh-glow-orange: rgba(255, 120, 40, 0.12);
-  --sh-glow-cyan: rgba(20, 241, 217, 0.08);
+  --sh-glow-cyan: rgba(117, 98, 171, 0.08);
 }
 
 body {

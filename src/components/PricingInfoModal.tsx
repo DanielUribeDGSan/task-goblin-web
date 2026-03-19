@@ -3,13 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Tag, Lock, Apple, Smartphone } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useLayout } from "../contexts/LayoutContext";
+import { APP_CONFIG } from "../constants/config";
 import { PaymentModal } from "./PaymentModal";
-
-// Constants from BottomBar
-const PRICE_MXN = 249;
-const PRICE_ORIGINAL_MXN = 299;
-const PRICE_USD = 13;
-const PRICE_ORIGINAL_USD = 16;
 
 const WindowsIcon = ({ size = 24 }: { size?: number }) => (
     <svg
@@ -23,10 +18,25 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
     </svg>
 );
 
-export const PricingInfoModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: { isOpen: boolean, onClose: () => void, appType?: "task-goblin" | "nexo" }) => {
     const { t, lang } = useLanguage();
     const { isMobile } = useLayout();
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+    const isNexo = appType === "nexo";
+    
+    // Pricing configuration
+    const prices = isNexo ? {
+        mxn: 149,
+        originalMxn: 199,
+        usd: 8,
+        originalUsd: 11
+    } : {
+        mxn: 249,
+        originalMxn: 299,
+        usd: 13,
+        originalUsd: 16
+    };
 
     const showUsd = lang === "en";
 
@@ -60,7 +70,7 @@ export const PricingInfoModal = ({ isOpen, onClose }: { isOpen: boolean, onClose
                                 <div className="w-16 h-16 rounded-2xl glass flex items-center justify-center text-brand-cyan mx-auto mb-4">
                                     <Tag size={32} />
                                 </div>
-                                <h2 className="text-2xl font-bold text-white">{t.appName}</h2>
+                                <h2 className="text-2xl font-bold text-white">{isNexo ? t.nexoAppName : t.appName}</h2>
                                 <p className="text-sh-text-muted text-sm px-4">
                                     {t.modalInfo.subtitle}
                                 </p>
@@ -69,16 +79,16 @@ export const PricingInfoModal = ({ isOpen, onClose }: { isOpen: boolean, onClose
                                     {showUsd ? (
                                         <p className="text-3xl font-bold text-white">
                                             <span className="line-through text-sh-text-muted font-normal text-lg mr-2">
-                                                ${PRICE_ORIGINAL_USD}
+                                                ${prices.originalUsd}
                                             </span>
-                                            ${PRICE_USD} <span className="text-lg">USD</span>
+                                            ${prices.usd} <span className="text-lg">USD</span>
                                         </p>
                                     ) : (
                                         <p className="text-3xl font-bold text-white">
                                             <span className="line-through text-sh-text-muted font-normal text-lg mr-2">
-                                                ${PRICE_ORIGINAL_MXN}
+                                                ${prices.originalMxn}
                                             </span>
-                                            ${PRICE_MXN} <span className="text-lg">MXN</span>
+                                            ${prices.mxn} <span className="text-lg">MXN</span>
                                         </p>
                                     )}
                                     <p className="text-brand-cyan font-semibold mt-2 uppercase text-sm tracking-wider">
@@ -108,14 +118,25 @@ export const PricingInfoModal = ({ isOpen, onClose }: { isOpen: boolean, onClose
 
                                 <button
                                     type="button"
+                                    disabled={!APP_CONFIG.ENABLE_LICENSING}
                                     onClick={() => {
                                         setIsPaymentModalOpen(true);
                                     }}
-                                    className="w-full bg-brand-cyan hover:bg-brand-cyan/90 text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                                    className={`w-full font-bold rounded-xl py-3.5 px-4 transition-all transform flex items-center justify-center gap-2 ${
+                                        APP_CONFIG.ENABLE_LICENSING 
+                                            ? "bg-brand-cyan hover:bg-brand-cyan/90 text-black hover:scale-[1.02] active:scale-[0.98]" 
+                                            : "bg-white/10 text-white/40 cursor-not-allowed"
+                                    }`}
                                 >
                                     <Lock size={18} />
-                                    {t.bottomBar.obtainLicense}
+                                    {APP_CONFIG.ENABLE_LICENSING ? t.bottomBar.obtainLicense : t.paymentModal.disabledButton}
                                 </button>
+
+                                {!APP_CONFIG.ENABLE_LICENSING && (
+                                    <p className="text-[10px] text-sh-text-muted mt-2 italic px-4">
+                                        {t.paymentModal.disabledMessage}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </motion.div>

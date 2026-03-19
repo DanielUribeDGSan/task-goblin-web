@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, AlertCircle, CreditCard, Mail } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { APP_CONFIG } from "../constants/config";
 
 interface PaymentModalProps {
     isOpen: boolean;
@@ -31,6 +32,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
 
     const handleCheckout = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!APP_CONFIG.ENABLE_LICENSING) {
+            alert(t.paymentModal.disabledMessage);
+            return;
+        }
         if (!email) return;
 
         setStep("processing");
@@ -135,7 +140,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
                                             <AlertCircle size={20} />
                                         </div>
                                         <p className="text-xs text-white/70 leading-relaxed text-left">
-                                            {t.paymentModal.emailWarning}
+                                            {APP_CONFIG.ENABLE_LICENSING ? t.paymentModal.emailWarning : t.paymentModal.disabledMessage}
                                         </p>
                                     </div>
 

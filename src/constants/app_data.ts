@@ -211,7 +211,7 @@ export const APP_CONFIGS = {
   "nexo": {
     name: "Nexo",
     iconPath: "/icon/computer.png",
-    accentColor: "#00f1d9",
+    accentColor: "#7562AB",
     secondaryColor: "#09090b",
     rooms: NEXO_ROOMS,
     heroIcon: "/icon/computer.png",

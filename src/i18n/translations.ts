@@ -204,6 +204,8 @@ export const translations = {
       emailWarning: "Important: You must use this same email address during the checkout process to ensure your license is correctly linked to your account.",
       errorMessage: "There was an error processing your payment.",
       closeButton: "Close",
+      disabledMessage: "Payments are temporarily disabled while we conduct tests. Come back soon!",
+      disabledButton: "Payments Disabled",
     },
     licensePage: {
       title: "Task Goblin License",
@@ -428,6 +430,8 @@ export const translations = {
       emailWarning: "Importante: Debes usar este mismo correo electrónico durante el proceso de pago para asegurar que tu licencia se vincule correctamente a tu cuenta.",
       errorMessage: "Hubo un error al procesar tu pago.",
       closeButton: "Cerrar",
+      disabledMessage: "Los pagos están deshabilitados temporalmente mientras realizamos pruebas. ¡Vuelve pronto!",
+      disabledButton: "Pagos Deshabilitados",
     },
     licensePage: {
       title: "Licencia de Task Goblin",

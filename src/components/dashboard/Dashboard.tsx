@@ -95,15 +95,17 @@ const itemVariants = {
 function useMasonryCols(breakpoints = { sm: 640, lg: 1024 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [cols, setCols] = useState(() => {
-    if (typeof window === "undefined") return 3;
-    return window.innerWidth >= breakpoints.lg ? 3 : window.innerWidth >= breakpoints.sm ? 2 : 1;
+    if (typeof globalThis.window === "undefined") return 3;
+    const w = globalThis.window.innerWidth;
+    return w >= breakpoints.lg ? 3 : w >= breakpoints.sm ? 2 : 1;
   });
 
   useEffect(() => {
     const el = ref.current ?? document.documentElement;
     const update = () => {
-      const w = window.innerWidth;
-      setCols(w >= breakpoints.lg ? 3 : w >= breakpoints.sm ? 2 : 1);
+      const w = globalThis.window.innerWidth;
+      const nextCols = w >= breakpoints.lg ? 3 : w >= breakpoints.sm ? 2 : 1;
+      setCols(nextCols);
     };
     update();
     const ro = new ResizeObserver(update);
@@ -137,8 +139,8 @@ function MasonryLayout({
         aspectRatio="video"
         mediaItems={
           config.heroVideo 
-            ? [{ type: "video", src: config.heroVideo, poster: config.heroPoster }, ...config.heroImages.map(src => ({ type: "image" as const, src }))]
-            : config.heroImages.map(src => ({ type: "image" as const, src }))
+            ? [{ type: "video", src: config.heroVideo, poster: config.heroPoster }, ...config.heroImages.map((src: string) => ({ type: "image" as const, src }))]
+            : config.heroImages.map((src: string) => ({ type: "image" as const, src }))
         }
         className="w-full"
       >
@@ -206,7 +208,7 @@ function MasonryLayout({
     </motion.div>,
 
     // Cards de rightRooms
-    ...rightRooms.map((room) => (
+    ...rightRooms.map((room: any) => (
       <motion.div key={room.id} className="w-full mb-3" variants={itemVariants}>
         <RoomCard
           title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
@@ -216,21 +218,24 @@ function MasonryLayout({
           aspectRatio={room.aspectRatio}
           className="w-full"
         >
-          {room.children
-            ? room.children(devices, toggleDevice)
-            : t.cardDescriptions[room.id as keyof typeof t.cardDescriptions]
-              ? (
+          {(() => {
+            if (room.children) return room.children(devices, toggleDevice);
+            const description = t.cardDescriptions[room.id as keyof typeof t.cardDescriptions];
+            if (description) {
+              return (
                 <p className="text-sm text-sh-text-muted leading-relaxed break-words pt-2">
-                  {t.cardDescriptions[room.id as keyof typeof t.cardDescriptions]}
+                  {description}
                 </p>
-              )
-              : null}
+              );
+            }
+            return null;
+          })()}
         </RoomCard>
       </motion.div>
     )),
 
     // Cards de bottomRooms
-    ...bottomRooms.map((room) => (
+    ...bottomRooms.map((room: any) => (
       <motion.div key={room.id} className="w-full mb-3" variants={itemVariants}>
         <RoomCard
           title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
@@ -264,7 +269,7 @@ function MasonryLayout({
       variants={{ visible: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } } }}
     >
       {columns.map((colItems, colIdx) => (
-        <div key={colIdx} className="flex flex-col flex-1 min-w-0">
+        <div key={`${colIdx}-${cols}`} className="flex flex-col flex-1 min-w-0">
           {colItems}
         </div>
       ))}
@@ -289,15 +294,22 @@ function DashboardContent({ appType }: { appType: AppType }) {
     const handleScroll = () => {
       const currentScrollY = container.scrollTop;
       
-      // Only trigger if we've scrolled more than a small threshold (e.g. 10px)
-      if (Math.abs(currentScrollY - lastScrollY.current) < 10) return;
+      // Determine if we are scrolling up or down
+      const isScrollingDown = currentScrollY > lastScrollY.current;
+      const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
 
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        // Scrolling down and past a threshold
-        setShowTopBar(false);
-      } else {
-        // Scrolling up
+      // 1. Show header if we are near the top (e.g. top 50px) regardless of scroll direction
+      if (currentScrollY < 50) {
         setShowTopBar(true);
+      } 
+      // 2. Only toggle if we've scrolled more than a significant threshold (e.g. 20px)
+      // This prevents "jitter" or "bouncing" from tiny movements or rubber-banding
+      else if (scrollDifference > 20) {
+        if (isScrollingDown) {
+          setShowTopBar(false);
+        } else {
+          setShowTopBar(true);
+        }
       }
       
       lastScrollY.current = currentScrollY;

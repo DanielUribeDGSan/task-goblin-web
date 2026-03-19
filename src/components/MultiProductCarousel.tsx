@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronUp, ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronUp, ChevronDown, ArrowRight, Languages } from "lucide-react";
 import { APP_CONFIGS } from "../constants/app_data";
+import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
 
 const APPS = Object.entries(APP_CONFIGS).map(([id, config]) => ({
   id,
@@ -11,6 +12,15 @@ const APPS = Object.entries(APP_CONFIGS).map(([id, config]) => ({
 }));
 
 export const MultiProductCarousel = () => {
+  return (
+    <LanguageProvider>
+      <CarouselContent />
+    </LanguageProvider>
+  );
+};
+
+const CarouselContent = () => {
+  const { lang, setLang } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
@@ -27,7 +37,7 @@ export const MultiProductCarousel = () => {
 
   useEffect(() => {
     if (!isPaused) {
-      autoPlayRef.current = setInterval(handleNext, 5000);
+      autoPlayRef.current = setInterval(handleNext, 10000);
     }
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
@@ -36,6 +46,34 @@ export const MultiProductCarousel = () => {
 
   return (
     <div className="relative min-h-screen bg-black overflow-hidden flex flex-col sm:flex-row justify-center">
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4 sm:top-8 sm:right-8 z-[100] flex items-center gap-2">
+        <Languages size={18} className="text-white/40" />
+        <div className="flex rounded-xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md">
+          <button
+            type="button"
+            onClick={() => setLang("es")}
+            className={`px-3 py-1.5 text-xs font-bold transition-all ${
+              lang === "es"
+                ? "bg-white text-black"
+                : "text-white/40 hover:text-white hover:bg-white/5"
+            }`}
+          >
+            ES
+          </button>
+          <button
+            type="button"
+            onClick={() => setLang("en")}
+            className={`px-3 py-1.5 text-xs font-bold transition-all ${
+              lang === "en"
+                ? "bg-white text-black"
+                : "text-white/40 hover:text-white hover:bg-white/5"
+            }`}
+          >
+            EN
+          </button>
+        </div>
+      </div>
       {/* Glow Background */}
       <div 
         className="absolute inset-0 opacity-20 transition-colors duration-1000 blur-[120px]"
@@ -95,8 +133,8 @@ export const MultiProductCarousel = () => {
                      transition={{ delay: 0.4 }}
                    >
                      {activeApp.id === 'task-goblin' 
-                       ? 'Potencia tu productividad con herramientas inteligentes.'
-                       : 'Domina tu entorno de desarrollo local con redirección de dominios.'}
+                      ? (lang === 'es' ? 'Potencia tu productividad con herramientas inteligentes.' : 'Boost your productivity with smart tools.')
+                      : (lang === 'es' ? 'Domina tu entorno de desarrollo local con redirección de dominios.' : 'Master your local development environment with domain redirection.')}
                    </motion.p>
                    <motion.a
                      href={activeApp.path}
@@ -105,7 +143,7 @@ export const MultiProductCarousel = () => {
                      transition={{ delay: 0.5 }}
                      className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-white text-black text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl hover:scale-105 transition-transform"
                    >
-                     Entrar
+                     {lang === 'es' ? 'Entrar' : 'Enter'}
                      <ArrowRight size={18} />
                    </motion.a>
                 </div>
@@ -160,7 +198,9 @@ export const MultiProductCarousel = () => {
                           {app.name}
                         </h3>
                         <p className="text-white/40 text-[10px] sm:text-sm mt-0.5">
-                          {app.id === 'task-goblin' ? 'Core Suite' : 'Dev Tools'}
+                          {app.id === 'task-goblin' 
+                            ? (lang === 'es' ? 'Suite Principal' : 'Core Suite') 
+                            : (lang === 'es' ? 'Herramientas Dev' : 'Dev Tools')}
                         </p>
                       </div>
                     </div>
@@ -176,7 +216,7 @@ export const MultiProductCarousel = () => {
                            style={{ backgroundColor: app.accentColor }}
                            initial={{ width: "0%" }}
                            animate={{ width: "100%" }}
-                           transition={{ duration: 5, ease: "linear" }}
+                           transition={{ duration: 10, ease: "linear" }}
                          />
                       </motion.div>
                     )}

@@ -3,7 +3,6 @@ import { Languages, PanelLeft, Tag } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
 import { PricingInfoModal } from "../PricingInfoModal";
-import { motion, type Variants } from "framer-motion";
 import { APP_CONFIGS } from "../../constants/app_data";
 
 type AppType = keyof typeof APP_CONFIGS;
@@ -13,29 +12,6 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
   const { isMobile, toggleSidebar } = useLayout();
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const config = APP_CONFIGS[appType];
-
-  const topBarVariants: Variants = {
-    visible: { 
-      y: 0, 
-      height: "auto",
-      opacity: 1, 
-      transition: { 
-        duration: 0.3, 
-        ease: "easeOut",
-        height: { duration: 0.3 }
-      } 
-    },
-    hidden: { 
-      y: -20, // Subtle lift instead of full -100 to avoid excessive movement with height 0
-      height: 0,
-      opacity: 0, 
-      transition: { 
-        duration: 0.2, 
-        ease: "easeIn",
-        height: { duration: 0.25 }
-      } 
-    },
-  };
 
   const content = () => {
     const appName = appType === "nexo" ? t.nexoAppName : t.appName;
@@ -106,6 +82,7 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
           <PricingInfoModal
             isOpen={isPricingModalOpen}
             onClose={() => setIsPricingModalOpen(false)}
+            appType={appType}
           />
         </>
       );
@@ -157,20 +134,21 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
         <PricingInfoModal
           isOpen={isPricingModalOpen}
           onClose={() => setIsPricingModalOpen(false)}
+          appType={appType}
         />
       </div>
     );
   };
 
   return (
-    <motion.div
-      initial="visible"
-      animate={isVisible ? "visible" : "hidden"}
-      variants={topBarVariants}
-      className="sticky top-0 z-100 bg-transparent"
+    <div
+      className={`sticky top-0 z-100 bg-transparent transition-all duration-300 ease-in-out origin-top border-b border-transparent ${
+        isVisible 
+          ? "translate-y-0 opacity-100 pointer-events-auto pb-0" 
+          : "-translate-y-full opacity-0 pointer-events-none -mb-[100px]" // Use negative margin to "swallow" the space without shrinking
+      }`}
     >
       {content()}
-    </motion.div>
+    </div>
   );
 };
-

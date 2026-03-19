@@ -21,7 +21,7 @@ export default function DownloadCTA({ appType = 'task-goblin' }: { appType?: 'ta
 
   const isNexo = appType === 'nexo';
   const name = isNexo ? 'Nexo' : 'Task Goblin';
-  const accentColor = isNexo ? '#00f1d9' : 'var(--tg-accent)';
+  const accentColor = isNexo ? '#7562AB' : 'var(--tg-accent)';
 
   return (
     <>

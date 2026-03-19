@@ -25,11 +25,6 @@ const triggerDownload = (index: number, appType: "task-goblin" | "nexo" = "task-
   a.remove();
 };
 
-const PRICE_MXN = 249;
-const PRICE_ORIGINAL_MXN = 299;
-const PRICE_USD = 13; // equivalente aprox. de 249 MXN
-const PRICE_ORIGINAL_USD = 16; // equivalente aprox. de 299 MXN
-
 /** Icono tipo logo de Windows (4 cuadrantes) */
 const WindowsIcon = ({ size = 24 }: { size?: number }) => (
   <svg
@@ -56,6 +51,21 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   // Download modal state
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [pendingDownload, setPendingDownload] = useState<{ index: number; platform: DownloadPlatform } | null>(null);
+
+  const isNexo = appType === "nexo";
+  
+  // Pricing configuration
+  const prices = isNexo ? {
+      mxn: 149,
+      originalMxn: 199,
+      usd: 8,
+      originalUsd: 11
+  } : {
+      mxn: 249,
+      originalMxn: 299,
+      usd: 13,
+      originalUsd: 16
+  };
 
   const openDownloadModal = (index: number) => {
     const platform: DownloadPlatform = index === 0 ? "mac-silicon" : index === 1 ? "mac-intel" : "windows";
@@ -110,9 +120,9 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
               {showUsd ? (
                 <p className="text-sm font-bold text-white whitespace-nowrap">
                   <span className="line-through text-sh-text-muted font-normal mr-1">
-                    ${PRICE_ORIGINAL_USD}
+                    ${prices.originalUsd}
                   </span>{" "}
-                  ${PRICE_USD}{" "}
+                  ${prices.usd}{" "}
                   <span className="text-sh-text-muted font-normal text-xs">USD</span>
                   <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
                     {t.bottomBar.promotion}
@@ -121,9 +131,9 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
               ) : (
                 <p className="text-sm font-bold text-white whitespace-nowrap">
                   <span className="line-through text-sh-text-muted font-normal mr-1">
-                    ${PRICE_ORIGINAL_MXN}
+                    ${prices.originalMxn}
                   </span>{" "}
-                  ${PRICE_MXN}{" "}
+                  ${prices.mxn}{" "}
                   <span className="text-sh-text-muted font-normal text-xs">MXN</span>
                   <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
                     {t.bottomBar.promotion}
@@ -155,9 +165,9 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
             {showUsd ? (
               <p className="text-sm font-bold text-white whitespace-nowrap">
                 <span className="line-through text-sh-text-muted font-normal mr-1">
-                  ${PRICE_ORIGINAL_USD}
+                  ${prices.originalUsd}
                 </span>{" "}
-                ${PRICE_USD}{" "}
+                ${prices.usd}{" "}
                 <span className="text-sh-text-muted font-normal text-xs">USD</span>
                 <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
                   {t.bottomBar.promotion}
@@ -166,9 +176,9 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
             ) : (
               <p className="text-sm font-bold text-white whitespace-nowrap">
                 <span className="line-through text-sh-text-muted font-normal mr-1">
-                  ${PRICE_ORIGINAL_MXN}
+                  ${prices.originalMxn}
                 </span>{" "}
-                ${PRICE_MXN}{" "}
+                ${prices.mxn}{" "}
                 <span className="text-sh-text-muted font-normal text-xs">MXN</span>
                 <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
                   {t.bottomBar.promotion}
