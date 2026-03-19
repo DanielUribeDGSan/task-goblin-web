@@ -250,7 +250,6 @@ export const RoomCard = ({
                   poster={current.poster}
                   className="w-full h-full object-contain"
                   playsInline
-                  muted
                   onClick={togglePlayPause}
                 />
                 <button

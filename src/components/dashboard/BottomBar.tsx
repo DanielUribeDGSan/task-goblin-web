@@ -5,6 +5,7 @@ import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp, Search } 
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
 import { PaymentModal } from "../PaymentModal";
+import { DownloadModal, type Platform as DownloadPlatform } from "../DownloadModal";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -56,6 +57,22 @@ export const BottomBar = () => {
   const [dropdownRect, setDropdownRect] = useState<{ top: number; left: number } | null>(null);
   const showUsd = lang === "en";
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  // Download modal state
+  const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+  const [pendingDownload, setPendingDownload] = useState<{ index: number; platform: DownloadPlatform } | null>(null);
+
+  const openDownloadModal = (index: number) => {
+    const platform: DownloadPlatform = index === 0 ? "mac-silicon" : index === 1 ? "mac-intel" : "windows";
+    setPendingDownload({ index, platform });
+    setDownloadModalOpen(true);
+    setMacMenuOpen(false);
+  };
+
+  const handleDownloadConfirm = () => {
+    if (pendingDownload !== null) triggerDownload(pendingDownload.index);
+    setDownloadModalOpen(false);
+    setPendingDownload(null);
+  };
 
   useEffect(() => {
     if (!macMenuOpen || !macButtonRef.current) return;
@@ -227,10 +244,7 @@ export const BottomBar = () => {
                         type="button"
                         role="menuitem"
                         className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-                        onClick={() => {
-                          triggerDownload(0);
-                          setMacMenuOpen(false);
-                        }}
+                        onClick={() => openDownloadModal(0)}
                       >
                         {t.bottomBar.appleSilicon}
                       </button>
@@ -238,10 +252,7 @@ export const BottomBar = () => {
                         type="button"
                         role="menuitem"
                         className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-                        onClick={() => {
-                          triggerDownload(1);
-                          setMacMenuOpen(false);
-                        }}
+                        onClick={() => openDownloadModal(1)}
                       >
                         {t.bottomBar.intel}
                       </button>
@@ -252,7 +263,7 @@ export const BottomBar = () => {
             </div>
             <button
               type="button"
-              onClick={() => triggerDownload(2)}
+              onClick={() => openDownloadModal(2)}
               className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors cursor-pointer"
               aria-label={t.bottomBar.downloadWindows}
             >
@@ -294,6 +305,13 @@ export const BottomBar = () => {
       <PaymentModal
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
+      />
+
+      <DownloadModal
+        isOpen={downloadModalOpen}
+        platform={pendingDownload?.platform ?? "mac-silicon"}
+        onClose={() => setDownloadModalOpen(false)}
+        onConfirm={handleDownloadConfirm}
       />
     </div>
   );
