@@ -19,186 +19,22 @@ import {
   X,
   Sparkles,
 } from "lucide-react";
-import type { MediaSlide, RoomCardAspectRatio } from "./RoomCard";
+import { APP_CONFIGS, type MediaSlide, type RoomCardAspectRatio } from "../../constants/app_data";
 
-type RightColumnRoom =
-  | {
-    id: string;
-    title: string;
-    distance: string;
-    icon: string;
-    mediaItems: MediaSlide[];
-    aspectRatio: RoomCardAspectRatio;
-    children: null;
-  }
-  | {
-    id: string;
-    title: string;
-    distance: string;
-    icon: string;
-    image: string;
-    aspectRatio: RoomCardAspectRatio;
-    children:
-    | ((
-      devices: ReturnType<typeof useDashboardState>["devices"],
-      toggle: ReturnType<typeof useDashboardState>["toggleDevice"],
-    ) => React.ReactNode)
-    | null;
-  };
+type AppType = keyof typeof APP_CONFIGS;
 
-/** Habitaciones de la columna derecha en masonry. */
-const RIGHT_COLUMN_ROOMS: RightColumnRoom[] = [
-  {
-    id: "move-mouse",
-    title: "Move Mouse",
-    distance: "",
-    icon: "/icon/move.gif",
-    aspectRatio: "4/3",
-    mediaItems: [
-      {
-        type: "video",
-        src: "/mouse/video.mp4",
-        poster: "/mouse/image-1.png",
-      },
-      { type: "image", src: "/mouse/image-1.png" },
-    ],
-    children: null,
-  },
-  {
-    id: "whatsapp-msg",
-    title: "WhatsApp Msg",
-    distance: "",
-    icon: "/icon/chat.gif",
-    aspectRatio: "square",
-    mediaItems: [
-      {
-        type: "video",
-        src: "/whatsaap/video.mp4",
-        poster: "/whatsaap/image-1.png",
-      },
-      { type: "image", src: "/whatsaap/image-1.png" },
-      { type: "image", src: "/whatsaap/image-2.png" },
-    ],
-    children: null,
-  },
-];
-
-/** Tarjetas de la fila inferior en masonry: video + imagen(es) por carpeta. */
-const BOTTOM_ROW_ROOMS: {
+type RightColumnRoom = {
   id: string;
   title: string;
   distance: string;
   icon: string;
   mediaItems: MediaSlide[];
   aspectRatio: RoomCardAspectRatio;
-}[] = [
-    {
-      id: "screenshot-to-text",
-      title: "Screenshot to Text",
-      distance: "",
-      icon: "/icon/copy.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        {
-          type: "video",
-          src: "/capture-text/video.mp4",
-          poster: "/capture-text/image-1.png",
-        },
-        { type: "image", src: "/capture-text/image-1.png" },
-      ],
-    },
-    {
-      id: "close-all-apps",
-      title: "Close All Apps",
-      distance: "",
-      icon: "/icon/close.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        {
-          type: "video",
-          src: "/closed-apss/video.mp4",
-          poster: "/closed-apss/image-1.png",
-        },
-        { type: "image", src: "/closed-apss/image-1.png" },
-      ],
-    },
-    {
-      id: "schedule-shutdown",
-      title: "Schedule Shutdown",
-      distance: "",
-      icon: "/icon/off.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        {
-          type: "video",
-          src: "/shutdown/video.mp4",
-          poster: "/shutdown/image-1.png",
-        },
-        { type: "image", src: "/shutdown/image-1.png" },
-      ],
-    },
-    {
-      id: "convert-pdf-to-word",
-      title: "Convert PDF to Word",
-      distance: "",
-      icon: "/icon/note.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        {
-          type: "video",
-          src: "/pdf-word/video.mp4",
-          poster: "/pdf-word/image-1.png",
-        },
-        { type: "image", src: "/pdf-word/image-1.png" },
-      ],
-    },
-    {
-      id: "color-extractor",
-      title: "Color Extractor",
-      distance: "",
-      icon: "/icon/palette.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        {
-          type: "video",
-          src: "/color-extractor/video.mp4",
-          poster: "/color-extractor/image-1.png",
-        },
-        { type: "image", src: "/color-extractor/image-1.png" },
-      ],
-    },
-    {
-      id: "paint",
-      title: "Paint",
-      distance: "",
-      icon: "/icon/paint.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        {
-          type: "video",
-          src: "/paint/video.mp4",
-          poster: "/paint/image-1.png",
-        },
-        { type: "image", src: "/paint/image-1.png" },
-      ],
-    },
-    {
-      id: "image-converter",
-      title: "Image & PDF Converter",
-      distance: "",
-      icon: "/icon/camera.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        {
-          type: "video",
-          src: "/image-convert/video.mp4",
-          poster: "/image-convert/image-1.png",
-        },
-        { type: "image", src: "/image-convert/image-1.png" },
-        { type: "image", src: "/image-convert/image-2.png" },
-      ],
-    },
-  ];
+  children: null | ((devices: any, toggle: any) => React.ReactNode);
+};
+
+/** Habitaciones de la columna derecha en masonry. */
+// Rooms are now loaded from APP_CONFIGS
 
 const APP_PERMISSION_ICONS = [
   MousePointer2,
@@ -220,11 +56,11 @@ const INFO_MODAL_ICONS = [
   "/icon/camera.gif",
 ];
 
-export const Dashboard = () => {
+export const Dashboard = ({ appType = "task-goblin" }: { appType?: AppType }) => {
   return (
     <LanguageProvider>
       <LayoutProvider>
-        <DashboardContent />
+        <DashboardContent appType={appType} />
       </LayoutProvider>
     </LanguageProvider>
   );
@@ -237,6 +73,7 @@ export const Dashboard = () => {
 // hidden/flex de Tailwind, que tienen problemas de orden CSS en Tailwind 4.
 
 type MasonryProps = {
+  appType: AppType;
   devices: ReturnType<typeof useDashboardState>["devices"];
   toggleDevice: ReturnType<typeof useDashboardState>["toggleDevice"];
   t: ReturnType<typeof useLanguage>["t"];
@@ -278,6 +115,7 @@ function useMasonryCols(breakpoints = { sm: 640, lg: 1024 }) {
 }
 
 function MasonryLayout({
+  appType,
   devices,
   toggleDevice,
   t,
@@ -285,84 +123,100 @@ function MasonryLayout({
   setInfoModalOpen,
 }: MasonryProps) {
   const { ref: containerRef, cols } = useMasonryCols();
+  const config = APP_CONFIGS[appType] as any;
+  const { right: rightRooms, bottom: bottomRooms } = config.rooms;
 
   // Lista plana de datos de cards (sin JSX — se construye abajo para evitar duplicados)
   const allCards: React.ReactNode[] = [
     // Card 1: Hero (video de app + permisos + features)
     <motion.div key="hero" className="w-full mb-3" variants={itemVariants}>
       <RoomCard
-        title={t.videoCardTitle}
+        title={appType === "task-goblin" ? t.videoCardTitle : t.nexoVideoCardTitle}
         distance=""
-        icon="/icon/bot.gif"
+        icon={config.heroIcon}
         aspectRatio="video"
-        mediaItems={[
-          { type: "video", src: "/home/video.mp4", poster: "/home/image-1.png" },
-          { type: "image", src: "/home/image-1.png" },
-          { type: "image", src: "/home/image-2.png" },
-        ]}
+        mediaItems={
+          config.heroVideo 
+            ? [{ type: "video", src: config.heroVideo, poster: config.heroPoster }, ...config.heroImages.map(src => ({ type: "image" as const, src }))]
+            : config.heroImages.map(src => ({ type: "image" as const, src }))
+        }
         className="w-full"
       >
-        <button
-          type="button"
-          onClick={() => setPermissionsModalOpen(true)}
-          className="w-full flex items-center justify-between gap-3 rounded-xl bg-white/5 border border-white/10 p-3 text-left hover:bg-white/[0.08] hover:border-white/20 transition-colors cursor-pointer group pt-2"
-        >
-          <div className="flex items-center gap-3 min-w-0">
-            <span className="w-10 h-10 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-white">
-              <ShieldCheck size={20} />
-            </span>
-            <span className="text-sm font-bold text-white">
-              {t.permissionsCard.title}
-            </span>
-          </div>
-          <ChevronRight
-            size={20}
-            className="shrink-0 text-sh-text-muted group-hover:text-white transition-colors"
-          />
-        </button>
+        {appType === "task-goblin" ? (
+          <>
+            <button
+              type="button"
+              onClick={() => setPermissionsModalOpen(true)}
+              className="w-full flex items-center justify-between gap-3 rounded-xl bg-white/5 border border-white/10 p-3 text-left hover:bg-white/[0.08] hover:border-white/20 transition-colors cursor-pointer group pt-2"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="w-10 h-10 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                  <ShieldCheck size={20} />
+                </span>
+                <span className="text-sm font-bold text-white">
+                  {t.permissionsCard.title}
+                </span>
+              </div>
+              <ChevronRight
+                size={20}
+                className="shrink-0 text-sh-text-muted group-hover:text-white transition-colors"
+              />
+            </button>
 
-        <div className="pt-2">
-          <p className="text-base font-bold text-white mb-3">
-            {t.permissionsCard.featuresTitle}
-          </p>
-          <ul className="list-disc list-inside text-sm text-sh-text-muted space-y-1.5 mb-3">
-            {t.featuresList.map((item) => (
-              <li key={item} className="break-words">
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div className="flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 py-2 mb-4">
-            <Sparkles size={18} className="shrink-0 text-brand-cyan" />
-            <p className="text-sm text-sh-text-muted">
-              {t.permissionsCard.moreOptionsComing}
+            <div className="pt-2">
+              <p className="text-base font-bold text-white mb-3">
+                {t.permissionsCard.featuresTitle}
+              </p>
+              <ul className="list-disc list-inside text-sm text-sh-text-muted space-y-1.5 mb-3">
+                {t.featuresList.map((item) => (
+                  <li key={item} className="break-words">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 py-2 mb-4 hover:bg-white/[0.08] hover:border-white/20 transition-colors cursor-pointer"
+              >
+                <span className="flex items-center gap-2 group/btn">
+                  <Sparkles size={18} className="shrink-0 transition-colors" style={{ color: config.accentColor }} />
+                  <span className="text-white group-hover/btn:text-white transition-colors">
+                    {t.permissionsCard.getTaskGoblinPro}
+                  </span>
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setInfoModalOpen(true)}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand-cyan/20 border border-brand-cyan/40 py-2.5 text-sm font-semibold text-white hover:bg-brand-cyan/30 transition-colors cursor-pointer"
+              >
+                {t.permissionsCard.getMoreInfo}
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="pt-2">
+            <p className="text-sm text-sh-text-muted leading-relaxed mb-1 whitespace-pre-line">
+              {t.nexoIntro}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => setInfoModalOpen(true)}
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand-cyan/20 border border-brand-cyan/40 py-2.5 text-sm font-semibold text-white hover:bg-brand-cyan/30 transition-colors cursor-pointer"
-          >
-            {t.permissionsCard.getMoreInfo}
-            <ChevronRight size={18} />
-          </button>
-        </div>
+        )}
       </RoomCard>
     </motion.div>,
 
-    // Cards de RIGHT_COLUMN_ROOMS
-    ...RIGHT_COLUMN_ROOMS.map((room) => (
+    // Cards de rightRooms
+    ...rightRooms.map((room) => (
       <motion.div key={room.id} className="w-full mb-3" variants={itemVariants}>
         <RoomCard
           title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
           distance={room.distance}
           icon={room.icon}
-          image={"image" in room ? room.image : undefined}
-          mediaItems={"mediaItems" in room ? room.mediaItems : undefined}
+          mediaItems={room.mediaItems}
           aspectRatio={room.aspectRatio}
           className="w-full"
         >
-          {"image" in room && room.children
+          {room.children
             ? room.children(devices, toggleDevice)
             : t.cardDescriptions[room.id as keyof typeof t.cardDescriptions]
               ? (
@@ -375,8 +229,8 @@ function MasonryLayout({
       </motion.div>
     )),
 
-    // Cards de BOTTOM_ROW_ROOMS
-    ...BOTTOM_ROW_ROOMS.map((room) => (
+    // Cards de bottomRooms
+    ...bottomRooms.map((room) => (
       <motion.div key={room.id} className="w-full mb-3" variants={itemVariants}>
         <RoomCard
           title={t.cardTitles[room.id as keyof typeof t.cardTitles] ?? room.title}
@@ -418,7 +272,7 @@ function MasonryLayout({
   );
 }
 
-function DashboardContent() {
+function DashboardContent({ appType }: { appType: AppType }) {
   const { t } = useLanguage();
   const { devices, toggleDevice } = useDashboardState();
   const [permissionsModalOpen, setPermissionsModalOpen] = useState(false);
@@ -456,16 +310,17 @@ function DashboardContent() {
   return (
     <div className="flex bg-[#020202] text-white h-screen overflow-hidden p-2 lg:p-4">
       <div className="flex w-full h-full glass rounded-[2.5rem] overflow-hidden shadow-2xl relative">
-        <Sidebar />
+        <Sidebar activeId={appType} />
 
         <div className="flex-1 flex flex-col min-w-0">
-          <TopBar isVisible={showTopBar} />
+          <TopBar isVisible={showTopBar} appType={appType} />
 
           <div 
             ref={scrollContainerRef}
             className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32"
           >
             <MasonryLayout
+              appType={appType}
               devices={devices}
               toggleDevice={toggleDevice}
               t={t}
@@ -623,7 +478,7 @@ function DashboardContent() {
           </div>
 
           <div className="relative z-[500] shrink-0">
-            <BottomBar />
+            <BottomBar appType={appType} />
           </div>
         </div>
       </div>

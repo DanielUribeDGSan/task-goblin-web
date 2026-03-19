@@ -52,7 +52,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     />
   </head>
   <body class="antialiased font-sans bg-black">
-    <Dashboard client:load />
+    <Dashboard client:load appType="task-goblin" />
 
     <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication, WebSite, Organization) -->
     <script

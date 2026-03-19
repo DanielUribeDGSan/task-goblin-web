@@ -4,22 +4,18 @@ import { motion } from "framer-motion";
 import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp, Search } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
+import { TASK_GOBLIN_URLS, NEXO_URLS } from "../../constants/app_data";
+import { triggerSecureDownload } from "../../utils/download";
 import { PaymentModal } from "../PaymentModal";
 import { DownloadModal, type Platform as DownloadPlatform } from "../DownloadModal";
 
 const MOBILE_BREAKPOINT = 768;
 
-// URLs resueltas solo en runtime para no exponer el destino en el DOM
 const b = (s: string) => (typeof atob !== "undefined" ? atob(s) : "");
-const _ = [
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV9hYXJjaDY0LmRtZw==",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV94NjQuZG1n",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV94NjQtc2V0dXAuZXhl",
-];
-const url = (i: number) => b(_[i]);
 
-const triggerDownload = (index: number) => {
-  const u = url(index);
+const triggerDownload = (index: number, appType: "task-goblin" | "nexo" = "task-goblin") => {
+  const urls = appType === "nexo" ? NEXO_URLS : TASK_GOBLIN_URLS;
+  const u = b(urls[index]);
   const a = document.createElement("a");
   a.href = u;
   a.download = "";
@@ -47,7 +43,7 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
-export const BottomBar = () => {
+export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin" | "nexo" }) => {
   const { t, lang } = useLanguage();
   const { isMobile, bottomBarOpen, toggleBottomBar } = useLayout();
   const [macMenuOpen, setMacMenuOpen] = useState(false);
@@ -69,7 +65,7 @@ export const BottomBar = () => {
   };
 
   const handleDownloadConfirm = () => {
-    if (pendingDownload !== null) triggerDownload(pendingDownload.index);
+    if (pendingDownload !== null) triggerSecureDownload(pendingDownload.index, appType);
     setDownloadModalOpen(false);
     setPendingDownload(null);
   };

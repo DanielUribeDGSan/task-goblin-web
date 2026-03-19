@@ -1,14 +1,10 @@
 import { useState } from "react";
 import AppleIcon from "@mui/icons-material/Apple";
 import DesktopWindowsIcon from "@mui/icons-material/DesktopWindows";
+import { triggerSecureDownload } from "../utils/download";
 import { DownloadModal, type Platform } from "./DownloadModal";
 
-// ⬇️  Actualiza estas URLs cuando tengas builds disponibles
-const DOWNLOAD_URL_MAC = "#";
-const DOWNLOAD_URL_WIN = "#";
-
-
-export default function DownloadCTA() {
+export default function DownloadCTA({ appType = 'task-goblin' }: { appType?: 'task-goblin' | 'nexo' }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [platform, setPlatform] = useState<Platform>("mac-silicon");
 
@@ -18,15 +14,14 @@ export default function DownloadCTA() {
   };
 
   const handleConfirm = () => {
-    const url = platform === "windows" ? DOWNLOAD_URL_WIN : DOWNLOAD_URL_MAC;
-    if (url !== "#") {
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "";
-      a.click();
-    }
+    const index = platform === "windows" ? 2 : (platform === "mac-silicon" ? 0 : 1);
+    triggerSecureDownload(index, appType);
     setModalOpen(false);
   };
+
+  const isNexo = appType === 'nexo';
+  const name = isNexo ? 'Nexo' : 'Task Goblin';
+  const accentColor = isNexo ? '#00f1d9' : 'var(--tg-accent)';
 
   return (
     <>

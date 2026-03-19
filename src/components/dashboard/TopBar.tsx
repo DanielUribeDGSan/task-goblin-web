@@ -4,11 +4,15 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
 import { PricingInfoModal } from "../PricingInfoModal";
 import { motion, type Variants } from "framer-motion";
+import { APP_CONFIGS } from "../../constants/app_data";
 
-export const TopBar = ({ isVisible = true }: { isVisible?: boolean }) => {
+type AppType = keyof typeof APP_CONFIGS;
+
+export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisible?: boolean, appType?: AppType }) => {
   const { lang, setLang, t } = useLanguage();
   const { isMobile, toggleSidebar } = useLayout();
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
+  const config = APP_CONFIGS[appType];
 
   const topBarVariants: Variants = {
     visible: { 
@@ -34,6 +38,9 @@ export const TopBar = ({ isVisible = true }: { isVisible?: boolean }) => {
   };
 
   const content = () => {
+    const appName = appType === "nexo" ? t.nexoAppName : t.appName;
+    const appIcon = config.iconPath;
+
     if (isMobile) {
       return (
         <>
@@ -48,15 +55,15 @@ export const TopBar = ({ isVisible = true }: { isVisible?: boolean }) => {
                 <PanelLeft size={22} />
               </button>
               <div className="flex items-center min-w-0">
-                <div className="w-9 h-9 rounded-xl overflow-hidden glass shrink-0">
+                <div className="w-9 h-9 rounded-xl overflow-hidden glass shrink-0 p-1.5">
                   <img
-                    src="/icon/TaskGoblin.png"
-                    alt="Task Goblin logo"
-                    className="w-full h-full object-cover"
+                    src={appIcon}
+                    alt={`${appName} logo`}
+                    className="w-full h-full object-contain"
                   />
                 </div>
                 <h1 className="text-lg font-bold text-white leading-none ml-2 truncate text-nowrap">
-                  {t.appName}
+                  {appName}
                 </h1>
               </div>
             </div>
@@ -107,16 +114,16 @@ export const TopBar = ({ isVisible = true }: { isVisible?: boolean }) => {
     return (
       <div className="flex items-center justify-between p-6">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl overflow-hidden glass">
+          <div className="w-10 h-10 rounded-xl overflow-hidden glass p-2">
             <img
-              src="/icon/TaskGoblin.png"
-              alt="Task Goblin logo"
-              className="w-full h-full object-cover"
+              src={appIcon}
+              alt={`${appName} logo`}
+              className="w-full h-full object-contain"
             />
           </div>
           <div>
             <h1 className="text-xl font-bold text-white leading-none">
-              {t.appName}
+              {appName}
             </h1>
           </div>
         </div>

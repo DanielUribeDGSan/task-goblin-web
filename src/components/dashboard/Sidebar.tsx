@@ -1,13 +1,7 @@
 import {
-  LayoutDashboard,
-  // Bath,
-  // Armchair,
-  // Bed,
-  // Microwave,
-  // Users,
-  // Home,
   X,
 } from "lucide-react";
+import { APP_CONFIGS } from "../../constants/app_data";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { useLayout } from "../../contexts/LayoutContext";
@@ -17,14 +11,9 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const icons = [
-  { id: "dashboard", icon: LayoutDashboard },
-  // { id: "bath", icon: Bath },
-  // { id: "living", icon: Armchair },
-  // { id: "bedroom", icon: Bed },
-  // { id: "kitchen", icon: Microwave },
-  // { id: "courtyard", icon: Users },
-  // { id: "home", icon: Home },
+const icons: { id: string; icon: string | any; path: string }[] = [
+  { id: "task-goblin", icon: "/icon/TaskGoblin.png", path: "/task-goblin-app" },
+  { id: "nexo", icon: "/icon/computer.png", path: "/nexo-app" },
 ];
 
 const SidebarContent = ({
@@ -50,19 +39,33 @@ const SidebarContent = ({
       </div>
     )}
     <div className={cn("flex-1 flex flex-col gap-3", isOverlay && "p-4")}>
-      {icons.map(({ id, icon: Icon }) => (
-        <button
-          key={id}
-          className={cn(
-            "w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300",
-            activeId === id
-              ? "bg-brand-cyan text-black shadow-[0_0_15px_rgba(20,241,217,0.3)]"
-              : "text-white/20 hover:text-white/60 hover:bg-white/5",
-          )}
-        >
-          <Icon size={20} strokeWidth={2.5} />
-        </button>
-      ))}
+      {icons.map(({ id, icon: Icon, path }) => {
+        const config = APP_CONFIGS[id as keyof typeof APP_CONFIGS];
+        const accentColor = config?.accentColor || "#00f1d9";
+        const isActive = activeId === id;
+
+        return (
+          <a
+            key={id}
+            href={path}
+            className={cn(
+              "w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300",
+              !isActive && "text-white/20 hover:text-white/60 hover:bg-white/5",
+            )}
+            style={isActive ? {
+              backgroundColor: "rgba(255, 255, 255, 0.08)",
+              border: `1px solid ${accentColor}40`,
+              boxShadow: `0 0 20px ${accentColor}20`
+            } : {}}
+          >
+            {typeof Icon === "string" ? (
+              <img src={Icon} alt={id} className="w-7 h-7 object-contain" />
+            ) : (
+              <Icon size={24} strokeWidth={2} />
+            )}
+          </a>
+        );
+      })}
     </div>
   </>
 );

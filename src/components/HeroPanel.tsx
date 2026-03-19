@@ -11,6 +11,8 @@ import AppleIcon from '@mui/icons-material/Apple';
 import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
 import ExtensionIcon from '@mui/icons-material/Extension';
 import DevicesIcon from '@mui/icons-material/Devices';
+import { triggerSecureDownload } from '../utils/download';
+import { DownloadModal, type Platform } from './DownloadModal';
 import type { ReactNode } from 'react';
 
 const actions: { icon: ReactNode; label: string; beta?: boolean }[] = [
@@ -24,8 +26,27 @@ const actions: { icon: ReactNode; label: string; beta?: boolean }[] = [
   { icon: <PaletteIcon fontSize="small" />, label: 'Color Extractor' },
 ];
 
-export default function HeroPanel() {
+export default function HeroPanel({ appType = 'task-goblin' }: { appType?: 'task-goblin' | 'nexo' }) {
   const [imgError, setImgError] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [platform, setPlatform] = useState<Platform>("mac-silicon");
+
+  const openModal = (p: Platform) => {
+    setPlatform(p);
+    setModalOpen(true);
+  };
+
+  const handleConfirm = () => {
+    // 0: Mac Silicon, 1: Mac Intel, 2: Windows
+    const index = platform === "windows" ? 2 : (platform === "mac-silicon" ? 0 : 1);
+    triggerSecureDownload(index, appType);
+    setModalOpen(false);
+  };
+
+  const isNexo = appType === 'nexo';
+  const name = isNexo ? 'Nexo' : 'TaskGoblin';
+  const accentColor = isNexo ? '#00f1d9' : 'var(--tg-accent)';
+  const iconText = isNexo ? 'N' : 'T';
 
   return (
     <div className="flex flex-col md:flex-row flex-1 min-h-0">
@@ -52,7 +73,7 @@ export default function HeroPanel() {
             </span>
           </button>
           <span className="text-sm font-medium ml-1" style={{ color: 'var(--tg-text)' }}>
-            TaskGoblin en acción
+            {name} en acción
           </span>
         </div>
 
@@ -121,7 +142,7 @@ export default function HeroPanel() {
             <span className="text-white font-bold">T</span>
           </div>
           <h2 className="text-xl md:text-2xl font-bold" style={{ color: 'var(--tg-text)' }}>
-            TaskGoblin
+            {name}
           </h2>
         </div>
         <p className="text-sm mb-4" style={{ color: 'var(--tg-text-muted)' }}>
@@ -161,17 +182,19 @@ export default function HeroPanel() {
         </ul>
 
         <div className="mt-5 flex flex-col sm:flex-row gap-3 shrink-0">
-          <a
-            href="#"
-            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-white text-sm transition opacity-95 hover:opacity-100"
+          <button
+            type="button"
+            onClick={() => openModal("mac-silicon")}
+            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-white text-sm transition opacity-95 hover:opacity-100 cursor-pointer"
             style={{ backgroundColor: 'var(--tg-accent-bright)' }}
           >
             <AppleIcon sx={{ fontSize: 20 }} />
             Descargar para Mac
-          </a>
-          <a
-            href="#"
-            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition border-2"
+          </button>
+          <button
+            type="button"
+            onClick={() => openModal("windows")}
+            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition border-2 cursor-pointer"
             style={{
               borderColor: 'var(--tg-accent)',
               color: 'var(--tg-text-muted)',
@@ -180,9 +203,16 @@ export default function HeroPanel() {
           >
             <DesktopWindowsIcon sx={{ fontSize: 20 }} />
             Descargar para Windows
-          </a>
+          </button>
         </div>
       </div>
+
+      <DownloadModal
+        isOpen={modalOpen}
+        platform={platform}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirm}
+      />
     </div>
   );
 }

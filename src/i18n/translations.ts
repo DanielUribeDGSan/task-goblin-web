@@ -3,12 +3,16 @@ export type Lang = "en" | "es";
 export const translations = {
   en: {
     appName: "Task Goblin",
+    nexoAppName: "Nexo",
     videoCardTitle: "Video of the application",
+    nexoVideoCardTitle: "Application Video",
+    nexoIntro: "Nexo is the command center for developers. Simplify your local environment, manage projects, master your ports, and share your work in seconds. Designed to boost your productivity and eliminate daily friction.",
     permissionsCard: {
       title: "Permissions required in the app",
       featuresTitle: "Everything you need, in one app:",
       moreOptionsComing: "More options coming soon.",
       getMoreInfo: "Get more information",
+      getTaskGoblinPro: "Get Task Goblin Pro",
     },
     featuresList: [
       "Automatic mouse movement",
@@ -118,6 +122,13 @@ export const translations = {
       "color-extractor": "Color Extractor",
       paint: "Paint",
       "image-converter": "Image & PDF Converter",
+      // Nexo Rooms
+      "nexo-proyectos": "Projects",
+      "nexo-puertos": "Ports",
+      "nexo-env": "Environment Variables",
+      "nexo-urls": "Custom Domains",
+      "nexo-snippets": "Saved Snippets",
+      "nexo-compartir": "Share Local Server",
     },
     cardDescriptions: {
       "move-mouse":
@@ -138,6 +149,13 @@ export const translations = {
         "Draw, write text, highlight areas, and add shapes directly on the screen. Ideal for explaining ideas, recording videos, or giving support.",
       "image-converter":
         "Convert images to multiple formats, including PDF, and reduce their size without losing quality.",
+      // Nexo Rooms
+      "nexo-proyectos": "Manage your development projects and open them instantly in your favorite IDE. Set up automatic commands to run on startup and launch multiple services at once with a single click.",
+      "nexo-puertos": "View all active ports on your system and detect which ones are in use. Instantly free up occupied ports ('kill') to avoid conflicts and ensure your apps always have a place to run.",
+      "nexo-env": "Quickly edit and switch between different .env configurations for your applications. Keep your sensitive data safe and organized.",
+      "nexo-urls": "Create friendly and custom URLs for your local services. Replace complex addresses like 'localhost:2310' with easy-to-remember names like 'http://banorte.local', simplifying your daily workflow.",
+      "nexo-snippets": "Store frequently used commands or configuration blocks for quick access. Share your best snippets with your team or keep them for your future self.",
+      "nexo-compartir": "Share your local servers with other devices on the same network easily. Generate QR codes to open your project on your phone or tablet instantly, ideal for testing mobile design and functionality.",
     },
     bottomBar: {
       price: "Price",
@@ -208,12 +226,16 @@ export const translations = {
   },
   es: {
     appName: "Task Goblin",
+    nexoAppName: "Nexo",
     videoCardTitle: "Video de la aplicación",
+    nexoVideoCardTitle: "Video de la aplicación",
+    nexoIntro: "Nexo es el centro de mando para desarrolladores. Simplifica tu entorno local, gestiona proyectos, domina tus puertos y comparte tu trabajo en segundos. Diseñado para potenciar tu productividad y eliminar las fricciones del día a día.",
     permissionsCard: {
       title: "Permisos solicitados en la aplicación",
       featuresTitle: "Todo lo que necesitas, en una sola app:",
       moreOptionsComing: "Se agregarán más opciones próximamente.",
       getMoreInfo: "Obtener más información",
+      getTaskGoblinPro: "Obtener Task Goblin Pro",
     },
     featuresList: [
       "Movimiento automático del mouse",
@@ -324,6 +346,13 @@ export const translations = {
       "color-extractor": "Extractor de color",
       paint: "Paint",
       "image-converter": "Conversor de imágenes y PDF",
+      // Nexo Rooms
+      "nexo-proyectos": "Proyectos",
+      "nexo-puertos": "Puertos",
+      "nexo-env": "Variables de Entorno",
+      "nexo-urls": "Dominios y URLs",
+      "nexo-snippets": "Snippets de Código",
+      "nexo-compartir": "Compartir en Red",
     },
     cardDescriptions: {
       "move-mouse":
@@ -344,6 +373,13 @@ export const translations = {
         "Dibuja, escribe texto, resalta zonas y agrega figuras directamente sobre la pantalla. Ideal para explicar ideas, grabar videos o dar soporte.",
       "image-converter":
         "Convierte imágenes a múltiples formatos, incluyendo PDF, y reduce su peso sin perder calidad.",
+      // Nexo Rooms
+      "nexo-proyectos": "Gestiona tus proyectos de desarrollo y ábrelos instantáneamente en tu IDE favorito. Configura comandos automáticos para que se ejecuten al abrir el proyecto y lanza múltiples servicios a la vez con un solo clic.",
+      "nexo-puertos": "Visualiza todos los puertos activos en tu sistema y detecta cuáles están en uso. Libera puertos ocupados ('kill') de forma instantánea para evitar conflictos y asegurar que tus aplicaciones siempre tengan donde correr.",
+      "nexo-env": "Edita y cambia rápidamente entre diferentes configuraciones de .env para tus aplicaciones. Mantén tus datos sensibles seguros y organizados.",
+      "nexo-urls": "Crea URLs amigables y personalizadas para tus servicios locales. Sustituye direcciones complejas como 'localhost:2310' por nombres fáciles de recordar como 'http://banorte.local', simplificando tu flujo de trabajo diario.",
+      "nexo-snippets": "Guarda comandos o bloques de configuración usados con frecuencia para un acceso rápido. Comparte tus mejores fragmentos con tu equipo.",
+      "nexo-compartir": "Comparte tus servidores locales con otros dispositivos en la misma red de forma sencilla. Genera códigos QR para abrir tu proyecto en tu celular o tablet al instante, ideal para pruebas de diseño y funcionalidad móvil.",
     },
     bottomBar: {
       price: "Precio",
