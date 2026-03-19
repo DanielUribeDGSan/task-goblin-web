@@ -18,19 +18,50 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content="Nexo, Task Goblin, dominios locales, localhost, redirección de puertos, Mac, desarrollo web, herramientas dev, proxy local" />
     <link rel="canonical" href={canonical} />
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Task Goblin - Nexo" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body class="antialiased font-sans bg-black">
     <Dashboard client:load appType="nexo" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://task-goblin.com/nexo-app/#software",
+          "name": "Nexo",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "macOS",
+          "description": description,
+          "image": "https://task-goblin.com/icon/computer.png",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      ]
+    })} />
   </body>
 </html>

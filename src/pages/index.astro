@@ -16,18 +16,53 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content="Task Goblin, Nexo, productividad, herramientas para desarrolladores, automatización, Mac, Windows, utilidades" />
     <link rel="canonical" href={canonical} />
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Task Goblin Apps" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body class="antialiased font-sans bg-black">
     <MultiProductCarousel client:load />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://task-goblin.com/#website",
+          "url": "https://task-goblin.com/",
+          "name": "Task Goblin Apps",
+          "description": description,
+          "publisher": {
+            "@type": "Organization",
+            "name": "Task Goblin",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://task-goblin.com/favicon.svg"
+            }
+          }
+        }
+      ]
+    })} />
   </body>
 </html>

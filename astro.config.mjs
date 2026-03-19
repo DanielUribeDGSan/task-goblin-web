@@ -17,6 +17,7 @@ export default defineConfig({
     sitemap({
       customPages: [
         'https://task-goblin.com/task-goblin-app',
+        'https://task-goblin.com/nexo-app',
         'https://task-goblin.com/license',
       ],
     }),
