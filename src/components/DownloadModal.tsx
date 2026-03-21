@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, AlertTriangle, Download, Apple, Monitor } from "lucide-react";
+import { X, AlertTriangle, Download, Apple, Monitor, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export type Platform = "mac-silicon" | "mac-intel" | "windows";
@@ -52,6 +52,8 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 }) => {
   const { t } = useLanguage();
   const dm = t.downloadModal;
+  const [showImage, setShowImage] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const isWindows = platform === "windows";
   const rows = isWindows ? winRows : macRows;
@@ -97,7 +99,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                 aria-label={t.paymentModal.closeButton}
               >
                 <X size={18} />
@@ -126,6 +128,67 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                   {dm.securityAlert} {alertMsg} {dm.safeFile}
                 </p>
               </div>
+
+              {/* 🛡️ Windows SmartScreen Reassurance */}
+              {isWindows && (
+                <div className="glass bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
+                  <div className="flex gap-3">
+                    <Monitor size={18} className="text-blue-400 shrink-0 mt-0.5" />
+                    <div className="flex flex-col gap-2">
+                      <p className="text-xs text-white/75 leading-relaxed">
+                        {/* @ts-ignore */}
+                        {dm.windowsSmartScreenInfo}
+                      </p>
+                      <button 
+                        onClick={() => setShowImage(!showImage)}
+                        className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors w-fit flex items-center gap-1.5 cursor-pointer"
+                      >
+                        {showImage ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                        {/* @ts-ignore */}
+                        {showImage ? dm.hideExampleImage : dm.showExampleImage}
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {showImage && (
+                    <motion.div 
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="relative rounded-lg overflow-hidden border border-white/10 shadow-lg mt-2"
+                    >
+                      <img 
+                        src="/windows/screen-blue.png" 
+                        alt="Windows Protected your PC screenshot" 
+                        className="w-full h-auto opacity-90"
+                      />
+                    </motion.div>
+                  )}
+                </div>
+              )}
+
+              {/* 🍎 Mac Permissions Alert */}
+              {!isWindows && (
+                <div className="glass bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
+                  <div className="flex gap-3">
+                    <Apple size={18} className="text-blue-400 shrink-0 mt-0.5" />
+                    <div className="flex flex-col gap-2">
+                      <p className="text-xs text-white/75 leading-relaxed">
+                        {/* @ts-ignore */}
+                        {dm.macPermissionsInfo}
+                      </p>
+                      <button 
+                        onClick={() => setShowTutorial(true)}
+                        className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors w-fit flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <Monitor size={14} className="mr-0.5" />
+                        {/* @ts-ignore */}
+                        {dm.macPermissionsTutorial}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Compatibility table */}
               <p className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">
@@ -169,7 +232,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
               <button
                 type="button"
                 onClick={onConfirm}
-                className="w-full bg-brand-cyan hover:bg-brand-cyan/90 text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                className="w-full bg-brand-cyan hover:bg-brand-cyan/90 text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Download size={18} />
                 {dm.downloadFor} {getArch()}
@@ -178,10 +241,95 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
               <p className="text-center text-xs text-white/30 mt-3">
                 {dm.acceptTerms}
               </p>
+
             </div>
           </motion.div>
         </React.Fragment>
       )}
+      
+      {/* Permission Tutorial Modal */}
+      <AnimatePresence>
+        {showTutorial && (
+          <React.Fragment>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-[10000]"
+              onClick={() => setShowTutorial(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md z-[10001] glass rounded-[2.5rem] border border-white/10 p-6 md:p-8 overflow-y-auto max-h-[85vh] shadow-2xl"
+            >
+              <button
+                onClick={() => setShowTutorial(false)}
+                className="absolute top-6 right-6 text-white/50 hover:text-white cursor-pointer transition-colors"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+                  <Monitor size={20} />
+                </div>
+                <h3 className="text-xl font-bold text-white pr-8">
+                  {/* @ts-ignore */}
+                  {dm.macPermissionsTutorial}
+                </h3>
+              </div>
+
+              <div className="flex flex-col gap-10">
+                {/* Step 1 */}
+                <div className="space-y-4">
+                  <p className="text-sm font-semibold text-white flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan text-xs shrink-0 mt-0.5 font-bold">1</span>
+                    {/* @ts-ignore */}
+                    {dm.tutorialStep1}
+                  </p>
+                  <div className="rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-black/40">
+                    <img src="/task-goblin/images/permiso-1.png" alt="Step 1" className="w-full h-auto" />
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="space-y-4">
+                  <p className="text-sm font-semibold text-white flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan text-xs shrink-0 mt-0.5 font-bold">2</span>
+                    {/* @ts-ignore */}
+                    {dm.tutorialStep2}
+                  </p>
+                  <div className="rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-black/40">
+                    <img src="/task-goblin/images/permiso-2.png" alt="Step 2" className="w-full h-auto" />
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="space-y-4">
+                  <p className="text-sm font-semibold text-white flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan text-xs shrink-0 mt-0.5 font-bold">3</span>
+                    {/* @ts-ignore */}
+                    {dm.tutorialStep3}
+                  </p>
+                  <div className="rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-black/40">
+                    <img src="/task-goblin/images/permiso-3.png" alt="Step 3" className="w-full h-auto" />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowTutorial(false)}
+                className="w-full mt-10 bg-brand-cyan/10 hover:bg-brand-cyan/20 text-brand-cyan font-bold py-4 rounded-2xl transition-all border border-brand-cyan/20 cursor-pointer"
+              >
+                {/* @ts-ignore */}
+                {dm.closeTutorial}
+              </button>
+            </motion.div>
+          </React.Fragment>
+        )}
+      </AnimatePresence>
     </AnimatePresence>
   );
 };

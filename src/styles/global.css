@@ -63,6 +63,31 @@ body {
   @apply w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300;
 }
 
+/* Custom scrollbar for all elements */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 /* Custom scrollbar */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
