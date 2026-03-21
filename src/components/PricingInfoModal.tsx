@@ -18,12 +18,13 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
     </svg>
 );
 
-export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: { isOpen: boolean, onClose: () => void, appType?: "task-goblin" | "nexo" }) => {
+export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: { isOpen: boolean, onClose: () => void, appType?: "task-goblin" | "nexo" | "floaty" }) => {
     const { t, lang } = useLanguage();
     const { isMobile } = useLayout();
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
     const isNexo = appType === "nexo";
+    const isFloaty = appType === "floaty";
     
     // Pricing configuration
     const prices = isNexo ? {
@@ -31,6 +32,11 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
         originalMxn: 199,
         usd: 8,
         originalUsd: 11
+    } : isFloaty ? {
+        mxn: 99,
+        originalMxn: 149,
+        usd: 5,
+        originalUsd: 8
     } : {
         mxn: 249,
         originalMxn: 299,
@@ -70,7 +76,7 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
                                 <div className="w-16 h-16 rounded-2xl glass flex items-center justify-center text-brand-cyan mx-auto mb-4">
                                     <Tag size={32} />
                                 </div>
-                                <h2 className="text-2xl font-bold text-white">{isNexo ? t.nexoAppName : t.appName}</h2>
+                                <h2 className="text-2xl font-bold text-white">{isNexo ? t.nexoAppName : isFloaty ? t.floatyAppName : t.appName}</h2>
                                 <p className="text-sh-text-muted text-sm px-4">
                                     {t.modalInfo.subtitle}
                                 </p>

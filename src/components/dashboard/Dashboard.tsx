@@ -124,7 +124,10 @@ function MasonryLayout({
   setPermissionsModalOpen,
   setInfoModalOpen,
 }: MasonryProps) {
-  const { ref: containerRef, cols } = useMasonryCols();
+  let { ref: containerRef, cols } = useMasonryCols();
+  if (appType === "floaty") {
+    cols = 1;
+  }
   const config = APP_CONFIGS[appType] as any;
   const { right: rightRooms, bottom: bottomRooms } = config.rooms;
 
@@ -133,12 +136,12 @@ function MasonryLayout({
     // Card 1: Hero (video de app + permisos + features)
     <motion.div key="hero" className="w-full mb-3" variants={itemVariants}>
       <RoomCard
-        title={appType === "task-goblin" ? t.videoCardTitle : t.nexoVideoCardTitle}
+        title={appType === "task-goblin" ? t.videoCardTitle : appType === "nexo" ? t.nexoVideoCardTitle : t.floatyVideoCardTitle}
         distance=""
         icon={config.heroIcon}
         aspectRatio="video"
         mediaItems={
-          config.heroVideo 
+          config.heroVideo
             ? [{ type: "video", src: config.heroVideo, poster: config.heroPoster }, ...config.heroImages.map((src: string) => ({ type: "image" as const, src }))]
             : config.heroImages.map((src: string) => ({ type: "image" as const, src }))
         }
@@ -200,7 +203,7 @@ function MasonryLayout({
         ) : (
           <div className="pt-2">
             <p className="text-sm text-sh-text-muted leading-relaxed mb-1 whitespace-pre-line">
-              {t.nexoIntro}
+              {appType === 'nexo' ? t.nexoIntro : t.floatyIntro}
             </p>
           </div>
         )}
@@ -263,7 +266,7 @@ function MasonryLayout({
   return (
     <motion.div
       ref={containerRef}
-      className="flex flex-row gap-3 max-w-[1600px] mx-auto items-start"
+      className={`flex flex-row gap-3 mx-auto items-start ${appType === "floaty" ? "w-full sm:w-[50%] max-w-[1200px]" : "w-full max-w-[1600px]"}`}
       initial="hidden"
       animate="visible"
       variants={{ visible: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } } }}
@@ -282,7 +285,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
   const { devices, toggleDevice } = useDashboardState();
   const [permissionsModalOpen, setPermissionsModalOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
-  
+
   const [showTopBar, setShowTopBar] = useState(true);
   const lastScrollY = useRef(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -293,7 +296,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
 
     const handleScroll = () => {
       const currentScrollY = container.scrollTop;
-      
+
       // Determine if we are scrolling up or down
       const isScrollingDown = currentScrollY > lastScrollY.current;
       const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
@@ -301,7 +304,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
       // 1. Show header if we are near the top (e.g. top 50px) regardless of scroll direction
       if (currentScrollY < 50) {
         setShowTopBar(true);
-      } 
+      }
       // 2. Only toggle if we've scrolled more than a significant threshold (e.g. 20px)
       // This prevents "jitter" or "bouncing" from tiny movements or rubber-banding
       else if (scrollDifference > 20) {
@@ -311,7 +314,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
           setShowTopBar(true);
         }
       }
-      
+
       lastScrollY.current = currentScrollY;
     };
 
@@ -327,7 +330,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
         <div className="flex-1 flex flex-col min-w-0 bg-[#0e0e0e]">
           <TopBar isVisible={showTopBar} appType={appType} />
 
-          <div 
+          <div
             ref={scrollContainerRef}
             className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32"
           >
@@ -490,7 +493,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
           </div>
 
           <div className="relative z-[500] shrink-0">
-            <BottomBar appType={appType} />
+            <BottomBar appType={appType as "task-goblin" | "nexo" | "floaty"} />
           </div>
         </div>
       </div>

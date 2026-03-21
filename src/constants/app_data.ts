@@ -195,6 +195,11 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
   ]
 };
 
+export const FLOATY_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
+  right: [],
+  bottom: []
+};
+
 export const APP_CONFIGS = {
   "task-goblin": {
     name: "TaskGoblin",
@@ -226,6 +231,21 @@ export const APP_CONFIGS = {
       "/nexo/images/snippets.png"
     ],
     path: "/nexo-app",
+  },
+  "floaty": {
+    name: "Floaty",
+    iconPath: "/icon/floaty.png",
+    accentColor: "#D879F8",
+    secondaryColor: "#09090b",
+    rooms: FLOATY_ROOMS,
+    heroIcon: "/icon/floaty.png",
+    heroVideo: "/floaty/video.mp4",
+    heroPoster: "/floaty/image-2.png",
+    heroImages: [
+      "/floaty/image-2.png",
+      "/floaty/imagen-1.png"
+    ],
+    path: "/floaty-app",
   }
 } as const;
  
@@ -239,4 +259,10 @@ export const NEXO_URLS = [
   "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1OZXhvL3JlbGVhc2VzL2Rvd25sb2FkL2xhdGVzdC9uZXhvXzAuMS4wX2FhcmNoNjQuZG1n",
   "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1OZXhvL3JlbGVhc2VzL2Rvd25sb2FkL2xhdGVzdC9uZXhvXzAuMS4wX3g2NC5kbWc=",
   "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1OZXhvL3JlbGVhc2VzL2Rvd25sb2FkL2xhdGVzdC9uZXhvXzAuMS4wX3g2NC1zZXR1cC5leGU=",
+];
+
+export const FLOATY_URLS = [
+  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1GbG9hdHkvcmVsZWFzZXMvZG93bmxvYWQvbGF0ZXN0L2Zsb2F0eV8wLjEuMF9hYXJjaDY0LmRtZw==",
+  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1GbG9hdHkvcmVsZWFzZXMvZG93bmxvYWQvbGF0ZXN0L2Zsb2F0eV8wLjEuMF94NjQuZG1n",
+  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1GbG9hdHkvcmVsZWFzZXMvZG93bmxvYWQvbGF0ZXN0L2Zsb2F0eV8wLjEuMF94NjQtc2V0dXAuZXhl"
 ];

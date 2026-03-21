@@ -14,7 +14,7 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
   const config = APP_CONFIGS[appType];
 
   const content = () => {
-    const appName = appType === "nexo" ? t.nexoAppName : t.appName;
+    const appName = appType === "nexo" ? t.nexoAppName : appType === "floaty" ? t.floatyAppName : t.appName;
     const appIcon = config.iconPath;
 
     if (isMobile) {

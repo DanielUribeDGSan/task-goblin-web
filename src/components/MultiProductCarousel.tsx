@@ -134,7 +134,9 @@ const CarouselContent = () => {
                    >
                      {activeApp.id === 'task-goblin' 
                       ? (lang === 'es' ? 'Potencia tu productividad con herramientas inteligentes.' : 'Boost your productivity with smart tools.')
-                      : (lang === 'es' ? 'Domina tu entorno de desarrollo local con redirección de dominios.' : 'Master your local development environment with domain redirection.')}
+                      : activeApp.id === 'nexo'
+                      ? (lang === 'es' ? 'Domina tu entorno de desarrollo local con redirección de dominios.' : 'Master your local development environment with domain redirection.')
+                      : (lang === 'es' ? 'Tu compañero virtual en el escritorio que te acompaña mientras trabajas.' : 'Your virtual desktop companion that accompanies you while you work.')}
                    </motion.p>
                    <motion.a
                      href={activeApp.path}
@@ -200,7 +202,9 @@ const CarouselContent = () => {
                         <p className="text-white/40 text-[10px] sm:text-sm mt-0.5">
                           {app.id === 'task-goblin' 
                             ? (lang === 'es' ? 'Suite Principal' : 'Core Suite') 
-                            : (lang === 'es' ? 'Herramientas Dev' : 'Dev Tools')}
+                            : app.id === 'nexo'
+                            ? (lang === 'es' ? 'Herramientas Dev' : 'Dev Tools')
+                            : (lang === 'es' ? 'Mascota Virtual' : 'Virtual Pet')}
                         </p>
                       </div>
                     </div>

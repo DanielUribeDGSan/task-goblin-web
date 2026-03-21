@@ -8,6 +8,7 @@ export type Platform = "mac-silicon" | "mac-intel" | "windows";
 interface DownloadModalProps {
   isOpen: boolean;
   platform: Platform;
+  appType?: "task-goblin" | "nexo" | "floaty";
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -47,6 +48,7 @@ const StatusBadge = ({ status, label }: { status: string; label: string }) => {
 export const DownloadModal: React.FC<DownloadModalProps> = ({
   isOpen,
   platform,
+  appType = "task-goblin",
   onClose,
   onConfirm,
 }) => {
@@ -168,7 +170,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
               )}
 
               {/* 🍎 Mac Permissions Alert */}
-              {!isWindows && (
+              {!isWindows && appType !== "floaty" && (
                 <div className="glass bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
                   <div className="flex gap-3">
                     <Apple size={18} className="text-blue-400 shrink-0 mt-0.5" />

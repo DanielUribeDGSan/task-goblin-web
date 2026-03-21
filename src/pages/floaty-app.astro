@@ -1,0 +1,66 @@
+---
+import { Dashboard } from "../components/dashboard/Dashboard";
+import "../styles/global.css";
+
+const title = "Floaty — Tu compañero virtual";
+const description = "Floaty es un compañero virtual ligero para tu escritorio. Mantente entretenido mientras trabajas con animaciones fluidas y una experiencia impecable.";
+const ogImage = `/icon/floaty.png`;
+const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321').toString();
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/icon/floaty.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Floaty, Task Goblin, compañero virtual, mascota virtual, escritorio, animaciones, widget" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Task Goblin - Floaty" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body class="antialiased font-sans bg-black">
+    <Dashboard client:load appType="floaty" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://task-goblin.com/floaty-app/#software",
+          "name": "Floaty",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "macOS, Windows",
+          "description": description,
+          "image": "https://task-goblin.com/icon/floaty.png",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      ]
+    })} />
+  </body>
+</html>

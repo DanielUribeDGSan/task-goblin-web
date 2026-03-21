@@ -4,9 +4,12 @@ export const translations = {
   en: {
     appName: "Task Goblin",
     nexoAppName: "Nexo",
+    floatyAppName: "Floaty",
     videoCardTitle: "Video of the application",
     nexoVideoCardTitle: "Application Video",
+    floatyVideoCardTitle: "Application Video",
     nexoIntro: "Nexo is the command center for developers. Simplify your local environment, manage projects, master your ports, and share your work in seconds. Designed to boost your productivity and eliminate daily friction.",
+    floatyIntro: "Floaty is a lightweight, virtual companion for your desktop. Stay entertained while you work with fluid animations and a smooth experience.",
     permissionsCard: {
       title: "Permissions required in the app",
       featuresTitle: "Everything you need, in one app:",
@@ -238,9 +241,12 @@ export const translations = {
   es: {
     appName: "Task Goblin",
     nexoAppName: "Nexo",
+    floatyAppName: "Floaty",
     videoCardTitle: "Video de la aplicación",
     nexoVideoCardTitle: "Video de la aplicación",
+    floatyVideoCardTitle: "Video de la aplicación",
     nexoIntro: "Nexo es el centro de mando para desarrolladores. Simplifica tu entorno local, gestiona proyectos, domina tus puertos y comparte tu trabajo en segundos. Diseñado para potenciar tu productividad y eliminar las fricciones del día a día.",
+    floatyIntro: "Floaty es un compañero virtual ligero para tu escritorio. Mantente entretenido mientras trabajas con animaciones fluidas y una experiencia impecable.",
     permissionsCard: {
       title: "Permisos solicitados en la aplicación",
       featuresTitle: "Todo lo que necesitas, en una sola app:",

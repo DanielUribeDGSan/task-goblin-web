@@ -14,6 +14,7 @@ function cn(...inputs: ClassValue[]) {
 const icons: { id: string; icon: string | any; path: string }[] = [
   { id: "task-goblin", icon: "/icon/TaskGoblin.png", path: "/task-goblin-app" },
   { id: "nexo", icon: "/icon/computer.png", path: "/nexo-app" },
+  { id: "floaty", icon: "/icon/floaty.png", path: "/floaty-app" },
 ];
 
 const SidebarContent = ({

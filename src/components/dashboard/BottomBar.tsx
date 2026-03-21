@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp, Search } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
-import { TASK_GOBLIN_URLS, NEXO_URLS } from "../../constants/app_data";
+import { TASK_GOBLIN_URLS, NEXO_URLS, FLOATY_URLS } from "../../constants/app_data";
 import { triggerSecureDownload } from "../../utils/download";
 import { PaymentModal } from "../PaymentModal";
 import { DownloadModal, type Platform as DownloadPlatform } from "../DownloadModal";
@@ -13,9 +13,13 @@ const MOBILE_BREAKPOINT = 768;
 
 const b = (s: string) => (typeof atob !== "undefined" ? atob(s) : "");
 
-const triggerDownload = (index: number, appType: "task-goblin" | "nexo" = "task-goblin") => {
-  const urls = appType === "nexo" ? NEXO_URLS : TASK_GOBLIN_URLS;
+const triggerDownload = (index: number, appType: "task-goblin" | "nexo" | "floaty" = "task-goblin") => {
+  const urls = appType === "nexo" ? NEXO_URLS : appType === "floaty" ? FLOATY_URLS : TASK_GOBLIN_URLS;
   const u = b(urls[index]);
+  if (!u) {
+    alert("Próximamente disponible. / Coming soon.");
+    return;
+  }
   const a = document.createElement("a");
   a.href = u;
   a.download = "";
@@ -38,7 +42,7 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
-export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin" | "nexo" }) => {
+export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin" | "nexo" | "floaty" }) => {
   const { t, lang } = useLanguage();
   const { isMobile, bottomBarOpen, toggleBottomBar } = useLayout();
   const [macMenuOpen, setMacMenuOpen] = useState(false);
@@ -53,6 +57,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   const [pendingDownload, setPendingDownload] = useState<{ index: number; platform: DownloadPlatform } | null>(null);
 
   const isNexo = appType === "nexo";
+  const isFloaty = appType === "floaty";
   
   // Pricing configuration
   const prices = isNexo ? {
@@ -60,6 +65,11 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
       originalMxn: 199,
       usd: 8,
       originalUsd: 11
+  } : isFloaty ? {
+      mxn: 99,
+      originalMxn: 149,
+      usd: 5,
+      originalUsd: 8
   } : {
       mxn: 249,
       originalMxn: 299,
@@ -68,10 +78,10 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   };
 
   const openDownloadModal = (index: number) => {
+    setMacMenuOpen(false);
     const platform: DownloadPlatform = index === 0 ? "mac-silicon" : index === 1 ? "mac-intel" : "windows";
     setPendingDownload({ index, platform });
     setDownloadModalOpen(true);
-    setMacMenuOpen(false);
   };
 
   const handleDownloadConfirm = () => {
@@ -315,7 +325,8 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
       <DownloadModal
         isOpen={downloadModalOpen}
-        platform={pendingDownload?.platform ?? "mac-silicon"}
+        platform={pendingDownload?.platform || "windows"}
+        appType={appType}
         onClose={() => setDownloadModalOpen(false)}
         onConfirm={handleDownloadConfirm}
       />
