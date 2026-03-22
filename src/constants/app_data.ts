@@ -214,6 +214,22 @@ export const APP_CONFIGS = {
     heroImages: ["/task-goblin/images/task-goblin-general.png", "/home/image-1.png", "/home/image-2.png"],
     path: "/task-goblin-app",
   },
+  "floaty": {
+    name: "Floaty",
+    iconPath: "/icon/floaty.png",
+    accentColor: "#2BE46A",
+    secondaryColor: "#2FF070",
+    backgroundColor: "#0A0D0A",
+    rooms: FLOATY_ROOMS,
+    heroIcon: "/icon/floaty.png",
+    heroVideo: "/floaty/video.mp4",
+    heroPoster: "/floaty/image-2.png",
+    heroImages: [
+      "/floaty/image-2.png",
+      "/floaty/imagen-1.png"
+    ],
+    path: "/floaty-app",
+  },
   "nexo": {
     name: "Nexo",
     iconPath: "/icon/computer.png",
@@ -234,22 +250,6 @@ export const APP_CONFIGS = {
       "/nexo/images/snippets.png"
     ],
     path: "/nexo-app",
-  },
-  "floaty": {
-    name: "Floaty",
-    iconPath: "/icon/floaty.png",
-    accentColor: "#2BE46A",
-    secondaryColor: "#2FF070",
-    backgroundColor: "#0A0D0A",
-    rooms: FLOATY_ROOMS,
-    heroIcon: "/icon/floaty.png",
-    heroVideo: "/floaty/video.mp4",
-    heroPoster: "/floaty/image-2.png",
-    heroImages: [
-      "/floaty/image-2.png",
-      "/floaty/imagen-1.png"
-    ],
-    path: "/floaty-app",
   }
 } as const;
  
