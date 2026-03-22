@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-cyan: #AA7915;
+  --color-brand-cyan: var(--sh-accent);
   --color-brand-dark: #000000;
 }
 
@@ -11,15 +11,15 @@
   --sh-panel-border: rgba(170, 121, 21, 0.08);
   --sh-text: rgba(255, 255, 255, 1);
   --sh-text-muted: rgba(255, 255, 255, 0.5);
-  --sh-accent: #AA7915;
-  --sh-accent-muted: rgba(170, 121, 21, 0.2);
-  --sh-glow-orange: rgba(138, 90, 14, 0.15);
-  --sh-glow-cyan: rgba(170, 121, 21, 0.1);
+  --sh-accent: #5B518D;
+  --sh-accent-muted: rgba(91, 81, 141, 0.2);
+  --sh-glow-orange: rgba(91, 81, 141, 0.15);
+  --sh-glow-cyan: rgba(91, 81, 141, 0.1);
 
   /* TaskGoblin legacy variables for compatibility */
-  --tg-accent: #AA7915;
-  --tg-accent-soft: rgba(170, 121, 21, 0.1);
-  --tg-accent-bright: #8A5A0E;
+  --tg-accent: #5B518D;
+  --tg-accent-soft: rgba(91, 81, 141, 0.1);
+  --tg-accent-bright: #4A4175;
   --tg-border: rgba(255, 255, 255, 0.1);
   --tg-panel-border: rgba(255, 255, 255, 0.05);
   --tg-surface: #0e0e0e;
@@ -48,7 +48,7 @@ body {
   background: var(--sh-panel);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--sh-panel-border);
+
 
 }
 

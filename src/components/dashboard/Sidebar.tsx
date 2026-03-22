@@ -60,7 +60,7 @@ const SidebarContent = ({
             } : {}}
           >
             {typeof Icon === "string" ? (
-              <img src={Icon} alt={id} className="w-7 h-7 object-contain" />
+              <img src={Icon} alt={id} className="w-7 h-7 object-contain" style={{ viewTransitionName: `app-icon-${id}` }} />
             ) : (
               <Icon size={24} strokeWidth={2} />
             )}
@@ -91,7 +91,10 @@ export const Sidebar = ({ activeId = "dashboard" }: { activeId?: string }) => {
                 onClick={() => setSidebarOpen(false)}
                 aria-label="Cerrar menú"
               />
-              <div className="relative w-64 h-full flex flex-col bg-[#0f0f0f] shadow-xl">
+              <div
+                className="relative w-64 h-full flex flex-col shadow-xl"
+                style={{ backgroundColor: 'var(--sh-background)' }}
+              >
                 <SidebarContent
                   activeId={activeId}
                   onClose={() => setSidebarOpen(false)}
@@ -106,7 +109,7 @@ export const Sidebar = ({ activeId = "dashboard" }: { activeId?: string }) => {
   }
 
   return (
-    <div className="w-16 h-full flex flex-col items-center py-6 gap-6 bg-black/20 border-r border-white/5">
+    <div className="w-16 h-full flex flex-col items-center py-6 gap-6 bg-black/20">
       <SidebarContent activeId={activeId} />
     </div>
   );

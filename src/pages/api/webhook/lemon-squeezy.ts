@@ -62,6 +62,13 @@ export const POST: APIRoute = async ({ request }) => {
             // Generate license or retrieve format
             const autoLicenseKey = attributes.license_key || "LS-" + crypto.randomUUID().toUpperCase().split("-")[0] + "-" + Math.random().toString(36).substr(2, 9).toUpperCase();
 
+            // Extract variantId to map to appName
+            const variantId = attributes.first_order_item?.variant_id?.toString() || "";
+            let appName = "task-goblin";
+            if (variantId === "1382179") appName = "task-goblin";
+            else if (variantId === "1431192") appName = "nexo";
+            else if (variantId === "1430993") appName = "floaty";
+
             const supaUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL;
             const supaKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
@@ -72,7 +79,7 @@ export const POST: APIRoute = async ({ request }) => {
                     {
                         email: userEmail,
                         license_key: autoLicenseKey,
-                        // puedes agregar más campos si es necesario
+                        app: appName
                     }
                 ]);
 

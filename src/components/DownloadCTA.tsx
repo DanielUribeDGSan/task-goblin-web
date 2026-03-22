@@ -3,6 +3,7 @@ import AppleIcon from "@mui/icons-material/Apple";
 import DesktopWindowsIcon from "@mui/icons-material/DesktopWindows";
 import { triggerSecureDownload } from "../utils/download";
 import { DownloadModal, type Platform } from "./DownloadModal";
+import { APP_CONFIGS } from "../constants/app_data";
 
 export default function DownloadCTA({ appType = 'task-goblin' }: { appType?: 'task-goblin' | 'nexo' }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -19,9 +20,9 @@ export default function DownloadCTA({ appType = 'task-goblin' }: { appType?: 'ta
     setModalOpen(false);
   };
 
-  const isNexo = appType === 'nexo';
-  const name = isNexo ? 'Nexo' : 'Task Goblin';
-  const accentColor = isNexo ? '#7562AB' : 'var(--tg-accent)';
+  const config = APP_CONFIGS[appType as keyof typeof APP_CONFIGS];
+  const name = config.name;
+  const accentColor = config.accentColor;
 
   return (
     <>
@@ -58,8 +59,8 @@ export default function DownloadCTA({ appType = 'task-goblin' }: { appType?: 'ta
               onClick={() => openModal("windows")}
               className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-medium transition border-2 cursor-pointer"
               style={{
-                borderColor: "var(--tg-accent)",
-                color: "var(--tg-accent)",
+                borderColor: "var(--sh-accent)",
+                color: "var(--sh-accent)",
               }}
             >
               <DesktopWindowsIcon />

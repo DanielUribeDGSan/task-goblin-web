@@ -145,7 +145,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
                   </span>{" "}
                   ${prices.mxn}{" "}
                   <span className="text-sh-text-muted font-normal text-xs">MXN</span>
-                  <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
+                  <span className="ml-1 text-[10px] font-semibold uppercase" style={{ color: 'var(--sh-accent)' }}>
                     {t.bottomBar.promotion}
                   </span>
                 </p>
@@ -179,7 +179,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
                 </span>{" "}
                 ${prices.usd}{" "}
                 <span className="text-sh-text-muted font-normal text-xs">USD</span>
-                <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
+                <span className="ml-1 text-[10px] font-semibold uppercase" style={{ color: 'var(--sh-accent)' }}>
                   {t.bottomBar.promotion}
                 </span>
               </p>
@@ -190,7 +190,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
                 </span>{" "}
                 ${prices.mxn}{" "}
                 <span className="text-sh-text-muted font-normal text-xs">MXN</span>
-                <span className="ml-1 text-[10px] font-semibold text-brand-cyan uppercase">
+                <span className="ml-1 text-[10px] font-semibold uppercase" style={{ color: 'var(--sh-accent)' }}>
                   {t.bottomBar.promotion}
                 </span>
               </p>
@@ -201,7 +201,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
       {isMobile ? (
         <div className="flex items-center gap-3 glass rounded-xl sm:rounded-[1.5rem] px-4 py-3 text-center">
-          <Smartphone size={20} className="shrink-0 text-brand-cyan" />
+          <Smartphone size={20} className="shrink-0" style={{ color: 'var(--sh-accent)' }} />
           <p className="text-xs sm:text-sm text-sh-text-muted">
             {t.bottomBar.mobileDownloadNotice}
           </p>
@@ -306,9 +306,13 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
           <a
             href="/license"
-            className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none no-underline"
+            className="group flex flex-col items-center gap-1.5 transition-colors focus:outline-none no-underline"
+            style={{ viewTransitionName: 'license-card' }}
           >
-            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-brand-cyan transition-all">
+            <div 
+              className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted transition-all"
+              style={{ color: 'var(--sh-accent)' }}
+            >
               <Search size={20} />
             </div>
             <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
@@ -320,6 +324,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
       <PaymentModal
         isOpen={isPaymentModalOpen}
+        appType={appType}
         onClose={() => setIsPaymentModalOpen(false)}
       />
 

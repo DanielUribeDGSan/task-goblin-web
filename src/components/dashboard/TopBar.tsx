@@ -59,20 +59,22 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
                 <button
                   type="button"
                   onClick={ () => setLang("es")}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${lang === "es"
-                      ? "bg-brand-cyan text-black"
+                  className={`px-3 py-2 text-sm font-medium transition-colors cursor-pointer ${lang === "es"
+                      ? "text-black"
                       : "text-sh-text-muted hover:text-white"
                     }`}
+                  style={lang === "es" ? { backgroundColor: 'var(--sh-accent)' } : {}}
                 >
                   ES
                 </button>
                 <button
                   type="button"
                   onClick={ () => setLang("en")}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${lang === "en"
-                      ? "bg-brand-cyan text-black"
+                  className={`px-3 py-2 text-sm font-medium transition-colors cursor-pointer ${lang === "en"
+                      ? "text-black"
                       : "text-sh-text-muted hover:text-white"
                     }`}
+                  style={lang === "en" ? { backgroundColor: 'var(--sh-accent)' } : {}}
                 >
                   EN
                 </button>
@@ -111,20 +113,22 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
               <button
                 type="button"
                 onClick={ () => setLang("es")}
-                className={`px-3 py-1.5 text-sm font-medium transition-colors ${lang === "es"
-                    ? "bg-brand-cyan text-black"
+                className={`px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer ${lang === "es"
+                    ? "text-black"
                     : "text-sh-text-muted hover:text-white"
                   }`}
+                style={lang === "es" ? { backgroundColor: 'var(--sh-accent)' } : {}}
               >
                 ES
               </button>
               <button
                 type="button"
                 onClick={ () => setLang("en")}
-                className={`px-3 py-1.5 text-sm font-medium transition-colors ${lang === "en"
-                    ? "bg-brand-cyan text-black"
+                className={`px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer ${lang === "en"
+                    ? "text-black"
                     : "text-sh-text-muted hover:text-white"
                   }`}
+                style={lang === "en" ? { backgroundColor: 'var(--sh-accent)' } : {}}
               >
                 EN
               </button>

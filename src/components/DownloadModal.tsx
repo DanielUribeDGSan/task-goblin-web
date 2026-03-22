@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, AlertTriangle, Download, Apple, Monitor, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -56,9 +56,38 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
   const dm = t.downloadModal;
   const [showImage, setShowImage] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const downloadButtonRef = useRef<HTMLButtonElement>(null);
 
   const isWindows = platform === "windows";
   const rows = isWindows ? winRows : macRows;
+
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+      // If we are more than 20px away from the bottom, show the indicator
+      setCanScrollDown(scrollHeight - (scrollTop + clientHeight) > 20);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      // Small timeout to allow DOM to render and measures to be accurate
+      const timer = setTimeout(checkScroll, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, showImage]);
+
+  const scrollToDownload = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
   
   const getHeader = () => {
     if (platform === "mac-silicon") return dm.macSilicon;
@@ -94,14 +123,18 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 24 }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-lg z-[9999] max-h-[90vh] overflow-y-auto"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-lg z-[9999] max-h-[90vh] flex flex-col"
           >
-            <div className="glass rounded-3xl overflow-hidden border border-white/10 p-6 md:p-8 relative">
+            <div 
+              ref={scrollContainerRef}
+              onScroll={checkScroll}
+              className="glass rounded-3xl overflow-y-auto border border-white/10 p-6 md:p-8 relative scrollbar-hide"
+            >
               {/* Close */}
               <button
                 type="button"
                 onClick={onClose}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer z-20"
                 aria-label={t.paymentModal.closeButton}
               >
                 <X size={18} />
@@ -109,7 +142,10 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 
               {/* Header */}
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-2xl glass flex items-center justify-center text-brand-cyan shrink-0">
+                <div 
+                  className="w-10 h-10 rounded-2xl glass flex items-center justify-center shrink-0"
+                  style={{ color: 'var(--sh-accent)' }}
+                >
                   <PlatformIcon size={20} />
                 </div>
                 <div>
@@ -232,9 +268,11 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 
               {/* Actions */}
               <button
+                ref={downloadButtonRef}
                 type="button"
                 onClick={onConfirm}
-                className="w-full bg-brand-cyan hover:bg-brand-cyan/90 text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                style={{ backgroundColor: 'var(--sh-accent)' }}
               >
                 <Download size={18} />
                 {dm.downloadFor} {getArch()}
@@ -244,6 +282,26 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 {dm.acceptTerms}
               </p>
 
+              {/* Scroll Indicator Icon */}
+              <AnimatePresence>
+                {canScrollDown && (
+                  <motion.button
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    onClick={scrollToDownload}
+                    className="absolute bottom-6 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full glass border border-white/20 flex items-center justify-center text-white shadow-2xl cursor-pointer z-30 hover:scale-110 active:scale-95 transition-transform"
+                    style={{ backgroundColor: 'var(--sh-accent)' }}
+                  >
+                    <motion.div
+                      animate={{ y: [0, 4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <ChevronDown size={20} className="text-black" />
+                    </motion.div>
+                  </motion.button>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         </React.Fragment>
@@ -287,7 +345,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 {/* Step 1 */}
                 <div className="space-y-4">
                   <p className="text-sm font-semibold text-white flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan text-xs shrink-0 mt-0.5 font-bold">1</span>
+                    <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold" style={{ backgroundColor: 'var(--sh-accent-muted)', color: 'var(--sh-accent)' }}>1</span>
                     {/* @ts-ignore */}
                     {dm.tutorialStep1}
                   </p>
@@ -299,7 +357,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 {/* Step 2 */}
                 <div className="space-y-4">
                   <p className="text-sm font-semibold text-white flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan text-xs shrink-0 mt-0.5 font-bold">2</span>
+                    <span className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs shrink-0 mt-0.5 font-bold">2</span>
                     {/* @ts-ignore */}
                     {dm.tutorialStep2}
                   </p>
@@ -311,7 +369,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 {/* Step 3 */}
                 <div className="space-y-4">
                   <p className="text-sm font-semibold text-white flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan text-xs shrink-0 mt-0.5 font-bold">3</span>
+                    <span className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs shrink-0 mt-0.5 font-bold">3</span>
                     {/* @ts-ignore */}
                     {dm.tutorialStep3}
                   </p>
@@ -323,7 +381,12 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 
               <button
                 onClick={() => setShowTutorial(false)}
-                className="w-full mt-10 bg-brand-cyan/10 hover:bg-brand-cyan/20 text-brand-cyan font-bold py-4 rounded-2xl transition-all border border-brand-cyan/20 cursor-pointer"
+                className="w-full mt-10 font-bold py-4 rounded-2xl transition-all border cursor-pointer"
+                style={{ 
+                  backgroundColor: 'var(--sh-accent-muted)', 
+                  color: 'var(--sh-accent)',
+                  borderColor: 'var(--sh-panel-border)'
+                }}
               >
                 {/* @ts-ignore */}
                 {dm.closeTutorial}

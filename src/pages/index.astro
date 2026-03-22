@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import { MultiProductCarousel } from "../components/MultiProductCarousel";
 import "../styles/global.css";
 
@@ -39,6 +40,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
 
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <ClientRouter />
   </head>
   <body class="antialiased font-sans bg-black">
     <MultiProductCarousel client:load />

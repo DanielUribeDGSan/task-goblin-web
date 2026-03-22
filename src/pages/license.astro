@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import { LicenseApp } from "../components/LicenseViewer";
 import "../styles/global.css";
 
@@ -34,11 +35,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         >
             <div class="absolute inset-0 z-0">
                 <div
-                    class="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-brand-cyan/10 rounded-full blur-[120px] mix-blend-screen animate-blob"
+                    class="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] rounded-full blur-[120px] mix-blend-screen animate-blob"
+                    style="background-color: rgba(91, 81, 141, 0.2)"
                 >
                 </div>
                 <div
-                    class="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] bg-blue-500/10 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"
+                    class="absolute bottom-1/4 right-1/4 w-[50vw] h-[50vw] rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"
+                    style="background-color: rgba(91, 81, 141, 0.15)"
                 >
                 </div>
             </div>

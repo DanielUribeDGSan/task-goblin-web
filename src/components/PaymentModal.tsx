@@ -6,17 +6,23 @@ import { APP_CONFIG } from "../constants/config";
 
 interface PaymentModalProps {
     isOpen: boolean;
+    appType?: "task-goblin" | "nexo" | "floaty";
     onClose: () => void;
 }
 
-export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
+export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "task-goblin", onClose }) => {
     const { t } = useLanguage();
     const [email, setEmail] = useState("");
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
 
-    // Placeholder for Lemon Squeezy Product/Variant ID
-    const LEMON_VARIANT_ID = "1382179";
+    // Lemon Squeezy Product/Variant ID map
+    const variantIdMap = {
+        "task-goblin": "1382179",
+        "nexo": "1431192",
+        "floaty": "1430993"
+    };
+    const LEMON_VARIANT_ID = variantIdMap[appType];
 
     useEffect(() => {
         // Load Lemon.js script dynamically
@@ -126,7 +132,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
                             {step === "email" && (
                                 <div className="space-y-6">
                                     <div className="text-center space-y-2">
-                                        <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-brand-cyan mx-auto mb-4">
+                                        <div 
+                                            className="w-12 h-12 rounded-2xl glass flex items-center justify-center mx-auto mb-4"
+                                            style={{ color: 'var(--sh-accent)' }}
+                                        >
                                             <CreditCard size={24} />
                                         </div>
                                         <h2 className="text-2xl font-bold text-white">{t.paymentModal.title}</h2>
@@ -135,8 +144,11 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
                                         </p>
                                     </div>
 
-                                    <div className="glass bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl p-4 flex gap-3">
-                                        <div className="text-brand-cyan shrink-0">
+                                    <div 
+                                        className="glass rounded-2xl p-4 flex gap-3"
+                                        style={{ backgroundColor: 'var(--sh-accent-muted)', borderColor: 'var(--sh-panel-border)' }}
+                                    >
+                                        <div className="shrink-0" style={{ color: 'var(--sh-accent)' }}>
                                             <AlertCircle size={20} />
                                         </div>
                                         <p className="text-xs text-white/70 leading-relaxed text-left">
@@ -158,7 +170,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                     placeholder={t.paymentModal.emailPlaceholder}
-                                                    className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-brand-cyan/50 focus:border-brand-cyan transition-all"
+                                                    className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 transition-all"
+                                                    style={{ focusRingColor: 'var(--sh-accent-muted)', focusBorderColor: 'var(--sh-accent)' } as any}
                                                 />
                                             </div>
                                         </div>
@@ -166,7 +179,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
                                         <button
                                             type="submit"
                                             disabled={!email.includes('@')}
-                                            className="w-full bg-brand-cyan hover:bg-brand-cyan/90 text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
+                                            className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
+                                            style={{ backgroundColor: 'var(--sh-accent)' }}
                                         >
                                             {t.paymentModal.checkoutButton}
                                         </button>
@@ -180,7 +194,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) =
 
                             {step === "processing" && (
                                 <div className="py-12 flex flex-col items-center justify-center space-y-4">
-                                    <div className="w-10 h-10 border-4 border-white/10 border-t-brand-cyan rounded-full animate-spin" />
+                                    <div 
+                                        className="w-10 h-10 border-4 border-white/10 rounded-full animate-spin" 
+                                        style={{ borderTopColor: 'var(--sh-accent)' }}
+                                    />
                                     <p className="text-white/70 font-medium">{t.paymentModal.processing}</p>
                                 </div>
                             )}

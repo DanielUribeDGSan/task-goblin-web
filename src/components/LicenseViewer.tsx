@@ -68,22 +68,25 @@ export const LicenseViewer: React.FC = () => {
     };
 
     return (
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full max-w-md mx-auto" style={{ viewTransitionName: 'license-card' }}>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="glass rounded-3xl overflow-hidden border border-white/10 p-6 md:p-8 relative"
             >
-                <a
-                    href="/"
-                    className="absolute top-4 left-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                <button
+                    onClick={() => window.history.back()}
+                    className="absolute top-4 left-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                     title={t.licensePage.backToHome}
                 >
                     <Home size={18} />
-                </a>
+                </button>
 
                 <div className="text-center space-y-2 mt-4 mb-8">
-                    <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-brand-cyan mx-auto mb-4">
+                    <div 
+                        className="w-12 h-12 rounded-2xl glass flex items-center justify-center mx-auto mb-4"
+                        style={{ color: '#5B518D' }}
+                    >
                         <Search size={24} />
                     </div>
                     <h2 className="text-2xl font-bold text-white">{t.licensePage.title}</h2>
@@ -115,16 +118,18 @@ export const LicenseViewer: React.FC = () => {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder={t.licensePage.emailPlaceholder}
-                                        className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-brand-cyan/50 focus:border-brand-cyan transition-all"
+                                        className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 transition-all"
+                                        style={{ focusRingColor: '#5B518D50', focusBorderColor: '#5B518D' } as any}
                                     />
                                 </div>
                             </div>
 
-                            <button
-                                type="submit"
-                                disabled={!email.includes('@')}
-                                className="w-full bg-brand-cyan hover:bg-brand-cyan/90 text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2"
-                            >
+                                <button
+                                    type="submit"
+                                    disabled={!email.includes('@')}
+                                    className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2"
+                                    style={{ backgroundColor: '#5B518D' }}
+                                >
                                 <Search size={18} />
                                 {t.licensePage.searchButton}
                             </button>
@@ -139,7 +144,10 @@ export const LicenseViewer: React.FC = () => {
                             exit={{ opacity: 0 }}
                             className="py-12 flex flex-col items-center justify-center space-y-4"
                         >
-                            <div className="w-10 h-10 border-4 border-white/10 border-t-brand-cyan rounded-full animate-spin" />
+                            <div 
+                                className="w-10 h-10 border-4 border-white/10 rounded-full animate-spin" 
+                                style={{ borderTopColor: '#5B518D' }}
+                            />
                             <p className="text-white/70 font-medium">{t.licensePage.searching}</p>
                         </motion.div>
                     )}
@@ -162,7 +170,10 @@ export const LicenseViewer: React.FC = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <span className="text-sm text-brand-cyan/80 font-medium block">
+                                    <span 
+                                        className="text-sm font-medium block"
+                                        style={{ color: '#5B518D' }}
+                                    >
                                         {licenseKeys.length > 1 ? t.licensePage.licenseKeyLabel + " (" + licenseKeys.length + ")" : t.licensePage.licenseKeyLabel}
                                     </span>
 
@@ -187,7 +198,7 @@ export const LicenseViewer: React.FC = () => {
 
                             <div className="glass bg-white/5 rounded-xl p-4 text-sm">
                                 <h4 className="font-semibold text-white/90 mb-2 flex items-center gap-2">
-                                    <AlertCircle size={16} className="text-brand-cyan" />
+                                    <AlertCircle size={16} style={{ color: '#5B518D' }} />
                                     {t.licensePage.instructionHeading}
                                 </h4>
                                 <ul className="list-disc list-inside text-white/70 space-y-1 text-xs">

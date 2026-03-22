@@ -44,6 +44,22 @@ const CarouselContent = () => {
     };
   }, [isPaused]);
 
+  // Update global CSS variables based on active app colors
+  useEffect(() => {
+    const root = document.documentElement;
+    const { accentColor, secondaryColor, backgroundColor } = activeApp as any;
+    
+    root.style.setProperty('--sh-accent', accentColor);
+    root.style.setProperty('--tg-accent', accentColor);
+    root.style.setProperty('--sh-accent-muted', `${accentColor}33`);
+    root.style.setProperty('--sh-panel-border', `${accentColor}14`);
+    
+    if (backgroundColor) {
+      root.style.setProperty('--sh-background', backgroundColor);
+      document.body.style.backgroundColor = backgroundColor;
+    }
+  }, [activeApp]);
+
   return (
     <div className="relative min-h-screen bg-black overflow-hidden flex flex-col sm:flex-row justify-center">
       {/* Language Switcher */}
@@ -76,10 +92,10 @@ const CarouselContent = () => {
       </div>
       {/* Glow Background */}
       <div 
-        className="absolute inset-0 opacity-20 transition-colors duration-1000 blur-[120px]"
+        className="absolute inset-0 opacity-40 transition-colors duration-1000 blur-[120px]"
         style={{ 
-          background: `radial-gradient(circle at 20% 30%, ${activeApp.accentColor}, transparent 40%), 
-                       radial-gradient(circle at 80% 70%, ${activeApp.accentColor}, transparent 40%)` 
+          background: `radial-gradient(circle at 20% 30%, ${activeApp.accentColor}, transparent 50%), 
+                       radial-gradient(circle at 80% 70%, ${activeApp.secondaryColor}, transparent 50%)` 
         }}
       />
 
@@ -100,7 +116,10 @@ const CarouselContent = () => {
                 className="absolute -inset-1 bg-gradient-to-r from-white/20 to-transparent rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"
                 style={{ backgroundColor: activeApp.accentColor }}
               />
-              <div className="relative bg-[#0a0a0a] rounded-3xl sm:rounded-4xl border border-white/10 overflow-hidden shadow-2xl aspect-16/10">
+              <div 
+                className="relative rounded-3xl sm:rounded-4xl border border-white/10 overflow-hidden shadow-2xl aspect-16/10 transition-colors duration-500"
+                style={{ backgroundColor: (activeApp as any).backgroundColor || '#0a0a0a' }}
+              >
                 {/* Window Controls */}
                 <div className="absolute top-0 left-0 right-0 h-8 sm:h-10 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2 z-20">
                   <div className="w-2 h-2 rounded-full bg-red-500/40" />
@@ -144,6 +163,7 @@ const CarouselContent = () => {
                      animate={{ y: 0, opacity: 1 }}
                      transition={{ delay: 0.5 }}
                      className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-white text-black text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl hover:scale-105 transition-transform"
+                     style={{ viewTransitionName: 'page-transition-button' }}
                    >
                      {lang === 'es' ? 'Entrar' : 'Enter'}
                      <ArrowRight size={18} />
@@ -189,14 +209,20 @@ const CarouselContent = () => {
                       : 'bg-transparent border-transparent opacity-40 hover:opacity-100 scale-95'}
                   `}>
                     <div className="flex items-center gap-3 sm:gap-4">
-                      <div 
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/5 border border-white/10"
-                        style={{ color: isActive ? app.accentColor : 'white' }}
-                      >
-                        <img src={app.iconPath} alt="" className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
-                      </div>
+                       <div 
+                         className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center bg-white/5 border border-white/10"
+                         style={{ 
+                           color: isActive ? app.accentColor : 'white',
+                           viewTransitionName: isActive ? `app-icon-${app.id}` : 'none'
+                         }}
+                       >
+                         <img src={app.iconPath} alt="" className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
+                       </div>
                       <div>
-                        <h3 className={`text-base sm:text-xl font-bold transition-colors text-white`}>
+                        <h3 
+                          className={`text-base sm:text-xl font-bold transition-colors text-white`}
+                          style={{ viewTransitionName: isActive ? `app-title-${app.id}` : 'none' }}
+                        >
                           {app.name}
                         </h3>
                         <p className="text-white/40 text-[10px] sm:text-sm mt-0.5">

@@ -16,8 +16,9 @@ export const Switch = ({ checked, onChange }: SwitchProps) => {
             onClick={() => onChange(!checked)}
             className={cn(
                 "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
-                checked ? "bg-brand-cyan" : "bg-white/10"
+                checked ? "" : "bg-white/10"
             )}
+            style={checked ? { backgroundColor: 'var(--sh-accent)' } : {}}
         >
             <span
                 className={cn(
@@ -54,7 +55,10 @@ export const DeviceControl = ({ icon, label, sublabel, active, onToggle, statusT
                     {statusText && (
                         <div className="flex items-center gap-2 mt-0.5">
                             <div className="w-8 h-2 bg-white/10 rounded-full overflow-hidden shrink-0">
-                                <div className="h-full bg-brand-cyan transition-all duration-500" style={{ width: `${percentage}%` }} />
+                                <div 
+                                    className="h-full transition-all duration-500" 
+                                    style={{ width: `${percentage}%`, backgroundColor: 'var(--sh-accent)' }} 
+                                />
                             </div>
                             <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-wider shrink-0">{percentage}%</span>
                         </div>

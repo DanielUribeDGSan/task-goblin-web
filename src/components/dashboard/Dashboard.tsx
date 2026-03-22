@@ -322,12 +322,27 @@ function DashboardContent({ appType }: { appType: AppType }) {
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Update global CSS variables based on active app colors
+  useEffect(() => {
+    const root = document.documentElement;
+    const config = APP_CONFIGS[appType] as any;
+    const { accentColor, backgroundColor } = config;
+
+    root.style.setProperty('--sh-accent', accentColor);
+    root.style.setProperty('--tg-accent', accentColor);
+    root.style.setProperty('--sh-accent-muted', `${accentColor}33`);
+    root.style.setProperty('--sh-panel-border', `${accentColor}14`);
+
+    // Set a static dark background for the dashboard pages
+    root.style.setProperty('--sh-background', '#0a0a0a');
+  }, [appType]);
+
   return (
-    <div className="flex bg-[#0e0e0e] text-white h-screen overflow-hidden p-2 lg:p-4">
-      <div className="flex w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl relative bg-[#0e0e0e] border border-white/10">
+    <div className="flex text-white h-screen overflow-hidden p-2 lg:p-4 bg-[#0a0a0a]">
+      <div className="flex w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl relative bg-[#0a0a0a]">
         <Sidebar activeId={appType} />
 
-        <div className="flex-1 flex flex-col min-w-0 bg-[#0e0e0e]">
+        <div className="flex-1 flex flex-col min-w-0 bg-[#0a0a0a]">
           <TopBar isVisible={showTopBar} appType={appType} />
 
           <div
