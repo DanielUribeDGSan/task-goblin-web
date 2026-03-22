@@ -239,7 +239,7 @@ export const APP_CONFIGS = {
     deepColor: "#0E0D24",
     rooms: NEXO_ROOMS,
     heroIcon: "/icon/computer.png",
-    heroVideo: "/nexo/videos/proyectos.mp4",
+    heroVideo: "/nexo/videos/nexo.mp4",
     heroPoster: "/nexo/images/nexo-general.png",
     heroImages: [
       "/nexo/images/nexo-general.png", 

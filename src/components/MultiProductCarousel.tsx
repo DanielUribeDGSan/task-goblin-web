@@ -25,7 +25,8 @@ const CarouselContent = () => {
   const [isPaused, setIsPaused] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
-  const activeApp = APPS[activeIndex];
+  const activeApp = APPS[activeIndex] as any;
+  const { accentColor, secondaryColor, backgroundColor } = activeApp;
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % APPS.length);
@@ -47,7 +48,6 @@ const CarouselContent = () => {
   // Update global CSS variables based on active app colors
   useEffect(() => {
     const root = document.documentElement;
-    const { accentColor, secondaryColor, backgroundColor } = activeApp as any;
     
     root.style.setProperty('--sh-accent', accentColor);
     root.style.setProperty('--tg-accent', accentColor);
@@ -58,7 +58,7 @@ const CarouselContent = () => {
       root.style.setProperty('--sh-background', backgroundColor);
       document.body.style.backgroundColor = backgroundColor;
     }
-  }, [activeApp]);
+  }, [activeApp, accentColor, backgroundColor]);
 
   return (
     <div className="relative min-h-screen bg-black overflow-hidden flex flex-col sm:flex-row justify-center">
@@ -94,8 +94,8 @@ const CarouselContent = () => {
       <div 
         className="absolute inset-0 opacity-40 transition-colors duration-1000 blur-[120px]"
         style={{ 
-          background: `radial-gradient(circle at 20% 30%, ${activeApp.accentColor}, transparent 50%), 
-                       radial-gradient(circle at 80% 70%, ${activeApp.secondaryColor}, transparent 50%)` 
+          background: `radial-gradient(circle at 20% 30%, ${accentColor}, transparent 50%), 
+                       radial-gradient(circle at 80% 70%, ${secondaryColor}, transparent 50%)` 
         }}
       />
 
@@ -114,7 +114,7 @@ const CarouselContent = () => {
             <div className="relative group">
               <div 
                 className="absolute -inset-1 bg-gradient-to-r from-white/20 to-transparent rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"
-                style={{ backgroundColor: activeApp.accentColor }}
+                style={{ backgroundColor: accentColor }}
               />
               <div 
                 className="relative rounded-3xl sm:rounded-4xl border border-white/10 overflow-hidden shadow-2xl aspect-16/10 transition-colors duration-500"
@@ -127,13 +127,27 @@ const CarouselContent = () => {
                   <div className="w-2 h-2 rounded-full bg-green-500/40" />
                   <div className="ml-2 h-4 w-24 sm:w-32 bg-white/5 rounded-md" />
                 </div>
-                
-                {/* Preview Image */}
-                <img 
-                  src={activeApp.heroPoster} 
-                  alt={activeApp.name}
-                  className="w-full h-full object-cover"
-                />
+                               {/* Preview Media */}
+                <div className="w-full h-full">
+                  {(activeApp as any).heroVideo ? (
+                    <video
+                      key={(activeApp as any).heroVideo}
+                      src={(activeApp as any).heroVideo}
+                      poster={(activeApp as any).heroPoster}
+                      autoPlay
+                      muted={activeApp.id !== "nexo"} // Muted by default except for nexo
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <img 
+                      src={(activeApp as any).heroPoster} 
+                      alt={(activeApp as any).name}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
                 
                 {/* Overlay with info */}
                 <div className="absolute inset-x-0 bottom-0 p-4 sm:p-8 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
@@ -143,7 +157,7 @@ const CarouselContent = () => {
                      animate={{ y: 0, opacity: 1 }}
                      transition={{ delay: 0.3 }}
                    >
-                     {activeApp.name}
+                     {(activeApp as any).name}
                    </motion.h1>
                    <motion.p 
                      className="text-white/70 text-sm sm:text-lg max-w-xl mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-none"
