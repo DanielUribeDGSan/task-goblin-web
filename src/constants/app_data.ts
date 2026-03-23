@@ -140,7 +140,7 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       id: "nexo-puertos",
       title: "nexo-puertos",
       distance: "",
-      icon: "/icon/move.gif",
+      icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
         { type: "video", src: "/nexo/videos/puertosycompartir.mp4", poster: "/nexo/images/puertos.png" },
@@ -151,10 +151,10 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       id: "nexo-compartir",
       title: "nexo-compartir",
       distance: "",
-      icon: "/icon/camera.gif",
+      icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
-        { type: "image", src: "/nexo/images/compartir-proyecto.png" },
+        { type: "video", src: "/nexo/videos/share-movil.mp4" },
       ],
     },
   ],
@@ -163,7 +163,7 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       id: "nexo-env",
       title: "nexo-env",
       distance: "",
-      icon: "/icon/bot.gif",
+      icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
         { type: "video", src: "/nexo/videos/env.mp4", poster: "/nexo/images/env.png" },
@@ -174,7 +174,7 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       id: "nexo-urls",
       title: "nexo-urls",
       distance: "",
-      icon: "/icon/chat.gif",
+      icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
         { type: "video", src: "/nexo/videos/urls.mp4", poster: "/nexo/images/urls.png" },
@@ -185,7 +185,7 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       id: "nexo-snippets",
       title: "nexo-snippets",
       distance: "",
-      icon: "/icon/note.gif",
+      icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
         { type: "video", src: "/nexo/videos/snippets.mp4", poster: "/nexo/images/snippets.png" },
