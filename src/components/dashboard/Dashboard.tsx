@@ -1,7 +1,7 @@
 import { TopBar } from "./TopBar";
 import { RoomCard } from "./RoomCard";
 import { BottomBar } from "./BottomBar";
-import { TaskGoblinMacFeatures } from "./TaskGoblinMacFeatures";
+import { AppMacFeatures } from "./AppMacFeatures";
 import { useDashboardState } from "../../hooks/useDashboardState.ts";
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { LayoutProvider } from "../../contexts/LayoutContext";
@@ -347,22 +347,11 @@ function DashboardContent({ appType }: { appType: AppType }) {
           ref={scrollContainerRef}
           className="relative z-0 flex-1 overflow-visible lg:overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-6 lg:pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32"
         >
-            {appType === "task-goblin" ? (
-              <TaskGoblinMacFeatures
-                appType={appType}
-                setPermissionsModalOpen={setPermissionsModalOpen}
-                setInfoModalOpen={setInfoModalOpen}
-              />
-            ) : (
-              <MasonryLayout
-                appType={appType}
-                devices={devices}
-                toggleDevice={toggleDevice}
-                t={t}
-                setPermissionsModalOpen={setPermissionsModalOpen}
-                setInfoModalOpen={setInfoModalOpen}
-              />
-            )}
+            <AppMacFeatures
+              appType={appType}
+              setPermissionsModalOpen={setPermissionsModalOpen}
+              setInfoModalOpen={setInfoModalOpen}
+            />
 
             {/* ── Modals (renderizados via createPortal en document.body) ── */}
             {permissionsModalOpen &&

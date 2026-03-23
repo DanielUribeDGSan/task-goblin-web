@@ -32,9 +32,9 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
         className="relative bg-black shadow-2xl overflow-hidden cursor-pointer flex flex-col items-center justify-center border border-white/5"
         initial={false}
         animate={{ 
-          width: isExpanded ? 440 : 280,
-          height: isExpanded ? 130 : 44,
-          borderRadius: isExpanded ? "2.5rem" : "1.4rem",
+          width: isExpanded ? 440 : 320,
+          height: isExpanded ? 130 : 52,
+          borderRadius: isExpanded ? "2.5rem" : "1.6rem",
           backgroundColor: isExpanded ? "rgba(0, 0, 0, 0.98)" : "rgba(0, 0, 0, 1)"
         }}
         transition={{ type: "spring", stiffness: 400, damping: 32 }}
@@ -47,23 +47,28 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex items-center justify-between w-full px-4 h-full"
+              className="flex items-center justify-between w-full px-5 h-full"
             >
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 flex items-center justify-center">
+                <div className="w-7 h-7 flex items-center justify-center">
                   <img src={activeConfig.iconPath} alt="" className="w-full h-full object-contain" />
                 </div>
-                <span className="text-[13px] font-bold text-white tracking-wide uppercase opacity-90">
+                <span className="text-[14px] font-bold text-white tracking-wide uppercase opacity-90">
                   {activeName}
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 bg-white/5 px-2.5 py-1 rounded-full border border-white/5">
-                {inactiveAppIds.map(id => (
-                  <div key={id} className="w-5 h-5 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity">
-                    <img src={APP_CONFIGS[id].iconPath} alt="" className="w-full h-full object-contain" />
-                  </div>
-                ))}
+              <div className="flex flex-col items-center gap-0.5 mt-1">
+                <div className="flex items-center gap-2 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
+                  {inactiveAppIds.map(id => (
+                    <div key={id} className="w-4 h-4 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity">
+                      <img src={APP_CONFIGS[id].iconPath} alt="" className="w-full h-full object-contain" />
+                    </div>
+                  ))}
+                </div>
+                <span className="text-[8px] font-bold text-white/20 tracking-tighter uppercase">
+                  {t.moreAppsTitle}
+                </span>
               </div>
             </motion.div>
           ) : (
