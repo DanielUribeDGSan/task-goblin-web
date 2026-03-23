@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import { Dashboard } from "../components/dashboard/Dashboard";
+import { FloatingChat } from "../components/FloatingChat";
 import "../styles/global.css";
 
 const title = "Nexo — Gestión de dominios locales y redirección de puertos";
@@ -47,6 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
   </head>
   <body class="antialiased font-sans bg-black">
     <Dashboard client:load appType="nexo" />
+    <FloatingChat client:load />
 
     <!-- JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify({

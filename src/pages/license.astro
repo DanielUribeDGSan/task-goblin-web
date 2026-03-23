@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import { LicenseApp } from "../components/LicenseViewer";
+import { FloatingChat } from "../components/FloatingChat";
 import "../styles/global.css";
 
 const title = "License Recovery | Task Goblin";
@@ -50,5 +51,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
                 <LicenseApp client:load />
             </div>
         </main>
+        <FloatingChat client:load />
     </body>
 </html>

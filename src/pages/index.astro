@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import { MultiProductCarousel } from "../components/MultiProductCarousel";
+import { FloatingChat } from "../components/FloatingChat";
 import "../styles/global.css";
 
 const title = "Task Goblin Apps — Productividad y Herramientas para Desarrolladores";
@@ -44,6 +45,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
   </head>
   <body class="antialiased font-sans bg-black">
     <MultiProductCarousel client:load />
+    <FloatingChat client:load />
 
     <!-- JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify({
