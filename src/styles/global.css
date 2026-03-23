@@ -44,6 +44,15 @@ body {
   min-height: 100vh;
 }
 
+@media (max-width: 1023px) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100dvh;
+  }
+}
+
 .glass {
   background: var(--sh-panel);
   backdrop-filter: blur(24px);

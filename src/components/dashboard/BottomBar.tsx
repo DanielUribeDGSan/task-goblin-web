@@ -115,7 +115,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   }
 
   return (
-    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end p-4 sm:p-6 gap-4 sm:gap-6 w-full max-w-full overflow-hidden">
+    <div className="flex flex-col xl:flex-row items-stretch sm:items-end xl:items-center justify-end p-4 sm:p-6 gap-4 sm:gap-6 w-full max-w-full overflow-hidden">
       {isMobile && (
         <div className="flex items-center gap-2 w-full sm:hidden">
           <motion.div

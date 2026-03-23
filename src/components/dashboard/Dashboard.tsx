@@ -1,7 +1,7 @@
-import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 import { RoomCard } from "./RoomCard";
 import { BottomBar } from "./BottomBar";
+import { TaskGoblinMacFeatures } from "./TaskGoblinMacFeatures";
 import { useDashboardState } from "../../hooks/useDashboardState.ts";
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { LayoutProvider } from "../../contexts/LayoutContext";
@@ -291,11 +291,12 @@ function DashboardContent({ appType }: { appType: AppType }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+    const isMobileScroll = window.innerWidth < 1024;
+    const target = isMobileScroll ? window : scrollContainerRef.current;
+    if (!target) return;
 
     const handleScroll = () => {
-      const currentScrollY = container.scrollTop;
+      const currentScrollY = isMobileScroll ? window.scrollY : (target as HTMLElement).scrollTop;
 
       // Determine if we are scrolling up or down
       const isScrollingDown = currentScrollY > lastScrollY.current;
@@ -318,8 +319,8 @@ function DashboardContent({ appType }: { appType: AppType }) {
       lastScrollY.current = currentScrollY;
     };
 
-    container.addEventListener("scroll", handleScroll, { passive: true });
-    return () => container.removeEventListener("scroll", handleScroll);
+    target.addEventListener("scroll", handleScroll, { passive: true });
+    return () => target.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Update global CSS variables based on active app colors
@@ -338,25 +339,30 @@ function DashboardContent({ appType }: { appType: AppType }) {
   }, [appType]);
 
   return (
-    <div className="flex text-white h-screen overflow-hidden p-2 lg:p-4 bg-[#0a0a0a]">
-      <div className="flex w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl relative bg-[#0a0a0a]">
-        <Sidebar activeId={appType} />
+    <div className="flex text-white min-h-[100dvh] lg:h-screen overflow-x-hidden lg:overflow-hidden p-0 lg:p-4 bg-[#0a0a0a]">
+      <div className="flex w-full min-h-full lg:h-full rounded-2xl lg:rounded-[2.5rem] lg:overflow-hidden shadow-2xl relative bg-[#0a0a0a] flex-col">
+        <TopBar isVisible={showTopBar} appType={appType} />
 
-        <div className="flex-1 flex flex-col min-w-0 bg-[#0a0a0a]">
-          <TopBar isVisible={showTopBar} appType={appType} />
-
-          <div
-            ref={scrollContainerRef}
-            className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32"
-          >
-            <MasonryLayout
-              appType={appType}
-              devices={devices}
-              toggleDevice={toggleDevice}
-              t={t}
-              setPermissionsModalOpen={setPermissionsModalOpen}
-              setInfoModalOpen={setInfoModalOpen}
-            />
+        <div
+          ref={scrollContainerRef}
+          className="relative z-0 flex-1 overflow-visible lg:overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-6 lg:pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32"
+        >
+            {appType === "task-goblin" ? (
+              <TaskGoblinMacFeatures
+                appType={appType}
+                setPermissionsModalOpen={setPermissionsModalOpen}
+                setInfoModalOpen={setInfoModalOpen}
+              />
+            ) : (
+              <MasonryLayout
+                appType={appType}
+                devices={devices}
+                toggleDevice={toggleDevice}
+                t={t}
+                setPermissionsModalOpen={setPermissionsModalOpen}
+                setInfoModalOpen={setInfoModalOpen}
+              />
+            )}
 
             {/* ── Modals (renderizados via createPortal en document.body) ── */}
             {permissionsModalOpen &&
@@ -510,7 +516,6 @@ function DashboardContent({ appType }: { appType: AppType }) {
           <div className="relative z-[500] shrink-0">
             <BottomBar appType={appType as "task-goblin" | "nexo" | "floaty"} />
           </div>
-        </div>
       </div>
     </div>
   );

@@ -169,7 +169,7 @@ const CarouselContent = () => {
                       ? (lang === 'es' ? 'Potencia tu productividad con herramientas inteligentes.' : 'Boost your productivity with smart tools.')
                       : activeApp.id === 'nexo'
                       ? (lang === 'es' ? 'Domina tu entorno de desarrollo local con redirección de dominios.' : 'Master your local development environment with domain redirection.')
-                      : (lang === 'es' ? 'Tu compañero virtual en el escritorio que te acompaña mientras trabajas.' : 'Your virtual desktop companion that accompanies you while you work.')}
+                      : (lang === 'es' ? 'Es una app que abre ventanas flotantes para poder ver tus películas, series o videos favoritos mientras trabajas o usas tu computadora sin necesidad de tener otro monitor o adaptar el tamaño de una pestaña del navegador.' : 'Floaty is an app that opens floating windows so you can watch your favorite movies, series or videos while you work or use your computer without needing another monitor or adapting the size of a browser tab.')}
                    </motion.p>
                    <motion.a
                      href={activeApp.path}
