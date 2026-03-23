@@ -62,6 +62,7 @@ export const TaskGoblinMacFeatures = ({
       videoRef.current.load();
       setIsMuted(false);
       videoRef.current.muted = false;
+      videoRef.current.currentTime = 2;
       videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
     } else {
       setIsPlaying(false); // If not a video, ensure isPlaying is false

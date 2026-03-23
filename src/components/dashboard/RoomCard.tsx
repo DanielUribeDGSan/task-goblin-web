@@ -239,7 +239,7 @@ export const RoomCard = ({
               <>
                 <video
                   ref={videoRef}
-                  src={current.src}
+                  src={current.src + "#t=2"}
                   className="w-full h-full object-contain"
                   playsInline
                   onClick={togglePlayPause}
