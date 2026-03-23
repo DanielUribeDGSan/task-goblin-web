@@ -138,7 +138,6 @@ export const AppMacFeatures = ({
                           ref={videoRef}
                           key={activeMedia.src}
                           src={activeMedia.src}
-                          poster={activeMedia.poster}
                           autoPlay
                           muted={isMuted}
                           loop

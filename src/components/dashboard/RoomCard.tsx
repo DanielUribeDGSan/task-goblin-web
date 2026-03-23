@@ -240,7 +240,6 @@ export const RoomCard = ({
                 <video
                   ref={videoRef}
                   src={current.src}
-                  poster={current.poster}
                   className="w-full h-full object-contain"
                   playsInline
                   onClick={togglePlayPause}

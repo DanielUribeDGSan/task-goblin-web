@@ -136,7 +136,6 @@ export const TaskGoblinMacFeatures = ({
                           ref={videoRef}
                           key={activeMedia.src} // Use key to force re-mount when video src changes
                           src={activeMedia.src}
-                          poster={activeMedia.poster}
                           autoPlay
                           muted={isMuted}
                           loop

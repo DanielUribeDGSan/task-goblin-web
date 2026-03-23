@@ -131,7 +131,6 @@ const CarouselContent = () => {
                     <video
                       key={(activeApp as any).heroVideo}
                       src={(activeApp as any).heroVideo}
-                      poster={(activeApp as any).heroPoster}
                       autoPlay
                       muted // All videos are now muted
                       loop
