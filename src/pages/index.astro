@@ -6,14 +6,14 @@ import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
 const title = "Task Goblin Apps — Productividad y Herramientas para Desarrolladores";
-const description = "Explora la suite de aplicaciones de Task Goblin. Desde automatización de tareas con Task Goblin hasta gestión de dominios locales con Nexo.";
+const description = "Explora la suite de aplicaciones de Task Goblin. Desde automatización de tareas con Task Goblin hasta gestión de dominios locales con Nexo y ventanas flotantes con Floaty.";
 const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321').toString();
 ---
 
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/icon/TaskGoblin.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
@@ -64,7 +64,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
             "name": "Task Goblin",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://task-goblin.com/favicon.svg"
+              "url": "https://task-goblin.com/icon/TaskGoblin.png"
             }
           }
         }
