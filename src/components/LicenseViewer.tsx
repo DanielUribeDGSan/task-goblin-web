@@ -12,7 +12,7 @@ export const LicenseViewer: React.FC = () => {
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
     React.useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(globalThis.location.search);
         const emailParam = params.get("email");
         if (emailParam) {
             setEmail(emailParam);
@@ -51,7 +51,7 @@ export const LicenseViewer: React.FC = () => {
         }
     };
 
-    const handleSearch = async (e: React.FormEvent) => {
+    const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!email) return;
         await performSearch(email);
@@ -75,7 +75,7 @@ export const LicenseViewer: React.FC = () => {
                 className="glass rounded-3xl overflow-hidden border border-white/10 p-6 md:p-8 relative"
             >
                 <button
-                    onClick={() => window.history.back()}
+                    onClick={() => globalThis.history.back()}
                     className="absolute top-4 left-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                     title={t.licensePage.backToHome}
                 >
@@ -166,7 +166,16 @@ export const LicenseViewer: React.FC = () => {
 
                                 <div className="flex justify-between items-center pb-2 border-b border-white/10">
                                     <span className="text-sm text-white/60">{t.licensePage.emailLabel}</span>
-                                    <span className="text-sm font-medium text-white max-w-[200px] truncate" title={email}>{email}</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm font-medium text-white max-w-[150px] truncate" title={email}>{email}</span>
+                                        <button 
+                                            onClick={() => copyToClipboard(email, -1)}
+                                            className="p-1.5 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
+                                            title="Copy Email"
+                                        >
+                                            {copiedIndex === -1 ? <CheckCircle size={14} className="text-green-400" /> : <Copy size={14} />}
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div className="space-y-3">
@@ -256,7 +265,7 @@ export const LicenseViewer: React.FC = () => {
                         className="fixed bottom-8 left-1/2 glass border border-green-500/30 bg-green-500/10 text-white px-4 py-3 rounded-xl flex items-center gap-3 shadow-lg z-50 text-sm font-medium"
                     >
                         <CheckCircle size={18} className="text-green-400" />
-                        {t.licensePage.licenseCopied}
+                        {copiedIndex === -1 ? t.licensePage.emailCopied : t.licensePage.licenseCopied}
                     </motion.div>
                 )}
             </AnimatePresence>
