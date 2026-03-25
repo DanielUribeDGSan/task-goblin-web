@@ -29,7 +29,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         const { data, error } = await supabase
             .from('licenses')
-            .select('license_key, created_at')
+            .select('license_key, created_at, app')
             .eq('email', email)
             .order('created_at', { ascending: false });
 
@@ -37,7 +37,10 @@ export const POST: APIRoute = async ({ request }) => {
             return new Response(JSON.stringify({ error: "License not found" }), { status: 404 });
         }
 
-        const keys = data.map(record => record.license_key);
+        const keys = data.map(record => ({
+            key: record.license_key,
+            app: record.app || 'task-goblin'
+        }));
 
         return new Response(JSON.stringify({ licenseKeys: keys }), {
             status: 200,

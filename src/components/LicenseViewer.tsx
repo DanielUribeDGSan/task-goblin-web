@@ -8,7 +8,7 @@ export const LicenseViewer: React.FC = () => {
     const [email, setEmail] = useState("");
     const [step, setStep] = useState<"search" | "loading" | "success" | "error">("search");
     const [errorMessage, setErrorMessage] = useState("");
-    const [licenseKeys, setLicenseKeys] = useState<string[]>([]);
+    const [licenseKeys, setLicenseKeys] = useState<{ key: string; app: string }[]>([]);
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
     React.useEffect(() => {
@@ -177,15 +177,20 @@ export const LicenseViewer: React.FC = () => {
                                         {licenseKeys.length > 1 ? t.licensePage.licenseKeyLabel + " (" + licenseKeys.length + ")" : t.licensePage.licenseKeyLabel}
                                     </span>
 
-                                    <div className="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
-                                        {licenseKeys.map((key, i) => (
-                                            <div key={key} className="flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden">
-                                                <code className="px-4 py-3 text-sm text-white/90 font-mono tracking-wider truncate w-full">
-                                                    {key}
-                                                </code>
+                                    <div className="flex flex-col gap-2 max-h-64 overflow-y-auto pr-1 custom-scrollbar">
+                                        {licenseKeys.map((item, i) => (
+                                            <div key={item.key} className="flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden">
+                                                <div className="flex flex-col py-3 px-4 min-w-0 flex-1">
+                                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#5B518D] mb-1">
+                                                        {item.app.replace('-', ' ')}
+                                                    </span>
+                                                    <code className="text-sm text-white/90 font-mono tracking-wider truncate">
+                                                        {item.key}
+                                                    </code>
+                                                </div>
                                                 <button
-                                                    onClick={() => copyToClipboard(key, i)}
-                                                    className="px-4 py-3 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors border-l border-white/10 flex items-center justify-center shrink-0"
+                                                    onClick={() => copyToClipboard(item.key, i)}
+                                                    className="px-4 py-3 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors border-l border-white/10 flex items-center justify-center shrink-0 self-stretch"
                                                     title="Copy"
                                                 >
                                                     {copiedIndex === i ? <CheckCircle size={18} className="text-green-400" /> : <Copy size={18} />}
