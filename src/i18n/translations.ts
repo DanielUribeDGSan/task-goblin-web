@@ -264,6 +264,7 @@ export const translations = {
       contactResponse: "You can contact us via email at: task.goblin.apps@gmail.com. We'll be happy to help you.",
       emailSupport: "Email Support",
     },
+    loading: "Loading...",
   },
   es: {
     appName: "Task Goblin",
@@ -529,5 +530,6 @@ export const translations = {
       contactResponse: "Puedes contactarnos vía email en: task.goblin.apps@gmail.com. Estaremos encantados de ayudarte.",
       emailSupport: "Enviar Email",
     },
+    loading: "Cargando...",
   },
 } as const;

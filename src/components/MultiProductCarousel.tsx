@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp, ChevronDown, ArrowRight, Languages } from "lucide-react";
 import { APP_CONFIGS } from "../constants/app_data";
 import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
+import { VideoLoader } from "./VideoLoader";
 
 const APPS = Object.entries(APP_CONFIGS).map(([id, config]) => ({
   id,
@@ -23,6 +24,7 @@ const CarouselContent = () => {
   const { lang, setLang, t } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeApp = APPS[activeIndex] as any;
@@ -126,17 +128,27 @@ const CarouselContent = () => {
                   <div className="ml-2 h-4 w-24 sm:w-32 bg-white/5 rounded-md" />
                 </div>
                 {/* Preview Media */}
-                <div className="w-full h-full">
+                <div className="w-full h-full relative">
                   {(activeApp as any).heroVideo ? (
-                    <video
-                      key={(activeApp as any).heroVideo}
-                      src={(activeApp as any).heroVideo + "#t=2"}
-                      autoPlay
-                      muted // All videos are now muted
-                      loop
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
+                    <>
+                      {!isVideoLoaded && (
+                        <div className="absolute inset-0 z-30">
+                          <VideoLoader icon={activeApp.iconPath} size="medium" />
+                        </div>
+                      )}
+                      <video
+                        key={(activeApp as any).heroVideo}
+                        src={(activeApp as any).heroVideo + "#t=2"}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        onCanPlayThrough={() => setIsVideoLoaded(true)}
+                        onLoadedData={() => setIsVideoLoaded(true)}
+                        onLoadStart={() => setIsVideoLoaded(false)}
+                        className={`w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      />
+                    </>
                   ) : (
                     <img
                       src={(activeApp as any).heroPoster}

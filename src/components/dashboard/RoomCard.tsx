@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
+import { VideoLoader } from "../VideoLoader";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -68,6 +69,7 @@ export const RoomCard = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showFullscreenControls, setShowFullscreenControls] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaContainerRef = useRef<HTMLDivElement>(null);
   const hideControlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -237,13 +239,27 @@ export const RoomCard = ({
           >
             {current?.type === "video" && (
               <>
+                {!isLoaded && (
+                  <div className="absolute inset-0 z-10 transition-opacity duration-300">
+                    <VideoLoader size="small" />
+                  </div>
+                )}
                 <video
                   ref={videoRef}
-                  src={current.src + "#t=2"}
-                  className="w-full h-full object-contain"
+                  src={current.src}
+                  className={cn(
+                    "w-full h-full object-contain transition-opacity duration-500",
+                    isLoaded ? "opacity-100" : "opacity-0"
+                  )}
                   playsInline
+                  muted
                   onClick={togglePlayPause}
-                />
+                  onCanPlayThrough={() => setIsLoaded(true)}
+                  onLoadedData={() => setIsLoaded(true)}
+                  onLoadStart={() => setIsLoaded(false)}
+                >
+                  <track kind="captions" />
+                </video>
                 <button
                   type="button"
                   onClick={togglePlayPause}

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { APP_CONFIGS, type RoomConfig } from '../../constants/app_data';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { VideoLoader } from '../VideoLoader';
 import { 
   ShieldCheck, 
   ChevronRight, 
@@ -54,6 +55,7 @@ export const TaskGoblinMacFeatures = ({
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     // When feature changes, if it's a video, we play it automatically
@@ -141,12 +143,22 @@ export const TaskGoblinMacFeatures = ({
                           muted={isMuted}
                           loop
                           playsInline
-                          className="w-full h-full object-cover"
+                          className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
                           onTimeUpdate={() => videoRef.current && setCurrentTime(videoRef.current.currentTime)}
                           onLoadedMetadata={() => videoRef.current && setDuration(videoRef.current.duration)}
+                          onCanPlayThrough={() => setIsVideoLoaded(true)}
+                          onLoadStart={() => setIsVideoLoaded(false)}
                           onPlay={() => setIsPlaying(true)}
                           onPause={() => setIsPlaying(false)}
-                        />
+                        >
+                          <track kind="captions" />
+                        </video>
+                        
+                        {!isVideoLoaded && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-20">
+                            <VideoLoader size="small" />
+                          </div>
+                        )}
                         
                         {/* Dark Video Controls - Always Visible */}
                         <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent transition-opacity duration-300">

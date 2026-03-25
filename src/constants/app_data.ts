@@ -270,3 +270,5 @@ export const FLOATY_URLS = [
   "/downloads/floaty/floaty_0.1.0_x64.dmg",
   "/downloads/floaty/floaty_0.1.0_x64-setup.exe",
 ];
+
+export type AppType = keyof typeof APP_CONFIGS;

@@ -26,13 +26,12 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
   const activeDesc = rawDesc.length > 50 ? `${rawDesc.substring(0, 47)}...` : rawDesc;
 
   return (
-    <div className={`relative flex justify-center w-full ${isMobile ? 'pt-2' : 'pt-4'} pointer-events-auto`}>
+    <div className={`relative flex justify-center w-full ${isMobile ? 'h-[56px] pt-2' : 'h-[64px] pt-4'} pointer-events-auto z-[200]`}>
       <motion.div
-        layout
         onClick={() => isMobile && setIsExpanded(!isExpanded)}
         onMouseEnter={() => !isMobile && setIsExpanded(true)}
         onMouseLeave={() => !isMobile && setIsExpanded(false)}
-        className="relative bg-black shadow-2xl overflow-hidden cursor-pointer flex flex-col items-center justify-center border border-white/5"
+        className={`bg-black shadow-2xl overflow-hidden cursor-pointer flex flex-col items-center justify-center border border-white/5 ${isExpanded ? 'absolute z-[201]' : 'relative'}`}
         initial={false}
         animate={{ 
           width: isExpanded 

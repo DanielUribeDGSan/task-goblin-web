@@ -16,6 +16,7 @@ import {
   Volume2,
   VolumeX
 } from 'lucide-react';
+import { VideoLoader } from '../VideoLoader';
 
 interface AppMacFeaturesProps {
   appType: AppType;
@@ -48,7 +49,7 @@ export const AppMacFeatures = ({
     aspectRatio: 'video',
     mediaItems: [
       { type: 'video', src: config.heroVideo, poster: config.heroPoster },
-      ...config.heroImages.map(src => ({ type: 'image' as const, src }))
+      ...config.heroImages.map((src: string) => ({ type: 'image' as const, src }))
     ]
   };
 
@@ -63,6 +64,7 @@ export const AppMacFeatures = ({
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     if (activeMedia.type === 'video' && videoRef.current) {
@@ -135,6 +137,11 @@ export const AppMacFeatures = ({
                   >
                     {activeMedia.type === 'video' ? (
                       <div className="relative group/video w-full h-full">
+                        {!isVideoLoaded && (
+                          <div className="absolute inset-0 z-30">
+                            <VideoLoader size="medium" />
+                          </div>
+                        )}
                         <video
                           ref={videoRef}
                           key={activeMedia.src}
@@ -143,12 +150,17 @@ export const AppMacFeatures = ({
                           muted={isMuted}
                           loop
                           playsInline
-                          className="w-full h-full object-cover"
+                          className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
                           onTimeUpdate={() => videoRef.current && setCurrentTime(videoRef.current.currentTime)}
                           onLoadedMetadata={() => videoRef.current && setDuration(videoRef.current.duration)}
+                          onCanPlayThrough={() => setIsVideoLoaded(true)}
+                          onLoadedData={() => setIsVideoLoaded(true)}
+                          onLoadStart={() => setIsVideoLoaded(false)}
                           onPlay={() => setIsPlaying(true)}
                           onPause={() => setIsPlaying(false)}
-                        />
+                        >
+                          <track kind="captions" />
+                        </video>
                         
                         <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent transition-opacity duration-300">
                           <div className="w-full h-1 bg-white/20 rounded-full mb-3 cursor-pointer relative group/progress"

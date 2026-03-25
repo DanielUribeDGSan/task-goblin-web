@@ -2,6 +2,7 @@
 import { ClientRouter } from "astro:transitions";
 import { Dashboard } from "../components/dashboard/Dashboard";
 import { FloatingChat } from "../components/FloatingChat";
+import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
 const title = "Floaty — Tu compañero virtual";
@@ -46,6 +47,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body class="antialiased font-sans bg-black">
+    <GlobalLoader client:load />
     <Dashboard client:load appType="floaty" />
     <FloatingChat client:load />
 
