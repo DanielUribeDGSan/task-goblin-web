@@ -4,30 +4,12 @@ import { motion } from "framer-motion";
 import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp, Search } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
-import { TASK_GOBLIN_URLS, NEXO_URLS, FLOATY_URLS } from "../../constants/app_data";
 import { triggerSecureDownload } from "../../utils/download";
 import { PaymentModal } from "../PaymentModal";
 import { DownloadModal, type Platform as DownloadPlatform } from "../DownloadModal";
 
 const MOBILE_BREAKPOINT = 768;
 
-const b = (s: string) => (typeof atob !== "undefined" ? atob(s) : "");
-
-const triggerDownload = (index: number, appType: "task-goblin" | "nexo" | "floaty" = "task-goblin") => {
-  const urls = appType === "nexo" ? NEXO_URLS : appType === "floaty" ? FLOATY_URLS : TASK_GOBLIN_URLS;
-  const u = b(urls[index]);
-  if (!u) {
-    alert("Próximamente disponible. / Coming soon.");
-    return;
-  }
-  const a = document.createElement("a");
-  a.href = u;
-  a.download = "";
-  a.rel = "noopener noreferrer";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-};
 
 /** Icono tipo logo de Windows (4 cuadrantes) */
 const WindowsIcon = ({ size = 24 }: { size?: number }) => (
@@ -44,7 +26,7 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
 
 export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin" | "nexo" | "floaty" }) => {
   const { t, lang } = useLanguage();
-  const { isMobile, bottomBarOpen, toggleBottomBar } = useLayout();
+  const { isMobile, toggleBottomBar } = useLayout();
   const [macMenuOpen, setMacMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const macButtonRef = useRef<HTMLButtonElement>(null);

@@ -254,19 +254,19 @@ export const APP_CONFIGS = {
 } as const;
  
 export const TASK_GOBLIN_URLS = [
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV9hYXJjaDY0LmRtZw==",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV94NjQuZG1n",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi9yZWxlYXNlcy9kb3dubG9hZC9sYXRlc3QvVGFza0dvYmxpbl8wLjEuMV94NjQtc2V0dXAuZXhl",
+  "/downloads/task-goblin/TaskGoblin_0.1.1_aarch64.dmg",
+  "/downloads/task-goblin/TaskGoblin_0.1.1_x64.dmg",
+  "/downloads/task-goblin/TaskGoblin_0.1.1_x64-setup.exe",
 ];
 
 export const NEXO_URLS = [
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1OZXhvL3JlbGVhc2VzL2Rvd25sb2FkL2xhdGVzdC9uZXhvXzAuMS4wX2FhcmNoNjQuZG1n",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1OZXhvL3JlbGVhc2VzL2Rvd25sb2FkL2xhdGVzdC9uZXhvXzAuMS4wX3g2NC5kbWc=",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1OZXhvL3JlbGVhc2VzL2Rvd25sb2FkL2xhdGVzdC9uZXhvXzAuMS4wX3g2NC1zZXR1cC5leGU=",
+  "/downloads/nexo/nexo_0.1.0_aarch64.dmg",
+  "/downloads/nexo/nexo_0.1.0_x64.dmg",
+  "/downloads/nexo/nexo_0.1.0_x64-setup.exe",
 ];
 
 export const FLOATY_URLS = [
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1GbG9hdHkvcmVsZWFzZXMvZG93bmxvYWQvbGF0ZXN0L2Zsb2F0eV8wLjEuMF9hYXJjaDY0LmRtZw==",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1GbG9hdHkvcmVsZWFzZXMvZG93bmxvYWQvbGF0ZXN0L2Zsb2F0eV8wLjEuMF94NjQuZG1n",
-  "aHR0cHM6Ly9naXRodWIuY29tL0RhbmllbFVyaWJlREdTYW4vVGFza0dvYmxpbi1GbG9hdHkvcmVsZWFzZXMvZG93bmxvYWQvbGF0ZXN0L2Zsb2F0eV8wLjEuMF94NjQtc2V0dXAuZXhl"
+  "/downloads/floaty/floaty_0.1.0_aarch64.dmg",
+  "/downloads/floaty/floaty_0.1.0_x64.dmg",
+  "/downloads/floaty/floaty_0.1.0_x64-setup.exe",
 ];
