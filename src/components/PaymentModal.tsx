@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, AlertCircle, CreditCard, Mail } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -32,7 +33,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
         document.body.appendChild(script);
 
         return () => {
-            document.body.removeChild(script);
+            if (document.body.contains(script)) {
+                document.body.removeChild(script);
+            }
         };
     }, []);
 
@@ -100,30 +103,28 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
         }
     };
 
-
-
-    return (
+    const modalContent = (
         <AnimatePresence>
             {isOpen && (
-                <React.Fragment>
+                <div className="fixed inset-0 z-[11000] flex items-center justify-center p-4 overflow-y-auto scrollbar-hide">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999]"
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
                         onClick={onClose}
                     />
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md z-[10000]"
+                        className="relative w-full max-w-md z-10 my-auto"
                     >
                         <div className="glass rounded-3xl overflow-hidden border border-white/10 p-6 md:p-8 relative">
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors z-20 cursor-pointer"
                                 aria-label={t.paymentModal.closeButton}
                             >
                                 <X size={18} />
@@ -179,7 +180,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                         <button
                                             type="submit"
                                             disabled={!email.includes('@')}
-                                            className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
+                                            className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                                             style={{ backgroundColor: 'var(--sh-accent)' }}
                                         >
                                             {t.paymentModal.checkoutButton}
@@ -216,7 +217,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                     </p>
                                     <button
                                         onClick={onClose}
-                                        className="mt-6 w-full glass hover:bg-white/10 text-white font-medium rounded-xl py-3 transition-colors"
+                                        className="mt-6 w-full glass hover:bg-white/10 text-white font-medium rounded-xl py-3 transition-colors cursor-pointer"
                                     >
                                         {t.paymentModal.closeButton}
                                     </button>
@@ -234,7 +235,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                     </p>
                                     <button
                                         onClick={() => setStep("email")}
-                                        className="mt-6 w-full glass hover:bg-white/10 text-white font-medium rounded-xl py-3 transition-colors"
+                                        className="mt-6 w-full glass hover:bg-white/10 text-white font-medium rounded-xl py-3 transition-colors cursor-pointer"
                                     >
                                         Volver a intentar
                                     </button>
@@ -242,8 +243,11 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                             )}
                         </div>
                     </motion.div>
-                </React.Fragment>
+                </div>
             )}
         </AnimatePresence>
     );
+
+    if (typeof document === "undefined") return null;
+    return createPortal(modalContent, document.body);
 };

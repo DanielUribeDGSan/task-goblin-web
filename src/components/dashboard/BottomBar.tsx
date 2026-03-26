@@ -40,23 +40,23 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
   const isNexo = appType === "nexo";
   const isFloaty = appType === "floaty";
-  
+
   // Pricing configuration
   const prices = isNexo ? {
-      mxn: 149,
-      originalMxn: 199,
-      usd: 8,
-      originalUsd: 11
+    mxn: 149,
+    originalMxn: 199,
+    usd: 8,
+    originalUsd: 11
   } : isFloaty ? {
-      mxn: 99,
-      originalMxn: 149,
-      usd: 5,
-      originalUsd: 8
+    mxn: 99,
+    originalMxn: 149,
+    usd: 5,
+    originalUsd: 8
   } : {
-      mxn: 249,
-      originalMxn: 299,
-      usd: 13,
-      originalUsd: 16
+    mxn: 249,
+    originalMxn: 299,
+    usd: 13,
+    originalUsd: 16
   };
 
   const openDownloadModal = (index: number) => {
@@ -277,7 +277,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
             onClick={() => setIsPaymentModalOpen(true)}
             className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none"
           >
-            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all font-bold">
+            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all font-bold mb-2">
               <Unlock size={20} className="group-hover:hidden" />
               <Lock size={20} className="hidden group-hover:block" />
             </div>
@@ -291,8 +291,8 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
             className="group flex flex-col items-center gap-1.5 transition-colors focus:outline-none no-underline"
             style={{ viewTransitionName: 'license-card' }}
           >
-            <div 
-              className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted transition-all"
+            <div
+              className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted transition-all mb-2"
               style={{ color: 'var(--sh-accent)' }}
             >
               <Search size={20} />
