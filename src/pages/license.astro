@@ -4,10 +4,10 @@ import { LicenseApp } from "../components/LicenseViewer";
 import { FloatingChat } from "../components/FloatingChat";
 import "../styles/global.css";
 
-const title = "License Recovery";
+const title = "Pro Account Sync";
 const description =
-    "Recover your license key using your purchased email address.";
-const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+    "Sync your professional account status using your activation email.";
+const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321').toString();
 ---
 
 <html lang="es">

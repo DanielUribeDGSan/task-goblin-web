@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, AlertTriangle, Download, Apple, Monitor, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -15,29 +15,30 @@ interface DownloadModalProps {
 
 const macRows = [
   { version: "High Sierra", number: "10.13", year: "2017", status: "warn" },
-  { version: "Mojave",      number: "10.14", year: "2018", status: "warn" },
-  { version: "Catalina",    number: "10.15", year: "2019", status: "ok"   },
-  { version: "Big Sur",     number: "11",    year: "2020", status: "ok"   },
-  { version: "Monterey",    number: "12",    year: "2021", status: "ok"   },
-  { version: "Ventura",     number: "13",    year: "2022", status: "ok"   },
-  { version: "Sonoma",      number: "14",    year: "2023", status: "ok"   },
-  { version: "Sequoia",     number: "15",    year: "2024", status: "ok"   },
-  { version: "Tahoe",       number: "26",    year: "2025", status: "ok"   },
+  { version: "Mojave", number: "10.14", year: "2018", status: "warn" },
+  { version: "Catalina", number: "10.15", year: "2019", status: "partial" },
+  { version: "Big Sur", number: "11", year: "2020", status: "ok" },
+  { version: "Monterey", number: "12", year: "2021", status: "ok" },
+  { version: "Ventura", number: "13", year: "2022", status: "ok" },
+  { version: "Sonoma", number: "14", year: "2023", status: "ok" },
+  { version: "Sequoia", number: "15", year: "2024", status: "ok" },
+  { version: "Tahoe", number: "26", year: "2025", status: "ok" },
 ];
 
 const winRows = [
-  { version: "Windows 7 / 8", number: "≤ 8.1", year: "",     status: "bad" },
-  { version: "Windows 10",    number: "10",    year: "2015", status: "ok"  },
-  { version: "Windows 11",    number: "11",    year: "2021", status: "ok"  },
+  { version: "Windows 7 / 8", number: "≤ 8.1", year: "", status: "bad" },
+  { version: "Windows 10", number: "10", year: "2015", status: "ok" },
+  { version: "Windows 11", number: "11", year: "2021", status: "ok" },
 ];
 
 const StatusBadge = ({ status, label }: { status: string; label: string }) => {
   const styles: Record<string, string> = {
-    ok:   "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
+    ok: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
     warn: "bg-amber-500/15  text-amber-400  border border-amber-500/30",
-    bad:  "bg-red-500/15    text-red-400    border border-red-500/30",
+    partial: "bg-blue-500/15 text-blue-400 border border-blue-500/30",
+    bad: "bg-red-500/15    text-red-400    border border-red-500/30",
   };
-  const icons: Record<string, string> = { ok: "✅", warn: "⚠️", bad: "❌" };
+  const icons: Record<string, string> = { ok: "✅", warn: "⚠️", partial: "🔵", bad: "❌" };
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${styles[status]}`}>
       {icons[status]} {label}
@@ -56,39 +57,14 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
   const dm = t.downloadModal;
   const [showImage, setShowImage] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
-  const [canScrollDown, setCanScrollDown] = useState(false);
-  
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const downloadButtonRef = useRef<HTMLButtonElement>(null);
 
   const isWindows = platform === "windows";
   const rows = isWindows ? winRows : macRows;
 
-  const checkScroll = () => {
-    if (scrollContainerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-      // If we are more than 20px away from the bottom, show the indicator
-      setCanScrollDown(scrollHeight - (scrollTop + clientHeight) > 20);
-    }
-  };
 
-  useEffect(() => {
-    if (isOpen) {
-      // Small timeout to allow DOM to render and measures to be accurate
-      const timer = setTimeout(checkScroll, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, showImage]);
-
-  const scrollToDownload = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({
-        top: scrollContainerRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  };
-  
   const getHeader = () => {
     if (platform === "mac-silicon") return dm.macSilicon;
     if (platform === "mac-intel") return dm.macIntel;
@@ -125,10 +101,9 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-lg z-[9999] max-h-[90vh] flex flex-col"
           >
-            <div 
+            <div
               ref={scrollContainerRef}
-              onScroll={checkScroll}
-              className="glass rounded-3xl overflow-y-auto border border-white/10 p-6 md:p-8 relative scrollbar-hide"
+              className="glass rounded-3xl overflow-y-auto border border-white/10 p-6 md:p-8 relative"
             >
               {/* Close */}
               <button
@@ -142,7 +117,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
 
               {/* Header */}
               <div className="flex items-center gap-3 mb-5">
-                <div 
+                <div
                   className="w-10 h-10 rounded-2xl glass flex items-center justify-center shrink-0"
                   style={{ color: 'var(--sh-accent)' }}
                 >
@@ -167,6 +142,30 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 </p>
               </div>
 
+              {/* 🍏 Mac App Store Alert */}
+              {!isWindows && (
+                <div className="glass bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
+                  <div className="flex gap-3">
+                    <AlertTriangle size={18} className="text-amber-400 shrink-0 mt-0.5" />
+                    <div className="flex flex-col gap-2">
+                      <p className="text-xs text-white/75 leading-relaxed">
+                        <span className="font-semibold text-amber-400">{t.paymentModal.emailWarning.split(":")[0]}: </span>
+                        {dm.macAppStoreInfo}
+                      </p>
+                      <a
+                        href={dm.macAppStoreHelpUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors w-fit flex items-center gap-1.5 cursor-pointer no-underline"
+                      >
+                        <Monitor size={14} className="mr-0.5" />
+                        {dm.macAppStoreAction}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* 🛡️ Windows SmartScreen Reassurance */}
               {isWindows && (
                 <div className="glass bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
@@ -177,7 +176,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                         {/* @ts-ignore */}
                         {dm.windowsSmartScreenInfo}
                       </p>
-                      <button 
+                      <button
                         onClick={() => setShowImage(!showImage)}
                         className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors w-fit flex items-center gap-1.5 cursor-pointer"
                       >
@@ -187,17 +186,17 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                       </button>
                     </div>
                   </div>
-                  
+
                   {showImage && (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       className="relative rounded-lg overflow-hidden border border-white/10 shadow-lg mt-2"
                     >
-                      <img 
-                        src="/windows/screen-blue.png" 
-                        alt="Windows Protected your PC screenshot" 
+                      <img
+                        src="/windows/screen-blue.png"
+                        alt="Windows Protected your PC screenshot"
                         className="w-full h-auto opacity-90"
                       />
                     </motion.div>
@@ -215,7 +214,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                         {/* @ts-ignore */}
                         {dm.macPermissionsInfo}
                       </p>
-                      <button 
+                      <button
                         onClick={() => setShowTutorial(true)}
                         className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors w-fit flex items-center gap-1.5 cursor-pointer"
                       >
@@ -255,9 +254,14 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                         </td>
                         <td className="px-4 py-2.5 text-white/50 font-mono text-xs">{row.number}</td>
                         <td className="px-4 py-2.5">
-                          <StatusBadge 
-                            status={row.status} 
-                            label={row.status === "ok" ? dm.statusOk : row.status === "warn" ? dm.statusWarn : dm.statusBad} 
+                          <StatusBadge
+                            status={row.status}
+                            label={
+                              row.status === "ok" ? dm.statusOk : 
+                              row.status === "warn" ? dm.statusWarn : 
+                              row.status === "partial" ? dm.statusPartial : 
+                              dm.statusBad
+                            }
                           />
                         </td>
                       </tr>
@@ -266,47 +270,28 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 </table>
               </div>
 
-              {/* Actions */}
-              <button
-                ref={downloadButtonRef}
-                type="button"
-                onClick={onConfirm}
-                className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
-                style={{ backgroundColor: 'var(--sh-accent)' }}
-              >
-                <Download size={18} />
-                {dm.downloadFor} {getArch()}
-              </button>
+              {/* Actions Footer - Sticky */}
+              <div className="sticky -bottom-8 bg-linear-to-t from-[#151515] via-[#151515] to-[#151515]/0 backdrop-blur-md pt-6 pb-1 z-10 border-t border-white/5 mt-6 -mx-8 px-8 text-center">
+                <button
+                  ref={downloadButtonRef}
+                  type="button"
+                  onClick={onConfirm}
+                  className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                  style={{ backgroundColor: 'var(--sh-accent)' }}
+                >
+                  <Download size={18} />
+                  {dm.downloadFor} {getArch()}
+                </button>
 
-              <p className="text-center text-xs text-white/30 mt-3">
-                {dm.acceptTerms}
-              </p>
-
-              {/* Scroll Indicator Icon */}
-              <AnimatePresence>
-                {canScrollDown && (
-                  <motion.button
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    onClick={scrollToDownload}
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full glass border border-white/20 flex items-center justify-center text-white shadow-2xl cursor-pointer z-30 hover:scale-110 active:scale-95 transition-transform"
-                    style={{ backgroundColor: 'var(--sh-accent)' }}
-                  >
-                    <motion.div
-                      animate={{ y: [0, 4, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <ChevronDown size={20} className="text-black" />
-                    </motion.div>
-                  </motion.button>
-                )}
-              </AnimatePresence>
+                <p className="text-center text-xs text-white/30 mt-3">
+                  {dm.acceptTerms}
+                </p>
+              </div>
             </div>
           </motion.div>
         </React.Fragment>
       )}
-      
+
       {/* Permission Tutorial Modal */}
       <AnimatePresence>
         {showTutorial && (
@@ -382,8 +367,8 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
               <button
                 onClick={() => setShowTutorial(false)}
                 className="w-full mt-10 font-bold py-4 rounded-2xl transition-all border cursor-pointer"
-                style={{ 
-                  backgroundColor: 'var(--sh-accent-muted)', 
+                style={{
+                  backgroundColor: 'var(--sh-accent-muted)',
                   color: 'var(--sh-accent)',
                   borderColor: 'var(--sh-panel-border)'
                 }}
