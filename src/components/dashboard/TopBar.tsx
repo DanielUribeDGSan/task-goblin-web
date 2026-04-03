@@ -26,7 +26,7 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
 
           {/* Right Actions: Language & Pricing proooo */}
           <div className="flex items-center gap-2 lg:gap-4 h-[50px] order-2 md:order-3">
-            {/* {isMobile && (
+            {isMobile && (
               <button
                 type="button"
                 onClick={() => setIsPricingModalOpen(true)}
@@ -35,7 +35,7 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
               >
                 <Tag size={18} />
               </button>
-            )} */}
+            )}
 
             <div className="flex items-center gap-2 shrink-0">
               <div className="flex rounded-xl overflow-hidden border border-white/10 bg-white/5">
