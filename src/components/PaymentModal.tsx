@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, AlertCircle, CreditCard, Mail } from "lucide-react";
@@ -17,27 +17,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
 
-    // Lemon Squeezy Product/Variant ID map
-    const variantIdMap = {
-        "task-goblin": "1382179",
-        "nexo": "1431192",
-        "floaty": "1430993"
-    };
-    const LEMON_VARIANT_ID = variantIdMap[appType];
+    // Mercado Pago Prices are handled on the server side using APP_CONFIG.
 
-    useEffect(() => {
-        // Load Lemon.js script dynamically
-        const script = document.createElement("script");
-        script.src = "https://app.lemonsqueezy.com/js/lemon.js";
-        script.async = true;
-        document.body.appendChild(script);
-
-        return () => {
-            if (document.body.contains(script)) {
-                document.body.removeChild(script);
-            }
-        };
-    }, []);
+    // Mercado Pago redirection flow
 
     const handleCheckout = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,19 +32,15 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
         setStep("processing");
 
         try {
-            // En un entorno de producción seguro, la creación del checkout se hace en un backend.
-            // Como LemonSqueezy no permite procesar tarjetas de crédito directamente por API sin PCI Compliance,
-            // la forma recomendada es generar un enlace de Checkout usando la API y abrirlo con Lemon.js.
-
             // API Call to Astro internal endpoint to handle backend request securely
-            const response = await fetch("/api/create-checkout", {
+            const response = await fetch("/api/checkout/mercadopago", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     email: email,
-                    variantId: LEMON_VARIANT_ID
+                    appType: appType // 'task-goblin', 'nexo', or 'floaty'
                 })
             });
 
@@ -74,26 +52,11 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
             const checkoutData = await response.json();
             const checkoutUrl = checkoutData.url;
 
-            // Usar Lemon.js para abrir el modal de pago nativo de ellos
-            // @ts-ignore
-            if (window.LemonSqueezy) {
-                // @ts-ignore
-                window.LemonSqueezy.Url.Open(checkoutUrl);
-                // Setup LemonSqueezy Event listener to detect successful payment
-                // @ts-ignore
-                window.LemonSqueezy.Setup({
-                    eventHandler: (event: any) => {
-                        if (event.event === "Checkout.Success") {
-                            setStep("success");
-                            // Registration in Supabase is handled by the backend Lemon Squeezy webhook now.
-                        }
-                    }
-                });
+            if (checkoutUrl) {
+                // Mercado Pago uses a redirect for its checkouts
+                window.location.href = checkoutUrl;
             } else {
-                // Fallback
-                window.open(checkoutUrl, "_blank");
-                setStep("email");
-                alert("Se ha abierto el pago en una nueva pestaña. Por favor completa la compra y revisa tu correo.");
+                throw new Error("No checkout URL received from server.");
             }
 
         } catch (error: any) {
@@ -187,7 +150,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                         </button>
 
                                         <p className="text-xs text-center text-white/40 mt-4">
-                                            Secured by Lemon Squeezy integration
+                                            Secured by Mercado Pago integration
                                         </p>
                                     </form>
                                 </div>
