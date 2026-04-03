@@ -67,7 +67,16 @@ export const LicenseViewer: React.FC = () => {
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!email) return;
-        await performSearch(email, paymentId);
+
+        const trimmedInput = email.trim();
+        // Simple detection: if it's all digits and long, treat as paymentId
+        const isNumeric = /^\d+$/.test(trimmedInput);
+        
+        if (isNumeric && trimmedInput.length > 5) {
+            await performSearch("", trimmedInput);
+        } else {
+            await performSearch(trimmedInput, paymentId);
+        }
     };
 
     const copyToClipboard = async (text: string, index: number) => {

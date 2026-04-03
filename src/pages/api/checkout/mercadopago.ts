@@ -19,8 +19,8 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         const accessToken = APP_CONFIG.MERCADO_PAGO_IS_PROD
-            ? import.meta.env.PUBLIC_ACCESS_TOKEN_PRODUCCION
-            : import.meta.env.PUBLIC_ACCESS_TOKEN_PRUEBAS;
+            ? import.meta.env.ACCESS_TOKEN_PRODUCCION
+            : import.meta.env.ACCESS_TOKEN_PRUEBAS;
 
         if (!accessToken) {
             return new Response(JSON.stringify({ error: "Configuración de Mercado Pago incompleta" }), { status: 500 });

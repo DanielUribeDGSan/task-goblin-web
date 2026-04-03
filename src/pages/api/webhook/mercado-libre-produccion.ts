@@ -14,7 +14,7 @@ export const POST: APIRoute = async ({ request }) => {
         const id = body.data?.id || body.id;
 
         if (type === 'payment' && id) {
-            const accessToken = import.meta.env.PUBLIC_ACCESS_TOKEN_PRODUCCION;
+            const accessToken = import.meta.env.ACCESS_TOKEN_PRODUCCION;
 
             if (!accessToken) {
                 console.error("Mercado Pago Access Token missing in PRODUCCION Webhook");
