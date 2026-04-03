@@ -7,6 +7,7 @@ export const LicenseViewer: React.FC = () => {
     const { t } = useLanguage();
     const [email, setEmail] = useState("");
     const [paymentId, setPaymentId] = useState("");
+    const [gateway, setGateway] = useState("");
     const [step, setStep] = useState<"search" | "loading" | "success" | "error" | "checkout-success" | "checkout-cancel">("search");
     const [errorMessage, setErrorMessage] = useState("");
     const [licenseKeys, setLicenseKeys] = useState<{ key: string; app: string }[]>([]);
@@ -16,10 +17,15 @@ export const LicenseViewer: React.FC = () => {
         const params = new URLSearchParams(globalThis.location.search);
         const emailParam = params.get("email");
         const statusParam = params.get("status");
-        const paymentIdParam = params.get("payment_id") || params.get("collection_id");
+        const gatewayParam = params.get("gateway");
+        const paymentIdParam = params.get("payment_id") || params.get("collection_id") || params.get("id");
 
         if (paymentIdParam) {
             setPaymentId(paymentIdParam);
+        }
+
+        if (gatewayParam) {
+            setGateway(gatewayParam);
         }
 
         if (statusParam === "approved") {
@@ -102,7 +108,9 @@ export const LicenseViewer: React.FC = () => {
 
     let subtitleText: string = t.licensePage.subtitle;
     if (isCheckoutSuccess) {
-        subtitleText = t.licensePage.checkoutSuccessSubtitle;
+        subtitleText = gateway === "paypal" 
+            ? t.licensePage.checkoutSuccessSubtitlePayPal 
+            : t.licensePage.checkoutSuccessSubtitle;
     } else if (isCheckoutCancel) {
         subtitleText = t.licensePage.checkoutCancelSubtitle;
     }

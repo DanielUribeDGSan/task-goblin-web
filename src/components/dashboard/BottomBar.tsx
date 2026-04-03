@@ -146,7 +146,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
       )}
 
       {/* proooo */}
-      {/* {!isMobile && (
+      {!isMobile && (
         <motion.div
           className="flex items-center justify-center sm:justify-start gap-3 glass rounded-xl sm:rounded-[1.5rem] px-3 sm:px-4 py-2 sm:py-2.5 min-w-0 shrink-0"
           whileHover={{
@@ -181,7 +181,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
             )}
           </div>
         </motion.div>
-      )} */}
+      )}
 
       {isMobile ? (
         <div className="flex items-center gap-3 glass rounded-xl sm:rounded-[1.5rem] px-4 py-3 text-center">

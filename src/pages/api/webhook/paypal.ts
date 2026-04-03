@@ -102,7 +102,7 @@ export const GET: APIRoute = async ({ request, url, redirect }) => {
 
             if (userEmail && appName) {
                 await activateLicense(userEmail, appName, transactionId);
-                return redirect(`/license?status=approved&id=${transactionId}`);
+                return redirect(`/license?status=approved&id=${transactionId}&gateway=paypal`);
             }
         }
 
@@ -110,7 +110,7 @@ export const GET: APIRoute = async ({ request, url, redirect }) => {
             console.error("PayPal Capture failed or already processed:", captureData);
         }
 
-        return redirect(`/license?status=approved&id=${token}`);
+        return redirect(`/license?status=approved&id=${token}&gateway=paypal`);
 
     } catch (error: any) {
         console.error("PayPal Return Error:", error);

@@ -166,7 +166,7 @@ export const translations = {
     },
     bottomBar: {
       price: "Price",
-      promotion: "Promotion",
+      promotion: "Pro functions promotion",
       viewInMxn: "View price in MXN",
       viewInUsd: "View price in USD",
       downloadMac: "Download for Mac",
@@ -249,6 +249,7 @@ export const translations = {
       backToHome: "Back to Home",
       checkoutSuccessTitle: "Payment Successful!",
       checkoutSuccessSubtitle: "Please confirm the email used during payment or your Order ID to view your license.",
+      checkoutSuccessSubtitlePayPal: "If you paid using your PayPal account, make sure to enter that same email address to view your license.",
       checkoutCancelTitle: "Payment Canceled",
       checkoutCancelSubtitle: "The payment process was canceled. No charges were made. You can try again whenever you want.",
       associateButton: "View My License",
@@ -444,7 +445,7 @@ export const translations = {
     },
     bottomBar: {
       price: "Precio",
-      promotion: "Promoción",
+      promotion: "Promoción funciones pro",
       viewInMxn: "Ver precio en MXN",
       viewInUsd: "Ver precio en USD",
       downloadMac: "Descargar para Mac",
@@ -527,6 +528,7 @@ export const translations = {
       backToHome: "Volver al Inicio",
       checkoutSuccessTitle: "¡Pago Exitoso!",
       checkoutSuccessSubtitle: "Por favor, confirma el correo que usaste al pagar o tu ID de Pago para ver tu licencia.",
+      checkoutSuccessSubtitlePayPal: "Si realizaste el pago con tu cuenta de PayPal, asegúrate de ingresar ese mismo correo electrónico para consultar tu licencia.",
       checkoutCancelTitle: "Pago Cancelado",
       checkoutCancelSubtitle: "El proceso de pago fue cancelado. No se realizó ningún cargo. Puedes intentar de nuevo cuando quieras.",
       associateButton: "Ver Mi Licencia",

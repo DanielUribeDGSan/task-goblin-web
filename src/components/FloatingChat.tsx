@@ -198,7 +198,7 @@ const FloatingChatContent: React.FC = () => {
                         initial={{ opacity: 0, y: 20, scale: 0.9, transformOrigin: "bottom right" }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                        className="mb-4 w-[calc(100vw-2rem)] sm:w-[360px] h-[700px] max-h-[85vh] glass-card rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl border border-white/10"
+                        className="mb-4 w-[calc(100vw-2rem)] sm:w-[360px] h-[700px] max-h-[85dvh] glass-card rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl border border-white/10"
                         style={{
                             background: "linear-gradient(180deg, rgba(25, 25, 28, 0.95) 0%, rgba(15, 15, 18, 0.98) 100%)",
                             backdropFilter: "blur(20px)"
