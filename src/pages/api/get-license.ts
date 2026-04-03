@@ -12,10 +12,10 @@ export const POST: APIRoute = async ({ request }) => {
             return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400 });
         }
 
-        const { email } = body;
+        const { email, paymentId } = body;
 
-        if (!email) {
-            return new Response(JSON.stringify({ error: "Email is required" }), { status: 400 });
+        if (!email && !paymentId) {
+            return new Response(JSON.stringify({ error: "Email or Payment ID is required" }), { status: 400 });
         }
 
         const supaUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL;
@@ -27,11 +27,18 @@ export const POST: APIRoute = async ({ request }) => {
 
         const supabase = createClient(supaUrl, supaKey);
 
-        const { data, error } = await supabase
+        let query = supabase
             .from('licenses')
-            .select('license_key, created_at, app')
-            .eq('email', email)
+            .select('license_key, created_at, app, payment_id')
             .order('created_at', { ascending: false });
+
+        if (paymentId) {
+            query = query.eq('payment_id', paymentId);
+        } else {
+            query = query.eq('email', email);
+        }
+
+        const { data, error } = await query;
 
         if (error || !data || data.length === 0) {
             return new Response(JSON.stringify({ error: "License not found" }), { status: 404 });

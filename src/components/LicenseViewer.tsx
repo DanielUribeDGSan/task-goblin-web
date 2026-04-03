@@ -16,11 +16,16 @@ export const LicenseViewer: React.FC = () => {
         const emailParam = params.get("email");
         const statusParam = params.get("status");
         const externalRef = params.get("external_reference");
+        const paymentIdParam = params.get("payment_id") || params.get("collection_id");
 
         if (statusParam === "approved") {
             setStep("checkout-success");
             if (externalRef && externalRef !== "null") {
                 setEmail(externalRef);
+            }
+            if (paymentIdParam) {
+                // Trigger automatic search by payment_id
+                performSearch("", paymentIdParam);
             }
         } else if (emailParam) {
             setEmail(emailParam);
@@ -29,7 +34,7 @@ export const LicenseViewer: React.FC = () => {
         }
     }, []);
 
-    const performSearch = async (targetEmail: string) => {
+    const performSearch = async (targetEmail: string, paymentId?: string) => {
         setStep("loading");
         setErrorMessage("");
 
@@ -39,7 +44,10 @@ export const LicenseViewer: React.FC = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email: targetEmail })
+                body: JSON.stringify({ 
+                    email: targetEmail || undefined, 
+                    paymentId: paymentId 
+                })
             });
 
             if (!response.ok) {
@@ -83,7 +91,7 @@ export const LicenseViewer: React.FC = () => {
                 className="glass rounded-3xl overflow-hidden border border-white/10 p-6 md:p-8 relative"
             >
                 <button
-                    onClick={() => globalThis.history.back()}
+                    onClick={() => window.location.href = '/'}
                     className="absolute top-4 left-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                     title={t.licensePage.backToHome}
                 >

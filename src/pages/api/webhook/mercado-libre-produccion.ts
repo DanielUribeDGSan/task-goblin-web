@@ -37,9 +37,9 @@ export const POST: APIRoute = async ({ request }) => {
                         return new Response("Metadata missing", { status: 200 });
                     }
 
-                    console.log(`Processing approved PRODUCCION payment for ${userEmail} - App: ${appName}`);
+                    console.log(`Processing approved PRODUCCION payment for ${userEmail} - App: ${appName} - Payment: ${id}`);
 
-                    const autoLicenseKey = "MP-" + crypto.randomUUID().toUpperCase().split("-")[0] + "-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+                    const autoLicenseKey = "MP-" + crypto.randomUUID().toUpperCase().split("-")[0] + "-" + Math.random().toString(36).substring(2, 11).toUpperCase();
 
                     const supaUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL;
                     const supaKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
@@ -47,12 +47,11 @@ export const POST: APIRoute = async ({ request }) => {
                     if (supaUrl && supaKey) {
                         const supabase = createClient(supaUrl, supaKey);
 
-                        // Check if license already exists
+                        // Check if license already exists for this payment_id
                         const { data: existingLicense } = await supabase
                             .from('licenses')
                             .select('id')
-                            .eq('email', userEmail)
-                            .eq('app', appName)
+                            .eq('payment_id', id.toString())
                             .maybeSingle();
 
                         if (!existingLicense) {
@@ -60,15 +59,18 @@ export const POST: APIRoute = async ({ request }) => {
                                 {
                                     email: userEmail,
                                     license_key: autoLicenseKey,
-                                    app: appName
+                                    app: appName,
+                                    payment_id: id.toString()
                                 }
                             ]);
 
                             if (dbError) {
-                                console.error("Error inserting license to Supabase:", dbError);
-                                return new Response("DB Error", { status: 500 });
+                                console.error("Error inserting license to Supabase (check if payment_id column exists):", dbError);
+                                return new Response("DB Error", { status: 200 }); // Return 200 to acknowledge MP, but log error
                             }
                             console.log(`Successfully created PRODUCCION license for ${userEmail} in Supabase`);
+                        } else {
+                            console.log(`License already exists for payment ${id}`);
                         }
                     }
                 }
