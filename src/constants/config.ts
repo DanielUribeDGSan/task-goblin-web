@@ -10,7 +10,7 @@ export const APP_CONFIG = {
   /**
    * Mercado Pago Production Mode: true for production, false for test/sandbox
    */
-  MERCADO_PAGO_IS_PROD: false,
+  MERCADO_PAGO_IS_PROD: true,
   /**
    * Product Prices in MXN
    */
