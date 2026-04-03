@@ -36,7 +36,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    appType: appType
+                    appType: appType,
+                    isMexico: isMexico
                 })
             });
 

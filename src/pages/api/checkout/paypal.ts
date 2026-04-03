@@ -36,7 +36,7 @@ async function getPayPalAccessToken() {
 export const POST: APIRoute = async ({ request }) => {
     try {
         const body = await request.json();
-        const { appType } = body;
+        const { appType, isMexico } = body;
 
         if (!appType) {
             return new Response(JSON.stringify({ error: "Faltan datos requeridos (appType)" }), { status: 400 });
@@ -46,6 +46,10 @@ export const POST: APIRoute = async ({ request }) => {
         if (!product) {
             return new Response(JSON.stringify({ error: "Tipo de aplicación no válido" }), { status: 400 });
         }
+
+        // Determine currency and price based on location
+        const currency = isMexico ? 'MXN' : 'USD';
+        const price = isMexico ? product.price : product.priceUSD;
 
         const accessToken = await getPayPalAccessToken();
 
@@ -61,8 +65,8 @@ export const POST: APIRoute = async ({ request }) => {
                     {
                         reference_id: appType,
                         amount: {
-                            currency_code: 'USD',
-                            value: product.priceUSD.toString(),
+                            currency_code: currency,
+                            value: price.toString(),
                         },
                         description: `Lifetime license for ${product.name}`,
                     },
