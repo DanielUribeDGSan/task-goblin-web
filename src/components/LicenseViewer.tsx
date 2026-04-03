@@ -7,7 +7,7 @@ export const LicenseViewer: React.FC = () => {
     const { t } = useLanguage();
     const [email, setEmail] = useState("");
     const [paymentId, setPaymentId] = useState("");
-    const [step, setStep] = useState<"search" | "loading" | "success" | "error" | "checkout-success">("search");
+    const [step, setStep] = useState<"search" | "loading" | "success" | "error" | "checkout-success" | "checkout-cancel">("search");
     const [errorMessage, setErrorMessage] = useState("");
     const [licenseKeys, setLicenseKeys] = useState<{ key: string; app: string }[]>([]);
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -24,7 +24,8 @@ export const LicenseViewer: React.FC = () => {
 
         if (statusParam === "approved") {
             setStep("checkout-success");
-            // User will enter email to "associate/confirm" and view license
+        } else if (statusParam === "cancel") {
+            setStep("checkout-cancel");
         } else if (emailParam) {
             setEmail(emailParam);
             performSearch(emailParam);
@@ -89,6 +90,23 @@ export const LicenseViewer: React.FC = () => {
         }
     };
 
+    const isCheckoutSuccess = step === "checkout-success";
+    const isCheckoutCancel = step === "checkout-cancel";
+
+    let titleText: string = t.licensePage.title;
+    if (isCheckoutSuccess) {
+        titleText = t.licensePage.checkoutSuccessTitle;
+    } else if (isCheckoutCancel) {
+        titleText = t.licensePage.checkoutCancelTitle;
+    }
+
+    let subtitleText: string = t.licensePage.subtitle;
+    if (isCheckoutSuccess) {
+        subtitleText = t.licensePage.checkoutSuccessSubtitle;
+    } else if (isCheckoutCancel) {
+        subtitleText = t.licensePage.checkoutCancelSubtitle;
+    }
+
     return (
         <div className="w-full max-w-md mx-auto" style={{ viewTransitionName: 'license-card' }}>
             <motion.div
@@ -97,7 +115,7 @@ export const LicenseViewer: React.FC = () => {
                 className="glass rounded-3xl overflow-hidden border border-white/10 p-6 md:p-8 relative"
             >
                 <button
-                    onClick={() => window.location.href = '/'}
+                    onClick={() => globalThis.location.href = '/'}
                     className="absolute top-4 left-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                     title={t.licensePage.backToHome}
                 >
@@ -109,18 +127,18 @@ export const LicenseViewer: React.FC = () => {
                         className="w-12 h-12 rounded-2xl glass flex items-center justify-center mx-auto mb-4"
                         style={{ color: '#5B518D' }}
                     >
-                        <Search size={24} />
+                        {isCheckoutCancel ? <AlertCircle size={24} className="text-orange-400" /> : <Search size={24} />}
                     </div>
                     <h2 className="text-2xl font-bold text-white">
-                        {step === "checkout-success" ? t.licensePage.checkoutSuccessTitle : t.licensePage.title}
+                        {titleText}
                     </h2>
                     <p className="text-sh-text-muted text-sm px-4">
-                        {step === "checkout-success" ? t.licensePage.checkoutSuccessSubtitle : t.licensePage.subtitle}
+                        {subtitleText}
                     </p>
                 </div>
 
                 <AnimatePresence mode="wait">
-                    {(step === "search" || step === "checkout-success") && (
+                    {(step === "search" || isCheckoutSuccess || isCheckoutCancel) && (
                         <motion.form
                             key={step}
                             initial={{ opacity: 0, x: -20 }}
@@ -154,8 +172,8 @@ export const LicenseViewer: React.FC = () => {
                                     className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2"
                                     style={{ backgroundColor: '#5B518D' }}
                                 >
-                                {step === "checkout-success" ? <CheckCircle size={18} /> : <Search size={18} />}
-                                {step === "checkout-success" ? t.licensePage.associateButton : t.licensePage.searchButton}
+                                {isCheckoutSuccess ? <CheckCircle size={18} /> : <Search size={18} />}
+                                {isCheckoutSuccess ? t.licensePage.associateButton : t.licensePage.searchButton}
                             </button>
                         </motion.form>
                     )}

@@ -249,6 +249,8 @@ export const translations = {
       backToHome: "Back to Home",
       checkoutSuccessTitle: "Payment Successful!",
       checkoutSuccessSubtitle: "Please confirm the email used during payment or your Order ID to view your license.",
+      checkoutCancelTitle: "Payment Canceled",
+      checkoutCancelSubtitle: "The payment process was canceled. No charges were made. You can try again whenever you want.",
       associateButton: "View My License",
     },
     chat: {
@@ -525,6 +527,8 @@ export const translations = {
       backToHome: "Volver al Inicio",
       checkoutSuccessTitle: "¡Pago Exitoso!",
       checkoutSuccessSubtitle: "Por favor, confirma el correo que usaste al pagar o tu ID de Pago para ver tu licencia.",
+      checkoutCancelTitle: "Pago Cancelado",
+      checkoutCancelSubtitle: "El proceso de pago fue cancelado. No se realizó ningún cargo. Puedes intentar de nuevo cuando quieras.",
       associateButton: "Ver Mi Licencia",
     },
     chat: {
