@@ -82,10 +82,17 @@ export const POST: APIRoute = async ({ request }) => {
         });
 
         const order = await orderResponse.json();
-        const approvalUrl = order.links.find((link: any) => link.rel === 'approve')?.href;
+
+        if (!orderResponse.ok) {
+            console.error("PayPal API Error:", JSON.stringify(order, null, 2));
+            throw new Error(order.message || "PayPal rejected the order creation. Check console logs for details.");
+        }
+
+        const approvalUrl = order.links?.find((link: any) => link.rel === 'approve')?.href;
 
         if (!approvalUrl) {
-            throw new Error("No approval URL received from PayPal");
+            console.error("PayPal Response links missing:", JSON.stringify(order.links, null, 2));
+            throw new Error("No approval URL received from PayPal. Check order status.");
         }
 
         return new Response(JSON.stringify({ url: approvalUrl }), {
@@ -94,7 +101,10 @@ export const POST: APIRoute = async ({ request }) => {
         });
 
     } catch (error: any) {
-        console.error("PayPal Order Error:", error);
-        return new Response(JSON.stringify({ error: error.message || "Error al crear la orden de PayPal" }), { status: 500 });
+        console.error("PayPal Checkout API Error:", error);
+        return new Response(JSON.stringify({ 
+            error: error.message || "Error al crear la orden de PayPal",
+            details: error.stack
+        }), { status: 500 });
     }
 }

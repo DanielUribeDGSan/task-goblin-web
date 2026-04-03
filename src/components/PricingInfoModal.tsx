@@ -29,9 +29,7 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
     const actionButtonRef = useRef<HTMLButtonElement>(null);
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
-
-    // Simple Mexico detection based on Timezone
-    const isMexico = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
+    const [isMexico, setIsMexico] = useState(false);
 
     const handleCheckout = async (gateway: "mercadopago" | "paypal") => {
         if (!APP_CONFIG.ENABLE_LICENSING) {
@@ -104,6 +102,15 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
             setCanScrollDown(scrollHeight - (scrollTop + clientHeight) > 20);
         }
     };
+
+    useEffect(() => {
+        if (typeof Intl !== 'undefined') {
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            if (tz.includes("Mexico")) {
+                setIsMexico(true);
+            }
+        }
+    }, []);
 
     useEffect(() => {
         if (isOpen) {
