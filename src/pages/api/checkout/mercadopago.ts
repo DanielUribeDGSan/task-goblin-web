@@ -44,11 +44,12 @@ export const POST: APIRoute = async ({ request }) => {
                     email: email
                 },
                 back_urls: {
-                    success: `${request.url.split('/api')[0]}?payment=success`,
-                    failure: `${request.url.split('/api')[0]}?payment=failure`,
-                    pending: `${request.url.split('/api')[0]}?payment=pending`
+                    success: `${request.url.split('/api')[0]}/license?status=approved`,
+                    failure: `${request.url.split('/api')[0]}/license?status=error`,
+                    pending: `${request.url.split('/api')[0]}/license?status=pending`
                 },
                 auto_return: 'approved',
+                external_reference: email,
                 notification_url: APP_CONFIG.MERCADO_PAGO_IS_PROD 
                     ? "https://task-goblin.com/api/webhook/mercado-libre-produccion"
                     : "https://task-goblin.com/api/webhook/mercado-libre-pruebas",

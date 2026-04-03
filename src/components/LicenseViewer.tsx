@@ -6,7 +6,7 @@ import { useLanguage, LanguageProvider } from "../contexts/LanguageContext";
 export const LicenseViewer: React.FC = () => {
     const { t } = useLanguage();
     const [email, setEmail] = useState("");
-    const [step, setStep] = useState<"search" | "loading" | "success" | "error">("search");
+    const [step, setStep] = useState<"search" | "loading" | "success" | "error" | "checkout-success">("search");
     const [errorMessage, setErrorMessage] = useState("");
     const [licenseKeys, setLicenseKeys] = useState<{ key: string; app: string }[]>([]);
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -14,7 +14,15 @@ export const LicenseViewer: React.FC = () => {
     React.useEffect(() => {
         const params = new URLSearchParams(globalThis.location.search);
         const emailParam = params.get("email");
-        if (emailParam) {
+        const statusParam = params.get("status");
+        const externalRef = params.get("external_reference");
+
+        if (statusParam === "approved") {
+            setStep("checkout-success");
+            if (externalRef && externalRef !== "null") {
+                setEmail(externalRef);
+            }
+        } else if (emailParam) {
             setEmail(emailParam);
             // Trigger automatic search
             performSearch(emailParam);
@@ -89,16 +97,18 @@ export const LicenseViewer: React.FC = () => {
                     >
                         <Search size={24} />
                     </div>
-                    <h2 className="text-2xl font-bold text-white">{t.licensePage.title}</h2>
+                    <h2 className="text-2xl font-bold text-white">
+                        {step === "checkout-success" ? t.licensePage.checkoutSuccessTitle : t.licensePage.title}
+                    </h2>
                     <p className="text-sh-text-muted text-sm px-4">
-                        {t.licensePage.subtitle}
+                        {step === "checkout-success" ? t.licensePage.checkoutSuccessSubtitle : t.licensePage.subtitle}
                     </p>
                 </div>
 
                 <AnimatePresence mode="wait">
-                    {step === "search" && (
+                    {(step === "search" || step === "checkout-success") && (
                         <motion.form
-                            key="search-form"
+                            key={step}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 20 }}
@@ -130,8 +140,8 @@ export const LicenseViewer: React.FC = () => {
                                     className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2"
                                     style={{ backgroundColor: '#5B518D' }}
                                 >
-                                <Search size={18} />
-                                {t.licensePage.searchButton}
+                                {step === "checkout-success" ? <CheckCircle size={18} /> : <Search size={18} />}
+                                {step === "checkout-success" ? t.licensePage.associateButton : t.licensePage.searchButton}
                             </button>
                         </motion.form>
                     )}

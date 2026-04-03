@@ -245,6 +245,9 @@ export const translations = {
       errorNotFound: "No professional account found for this email.",
       errorGeneric: "An error occurred while fetching your license. Please try again.",
       backToHome: "Back to Home",
+      checkoutSuccessTitle: "Payment Successful!",
+      checkoutSuccessSubtitle: "Please confirm your email to activate and view your license.",
+      associateButton: "View My License",
     },
     chat: {
       greeting: "Hi! How can I help you today?",
@@ -516,6 +519,9 @@ export const translations = {
       errorNotFound: "No se encontró ninguna cuenta profesional para este correo.",
       errorGeneric: "Ocurrió un error al buscar tu licencia. Intenta nuevamente.",
       backToHome: "Volver al Inicio",
+      checkoutSuccessTitle: "¡Pago Exitoso!",
+      checkoutSuccessSubtitle: "Por favor, confirma tu correo electrónico para activar y ver tu licencia.",
+      associateButton: "Ver Mi Licencia",
     },
     chat: {
       greeting: "¡Hola! ¿En qué puedo ayudarte hoy?",
