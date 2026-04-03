@@ -17,18 +17,15 @@ export const APP_CONFIG = {
   PRODUCTS: {
     'task-goblin': {
       name: 'Task Goblin Pro',
-      // price: 249,
-      price: 10,
+      price: 249,
     },
     'nexo': {
       name: 'Nexo Pro',
-      // price: 149,
-      price: 10,
+      price: 149,
     },
     'floaty': {
       name: 'Floaty Pro',
-      // price: 99,
-      price: 10,
+      price: 99,
     },
   },
 };

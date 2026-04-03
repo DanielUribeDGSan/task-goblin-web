@@ -37,9 +37,12 @@ export const POST: APIRoute = async ({ request }) => {
                         title: product.name,
                         unit_price: product.price,
                         quantity: 1,
-                        currency_id: 'MXN'
+                        currency_id: 'MXN',
+                        category_id: 'software',
+                        description: `Licencia vitalicia para la aplicación ${product.name}`
                     }
                 ],
+                statement_descriptor: "TASKGOBLIN",
                 back_urls: {
                     success: `${request.url.split('/api')[0]}/license?status=approved`,
                     failure: `${request.url.split('/api')[0]}/license?status=error`,
