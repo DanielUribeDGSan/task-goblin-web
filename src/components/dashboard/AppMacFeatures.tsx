@@ -61,7 +61,7 @@ export const AppMacFeatures = ({
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -69,8 +69,8 @@ export const AppMacFeatures = ({
   useEffect(() => {
     if (activeMedia.type === 'video' && videoRef.current) {
       videoRef.current.load();
-      setIsMuted(false);
-      videoRef.current.muted = false;
+      setIsMuted(true);
+      videoRef.current.muted = true;
       videoRef.current.currentTime = 2;
       videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
     } else {
