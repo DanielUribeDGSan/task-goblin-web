@@ -6,6 +6,7 @@ import { useLanguage, LanguageProvider } from "../contexts/LanguageContext";
 export const LicenseViewer: React.FC = () => {
     const { t } = useLanguage();
     const [email, setEmail] = useState("");
+    const [paymentId, setPaymentId] = useState("");
     const [step, setStep] = useState<"search" | "loading" | "success" | "error" | "checkout-success">("search");
     const [errorMessage, setErrorMessage] = useState("");
     const [licenseKeys, setLicenseKeys] = useState<{ key: string; app: string }[]>([]);
@@ -15,26 +16,22 @@ export const LicenseViewer: React.FC = () => {
         const params = new URLSearchParams(globalThis.location.search);
         const emailParam = params.get("email");
         const statusParam = params.get("status");
-        const externalRef = params.get("external_reference");
         const paymentIdParam = params.get("payment_id") || params.get("collection_id");
+
+        if (paymentIdParam) {
+            setPaymentId(paymentIdParam);
+        }
 
         if (statusParam === "approved") {
             setStep("checkout-success");
-            if (externalRef && externalRef !== "null") {
-                setEmail(externalRef);
-            }
-            if (paymentIdParam) {
-                // Trigger automatic search by payment_id
-                performSearch("", paymentIdParam);
-            }
+            // User will enter email to "associate/confirm" and view license
         } else if (emailParam) {
             setEmail(emailParam);
-            // Trigger automatic search
             performSearch(emailParam);
         }
     }, []);
 
-    const performSearch = async (targetEmail: string, paymentId?: string) => {
+    const performSearch = async (targetEmail: string, targetPaymentId?: string) => {
         setStep("loading");
         setErrorMessage("");
 
@@ -46,7 +43,7 @@ export const LicenseViewer: React.FC = () => {
                 },
                 body: JSON.stringify({ 
                     email: targetEmail || undefined, 
-                    paymentId: paymentId 
+                    paymentId: targetPaymentId || paymentId || undefined 
                 })
             });
 
@@ -70,7 +67,7 @@ export const LicenseViewer: React.FC = () => {
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!email) return;
-        await performSearch(email);
+        await performSearch(email, paymentId);
     };
 
     const copyToClipboard = async (text: string, index: number) => {

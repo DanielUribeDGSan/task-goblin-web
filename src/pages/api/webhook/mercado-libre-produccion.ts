@@ -29,12 +29,12 @@ export const POST: APIRoute = async ({ request }) => {
                 const paymentDetails = await payment.get({ id });
 
                 if (paymentDetails && paymentDetails.status === 'approved') {
-                    const userEmail = paymentDetails.metadata?.user_email;
-                    const appName = paymentDetails.metadata?.app_name;
+                    const userEmail = paymentDetails.metadata?.user_email || paymentDetails.payer?.email;
+                    const appName = paymentDetails.metadata?.app_name || paymentDetails.external_reference;
 
                     if (!userEmail || !appName) {
-                        console.warn("Payment approved but metadata missing:", paymentDetails.metadata);
-                        return new Response("Metadata missing", { status: 200 });
+                        console.warn("Payment approved but metadata/payer email missing:", paymentDetails.metadata, paymentDetails.payer);
+                        return new Response("Email or App missing", { status: 200 });
                     }
 
                     console.log(`Processing approved PRODUCCION payment for ${userEmail} - App: ${appName} - Payment: ${id}`);

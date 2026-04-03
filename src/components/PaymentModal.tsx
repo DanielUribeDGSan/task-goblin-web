@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle, AlertCircle, CreditCard, Mail } from "lucide-react";
+import { X, CheckCircle, AlertCircle, CreditCard } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { APP_CONFIG } from "../constants/config";
 
@@ -13,21 +13,15 @@ interface PaymentModalProps {
 
 export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "task-goblin", onClose }) => {
     const { t } = useLanguage();
-    const [email, setEmail] = useState("");
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
 
-    // Mercado Pago Prices are handled on the server side using APP_CONFIG.
-
-    // Mercado Pago redirection flow
-
-    const handleCheckout = async (e: React.FormEvent) => {
+    const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!APP_CONFIG.ENABLE_LICENSING) {
             alert(t.paymentModal.disabledMessage);
             return;
         }
-        if (!email) return;
 
         setStep("processing");
 
@@ -39,7 +33,6 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email: email,
                     appType: appType // 'task-goblin', 'nexo', or 'floaty'
                 })
             });
@@ -54,7 +47,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
 
             if (checkoutUrl) {
                 // Mercado Pago uses a redirect for its checkouts
-                window.location.href = checkoutUrl;
+                globalThis.location.href = checkoutUrl;
             } else {
                 throw new Error("No checkout URL received from server.");
             }
@@ -69,7 +62,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     const modalContent = (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[11000] flex items-center justify-center p-4 overflow-y-auto scrollbar-hide">
+                <div className="fixed inset-0 z-11000 flex items-center justify-center p-4 overflow-y-auto scrollbar-hide">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -121,29 +114,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                     </div>
 
                                     <form onSubmit={handleCheckout} className="space-y-4">
-                                        <div className="space-y-2">
-                                            <label htmlFor="email" className="block text-sm font-medium text-white/80">
-                                                {t.paymentModal.emailLabel}
-                                            </label>
-                                            <div className="relative">
-                                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" size={18} />
-                                                <input
-                                                    id="email"
-                                                    type="email"
-                                                    required
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                    placeholder={t.paymentModal.emailPlaceholder}
-                                                    className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 transition-all"
-                                                    style={{ focusRingColor: 'var(--sh-accent-muted)', focusBorderColor: 'var(--sh-accent)' } as any}
-                                                />
-                                            </div>
-                                        </div>
-
                                         <button
                                             type="submit"
-                                            disabled={!email.includes('@')}
-                                            className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                                            className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                                             style={{ backgroundColor: 'var(--sh-accent)' }}
                                         >
                                             {t.paymentModal.checkoutButton}
@@ -175,9 +148,6 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                     <div className="glass bg-green-500/10 border-green-500/20 text-green-400 p-4 rounded-xl text-sm leading-relaxed">
                                         {t.paymentModal.successMessage}
                                     </div>
-                                    <p className="text-sm text-sh-text-muted mt-6">
-                                        Hemos enviado tu licencia a <strong className="text-white">{email}</strong>.
-                                    </p>
                                     <button
                                         onClick={onClose}
                                         className="mt-6 w-full glass hover:bg-white/10 text-white font-medium rounded-xl py-3 transition-colors cursor-pointer"

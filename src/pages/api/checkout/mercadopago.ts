@@ -7,10 +7,10 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
     try {
         const body = await request.json();
-        const { email, appType } = body;
+        const { appType } = body;
 
-        if (!email || !appType) {
-            return new Response(JSON.stringify({ error: "Faltan datos requeridos (email o appType)" }), { status: 400 });
+        if (!appType) {
+            return new Response(JSON.stringify({ error: "Faltan datos requeridos (appType)" }), { status: 400 });
         }
 
         const product = APP_CONFIG.PRODUCTS[appType as keyof typeof APP_CONFIG.PRODUCTS];
@@ -40,21 +40,17 @@ export const POST: APIRoute = async ({ request }) => {
                         currency_id: 'MXN'
                     }
                 ],
-                payer: {
-                    email: email
-                },
                 back_urls: {
                     success: `${request.url.split('/api')[0]}/license?status=approved`,
                     failure: `${request.url.split('/api')[0]}/license?status=error`,
                     pending: `${request.url.split('/api')[0]}/license?status=pending`
                 },
                 auto_return: 'approved',
-                external_reference: email,
+                external_reference: appType,
                 notification_url: APP_CONFIG.MERCADO_PAGO_IS_PROD 
                     ? "https://task-goblin.com/api/webhook/mercado-libre-produccion"
                     : "https://task-goblin.com/api/webhook/mercado-libre-pruebas",
                 metadata: {
-                    user_email: email,
                     app_name: appType
                 }
             }
