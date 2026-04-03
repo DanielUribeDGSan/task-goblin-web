@@ -14,7 +14,7 @@ export const APP_CONFIG = {
   /**
    * PayPal Production Mode: true for production, false for sandbox
    */
-  PAYPAL_IS_PROD: true,
+  PAYPAL_IS_PROD: false,
   /**
    * Product Prices in MXN and USD
    */
