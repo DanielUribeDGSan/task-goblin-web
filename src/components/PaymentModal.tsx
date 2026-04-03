@@ -126,9 +126,16 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                             onClick={() => handleCheckout("paypal")}
                                             className="w-full flex items-center justify-between bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold rounded-2xl py-4 px-6 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                                         >
-                                            <span className="text-sm font-medium">{t.paymentModal.paypalButton}</span>
+                                            <div className="flex flex-col items-start text-left">
+                                                <span className="text-sm font-medium">{t.paymentModal.paypalButton}</span>
+                                                <span className="text-[10px] uppercase tracking-tighter opacity-60">
+                                                    PayPal {isMexico 
+                                                        ? `${APP_CONFIG.PRODUCTS[appType].price} MXN` 
+                                                        : `${APP_CONFIG.PRODUCTS[appType].priceUSD} USD`}
+                                                </span>
+                                            </div>
                                             <div className="flex items-center gap-1">
-                                                <span className="text-xs font-black italic">PayPal</span>
+                                                <span className="text-xs font-black italic text-white/90">PayPal</span>
                                             </div>
                                         </button>
                                     </div>
