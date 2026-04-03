@@ -15,9 +15,11 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     const { t } = useLanguage();
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
+    
+    // Simple Mexico detection based on Timezone
+    const isMexico = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
 
-    const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleCheckout = async (gateway: "mercadopago" | "paypal") => {
         if (!APP_CONFIG.ENABLE_LICENSING) {
             alert(t.paymentModal.disabledMessage);
             return;
@@ -26,14 +28,15 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
         setStep("processing");
 
         try {
-            // API Call to Astro internal endpoint to handle backend request securely
-            const response = await fetch("/api/checkout/mercadopago", {
+            const endpoint = gateway === "mercadopago" ? "/api/checkout/mercadopago" : "/api/checkout/paypal";
+            
+            const response = await fetch(endpoint, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    appType: appType // 'task-goblin', 'nexo', or 'floaty'
+                    appType: appType
                 })
             });
 
@@ -46,7 +49,6 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
             const checkoutUrl = checkoutData.url;
 
             if (checkoutUrl) {
-                // Mercado Pago uses a redirect for its checkouts
                 globalThis.location.href = checkoutUrl;
             } else {
                 throw new Error("No checkout URL received from server.");
@@ -101,6 +103,35 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                         </p>
                                     </div>
 
+                                    <div className="space-y-3">
+                                        <p className="text-xs font-semibold text-white/40 uppercase tracking-wider text-center">
+                                            {t.paymentModal.selectPaymentMethod}
+                                        </p>
+                                        
+                                        {isMexico && (
+                                            <button
+                                                onClick={() => handleCheckout("mercadopago")}
+                                                className="w-full flex items-center justify-between bg-[#009EE3] hover:bg-[#0086c3] text-white font-bold rounded-2xl py-4 px-6 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer group"
+                                            >
+                                                <div className="flex flex-col items-start">
+                                                    <span className="text-sm opacity-80 font-medium">{t.paymentModal.mercadoPagoButton}</span>
+                                                    <span className="text-[10px] uppercase tracking-tighter opacity-60">{t.paymentModal.mexicoNotice}</span>
+                                                </div>
+                                                <img src="https://http2.mlstatic.com/frontend-assets/mp-web-navigation/ui-navigation/5.34.0/mercadopago/logo__small.png" alt="MP" className="h-5" />
+                                            </button>
+                                        )}
+
+                                        <button
+                                            onClick={() => handleCheckout("paypal")}
+                                            className="w-full flex items-center justify-between bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold rounded-2xl py-4 px-6 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                                        >
+                                            <span className="text-sm font-medium">{t.paymentModal.paypalButton}</span>
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-xs font-black italic">PayPal</span>
+                                            </div>
+                                        </button>
+                                    </div>
+
                                     <div 
                                         className="glass rounded-2xl p-4 flex gap-3"
                                         style={{ backgroundColor: 'var(--sh-accent-muted)', borderColor: 'var(--sh-panel-border)' }}
@@ -113,19 +144,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                         </p>
                                     </div>
 
-                                    <form onSubmit={handleCheckout} className="space-y-4">
-                                        <button
-                                            type="submit"
-                                            className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-                                            style={{ backgroundColor: 'var(--sh-accent)' }}
-                                        >
-                                            {t.paymentModal.checkoutButton}
-                                        </button>
-
-                                        <p className="text-xs text-center text-white/40 mt-4">
-                                            Secured by Mercado Pago integration
-                                        </p>
-                                    </form>
+                                    <p className="text-xs text-center text-white/20 mt-4 italic">
+                                        Powered by Secure Payment Gateways
+                                    </p>
                                 </div>
                             )}
 
