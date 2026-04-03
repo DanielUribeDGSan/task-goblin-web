@@ -1,0 +1,39 @@
+---
+import { ClientRouter } from "astro:transitions";
+import { LegalLayout } from "../components/LegalLayout";
+import "../styles/global.css";
+
+const title = {
+  es: "Política de Privacidad",
+  en: "Privacy Policy"
+};
+const lastUpdated = {
+  es: "3 de abril de 2026",
+  en: "April 3, 2026"
+};
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/icon/TaskGoblin.png" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title.es} — Task Goblin Apps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <ClientRouter />
+
+    <style is:global>
+      /* Habilitar scroll en esta página específica */
+      body {
+        overflow: auto !important;
+        height: auto !important;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body class="bg-black antialiased">
+    <LegalLayout client:load title={title} lastUpdated={lastUpdated} type="privacy" />
+  </body>
+</html>
