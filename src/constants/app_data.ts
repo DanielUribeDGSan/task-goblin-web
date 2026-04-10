@@ -254,8 +254,8 @@ export const APP_CONFIGS = {
 } as const;
  
 export const TASK_GOBLIN_URLS = [
-  "/downloads/task-goblin/TaskGoblin_0.1.1_aarch64.dmg",
-  "/downloads/task-goblin/TaskGoblin_0.1.1_x64.dmg",
+  "/downloads/task-goblin/TaskGoblin_aarch64.dmg",
+  "/downloads/task-goblin/TaskGoblin_x64.dmg",
   "/downloads/task-goblin/TaskGoblin_0.1.1_x64-setup.exe",
 ];
 
