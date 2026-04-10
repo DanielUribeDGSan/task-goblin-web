@@ -266,9 +266,8 @@ export const NEXO_URLS = [
 ];
 
 export const FLOATY_URLS = [
-  "/downloads/floaty/floaty_0.1.0_aarch64.dmg",
-  "/downloads/floaty/floaty_0.1.0_x64.dmg",
-  "/downloads/floaty/floaty_0.1.0_x64-setup.exe",
+  "/downloads/floaty/Floaty_aarch64.dmg",
+  "/downloads/floaty/Floaty_x64.dmg",
 ];
 
 export type AppType = keyof typeof APP_CONFIGS;
