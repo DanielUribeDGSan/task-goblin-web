@@ -345,7 +345,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
 
         <div
           ref={scrollContainerRef}
-          className="relative z-0 flex-1 overflow-visible lg:overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-6 lg:pt-2 scrollbar-hide min-h-0 safari-flex-shrink pb-28 sm:pb-32"
+          className="relative z-0 flex-1 overflow-visible lg:overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-20 lg:pt-24 min-h-0 safari-flex-shrink pb-28 sm:pb-32"
         >
             <AppMacFeatures
               appType={appType}

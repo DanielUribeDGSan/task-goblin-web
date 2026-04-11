@@ -75,7 +75,7 @@ export const TopBar = ({ isVisible = true, appType = "task-goblin" }: { isVisibl
 
   return (
     <div
-      className={`sticky top-0 z-100 bg-transparent transition-all duration-500 ease-in-out origin-top ${isVisible
+      className={`absolute top-0 left-0 right-0 z-[100] bg-transparent transition-all duration-500 ease-in-out origin-top ${isVisible
         ? "translate-y-0 opacity-100 pointer-events-auto"
         : "-translate-y-full opacity-0 pointer-events-none scale-95 blur-md"
         }`}

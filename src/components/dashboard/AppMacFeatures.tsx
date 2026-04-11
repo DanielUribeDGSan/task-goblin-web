@@ -116,9 +116,9 @@ export const AppMacFeatures = ({
   }, []);
 
   return (
-    <div className="w-full h-full max-w-[1400px] mx-auto py-2 lg:py-6 px-4 sm:px-8 flex flex-col justify-center">
+    <div className="w-full min-h-full max-w-[1400px] mx-auto py-8 lg:py-12 px-4 sm:px-8 flex flex-col">
       
-      <div className="flex flex-col lg:flex-row-reverse gap-8 lg:gap-16 items-start">
+      <div className="my-auto flex flex-col lg:flex-row-reverse gap-8 lg:gap-16 items-start">
         
         {/* Left Side: Laptop Frame */}
         <div ref={laptopRef} className="w-full lg:w-[60%] shrink-0 relative">
