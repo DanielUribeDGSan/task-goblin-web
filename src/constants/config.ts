@@ -1,6 +1,7 @@
 /**
  * Global application configuration flags.
  */
+
 export const APP_CONFIG = {
   /**
    * Flag to enable or disable the licensing/payment system.
