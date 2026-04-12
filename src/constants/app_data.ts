@@ -1,5 +1,5 @@
 
-export type MediaSlide = 
+export type MediaSlide =
   | { type: "video"; src: string; poster?: string }
   | { type: "image"; src: string };
 
@@ -242,8 +242,8 @@ export const APP_CONFIGS = {
     heroVideo: "/nexo/videos/nexo.mp4",
     heroPoster: "/nexo/images/nexo-general.png",
     heroImages: [
-      "/nexo/images/nexo-general.png", 
-      "/nexo/images/proyectos.png", 
+      "/nexo/images/nexo-general.png",
+      "/nexo/images/proyectos.png",
       "/nexo/images/puertos.png",
       "/nexo/images/env.png",
       "/nexo/images/urls.png",
@@ -252,7 +252,7 @@ export const APP_CONFIGS = {
     path: "/nexo-app",
   }
 } as const;
- 
+
 export const TASK_GOBLIN_URLS = [
   "/downloads/task-goblin/TaskGoblin_aarch64.dmg",
   "/downloads/task-goblin/TaskGoblin_x64.dmg",
@@ -271,4 +271,4 @@ export const FLOATY_URLS = [
   "/downloads/floaty/Floaty_x64.exe",
 ];
 
-export type AppType = keyof typeof APP_CONFIGS;
+export type AppType = keyof typeof APP_CONFIGS
