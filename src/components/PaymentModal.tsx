@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle, AlertCircle, CreditCard } from "lucide-react";
+import { X, CheckCircle, AlertCircle, CreditCard, Smartphone } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useLayout } from "../contexts/LayoutContext";
 import { APP_CONFIG } from "../constants/config";
 
 interface PaymentModalProps {
@@ -13,8 +14,23 @@ interface PaymentModalProps {
 
 export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "task-goblin", onClose }) => {
     const { t } = useLanguage();
+    const { isMobile } = useLayout();
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
+
+    // Auto-reset state if it stays processing for more than 5 seconds
+    // This handles the case where the user returns from the payment gateway without completing it.
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
+        if (step === "processing") {
+            timer = setTimeout(() => {
+                setStep("email");
+            }, 5000);
+        }
+        return () => {
+            if (timer) clearTimeout(timer);
+        };
+    }, [step]);
     
     // Simple Mexico detection based on Timezone
     const isMexico = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
@@ -138,6 +154,19 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                                 <span className="text-xs font-black italic text-white/90">PayPal</span>
                                             </div>
                                         </button>
+
+                                        {isMobile && (
+                                            <div className="bg-white/5 border border-white/10 p-4 rounded-xl flex items-start gap-3 text-left mt-2">
+                                                <Smartphone 
+                                                    size={24} 
+                                                    className="shrink-0" 
+                                                    style={{ color: 'var(--sh-accent)' }}
+                                                />
+                                                <p className="text-xs text-sh-text-muted leading-relaxed">
+                                                    {t.bottomBar.mobileDownloadNotice}
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div 

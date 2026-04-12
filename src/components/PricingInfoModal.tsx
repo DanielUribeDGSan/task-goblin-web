@@ -31,6 +31,20 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
     const [errorMessage, setErrorMessage] = useState("");
     const [isMexico, setIsMexico] = useState(false);
 
+    // Auto-reset state if it stays processing for more than 5 seconds
+    // This handles the case where the user returns from the payment gateway without completing it.
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
+        if (step === "processing") {
+            timer = setTimeout(() => {
+                setStep("email");
+            }, 5000);
+        }
+        return () => {
+            if (timer) clearTimeout(timer);
+        };
+    }, [step]);
+
     const handleCheckout = async (gateway: "mercadopago" | "paypal") => {
         if (!APP_CONFIG.ENABLE_LICENSING) {
             alert(t.paymentModal.disabledMessage);
