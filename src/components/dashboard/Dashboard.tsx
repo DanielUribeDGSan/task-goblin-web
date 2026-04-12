@@ -297,18 +297,39 @@ function DashboardContent({ appType }: { appType: AppType }) {
 
     const handleScroll = () => {
       const currentScrollY = isMobileScroll ? window.scrollY : (target as HTMLElement).scrollTop;
+      
+      // Calculate max scroll to handle rubber-banding/elastic scroll on iOS
+      const scrollHeight = isMobileScroll 
+        ? document.documentElement.scrollHeight 
+        : (target as HTMLElement).scrollHeight;
+      const clientHeight = isMobileScroll 
+        ? window.innerHeight 
+        : (target as HTMLElement).clientHeight;
+      const maxScroll = scrollHeight - clientHeight;
+
+      // 1. Ignore elastic scroll values (bouncing at top or bottom)
+      // This prevents the header from flickering when the user hits the scroll limits
+      if (currentScrollY < 0 || (maxScroll > 0 && currentScrollY > maxScroll)) {
+        return;
+      }
 
       // Determine if we are scrolling up or down
       const isScrollingDown = currentScrollY > lastScrollY.current;
       const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
 
-      // 1. Show header if we are near the top (e.g. top 50px) regardless of scroll direction
+      // 2. Show header if we are near the top (e.g. top 50px) regardless of scroll direction
       if (currentScrollY < 50) {
         setShowTopBar(true);
       }
-      // 2. Only toggle if we've scrolled more than a significant threshold (e.g. 20px)
-      // This prevents "jitter" or "bouncing" from tiny movements or rubber-banding
-      else if (scrollDifference > 20) {
+      // 3. Prevent showing header if we are near the very bottom
+      // This is an extra safety layer against bottom-bounce glitches
+      else if (maxScroll > 0 && currentScrollY > maxScroll - 30) {
+        // Stay in current state or force hide if scrolling down
+        if (isScrollingDown) setShowTopBar(false);
+      }
+      // 4. Only toggle if we've scrolled more than a significant threshold (e.g. 25px)
+      // This prevents "jitter" or "bouncing" from tiny movements
+      else if (scrollDifference > 25) {
         if (isScrollingDown) {
           setShowTopBar(false);
         } else {
