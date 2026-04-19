@@ -146,6 +146,7 @@ function MasonryLayout({
             : config.heroImages.map((src: string) => ({ type: "image" as const, src }))
         }
         className="w-full"
+        priority={true}
       >
         {appType === "task-goblin" ? (
           <>

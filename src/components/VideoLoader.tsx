@@ -9,6 +9,20 @@ interface VideoLoaderProps {
 
 export const VideoLoader = ({ icon, size = 'medium' }: VideoLoaderProps) => {
   const { t } = useLanguage();
+  const [isMounted, setIsMounted] = React.useState(false);
+  const [isVisible, setIsVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+    
+    // Safety self-destruct: if still visible after 8s, start fading out
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 8000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   const containerClasses = {
     small: "w-full h-full min-h-[150px]",
     medium: "w-full h-full min-h-[300px]",
@@ -29,33 +43,50 @@ export const VideoLoader = ({ icon, size = 'medium' }: VideoLoaderProps) => {
     "/icon/floaty.png"
   ];
 
+  if (!isMounted) {
+    return (
+      <div className={`flex flex-col items-center justify-center overflow-hidden bg-black ${size === 'fullscreen' ? '' : 'relative'} ${containerClasses[size]}`}>
+        <div className="mt-8 flex flex-col items-center gap-2">
+          <span className="text-white/40 text-[10px] font-black tracking-[0.3em] uppercase">
+            {t.loading}
+          </span>
+          <div className="h-[2px] w-24 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-full bg-sh-accent w-1/4" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className={`flex flex-col items-center justify-center overflow-hidden bg-black ${size === 'fullscreen' ? '' : 'relative'} ${containerClasses[size]}`}>
+    <div className={`flex flex-col items-center justify-center overflow-hidden bg-black transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'} ${size === 'fullscreen' ? '' : 'relative'} ${containerClasses[size]}`}>
       {/* Space Background effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-radial-gradient from-white/5 to-transparent opacity-30" />
-        {Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={`star-${i}`}
-            className="absolute rounded-full bg-white/40"
-            initial={{
-              x: Math.random() * 100 + "%",
-              y: Math.random() * 100 + "%",
-              width: Math.random() * 2 + 1 + "px",
-              height: Math.random() * 2 + 1 + "px",
-              opacity: Math.random() * 0.5 + 0.1
-            }}
-            animate={{
-              opacity: [0.1, 0.5, 0.1],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
+        <div suppressHydrationWarning>
+          {Array.from({ length: 20 }).map((_, i) => (
+            <motion.div
+              key={`star-${i}`}
+              className="absolute rounded-full bg-white/40"
+              initial={{
+                x: (Math.random() * 100).toFixed(2) + "%",
+                y: (Math.random() * 100).toFixed(2) + "%",
+                width: (Math.random() * 2 + 1).toFixed(2) + "px",
+                height: (Math.random() * 2 + 1).toFixed(2) + "px",
+                opacity: parseFloat((Math.random() * 0.5 + 0.1).toFixed(2))
+              }}
+              animate={{
+                opacity: [0.1, 0.5, 0.1],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: parseFloat((Math.random() * 3 + 2).toFixed(2)),
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Spinning Icons */}
@@ -66,9 +97,13 @@ export const VideoLoader = ({ icon, size = 'medium' }: VideoLoaderProps) => {
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           className={`${iconSizes[size]} relative flex items-center justify-center`}
         >
-          {appIcons.map((src, i) => {
+          {isMounted && appIcons.map((src, i) => {
             const angle = (i * 360) / appIcons.length;
             const radius = size === 'fullscreen' ? 120 : 70;
+            // Use Math.round to ensure identical values on Server and Client
+            const x = Math.round(Math.cos((angle * Math.PI) / 180) * radius);
+            const y = Math.round(Math.sin((angle * Math.PI) / 180) * radius);
+            
             return (
               <motion.div
                 key={src}
@@ -76,11 +111,12 @@ export const VideoLoader = ({ icon, size = 'medium' }: VideoLoaderProps) => {
                 style={{
                   top: '50%',
                   left: '50%',
-                  x: Math.cos((angle * Math.PI) / 180) * radius,
-                  y: Math.sin((angle * Math.PI) / 180) * radius,
+                  x: x,
+                  y: y,
                   marginTop: '-25%',
                   marginLeft: '-25%'
                 }}
+                suppressHydrationWarning
               >
                 <img src={src} alt="" className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]" />
               </motion.div>

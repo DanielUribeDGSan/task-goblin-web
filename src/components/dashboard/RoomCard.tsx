@@ -43,6 +43,8 @@ interface RoomCardProps {
   };
   children?: React.ReactNode;
   className?: string;
+  /** Si es true, el video se precarga inmediatamente (útil para cards visibles al inicio). */
+  priority?: boolean;
 }
 
 const ASPECT_CLASS: Record<RoomCardAspectRatio, string> = {
@@ -63,6 +65,7 @@ export const RoomCard = ({
   stats,
   children,
   className,
+  priority = false,
 }: RoomCardProps) => {
   const aspectClass = ASPECT_CLASS[aspectRatio];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,6 +73,8 @@ export const RoomCard = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showFullscreenControls, setShowFullscreenControls] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [shouldPreload, setShouldPreload] = useState(priority);
+  const [loadError, setLoadError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaContainerRef = useRef<HTMLDivElement>(null);
   const hideControlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -157,6 +162,58 @@ export const RoomCard = ({
       if (hideControlsTimeoutRef.current) clearTimeout(hideControlsTimeoutRef.current);
     };
   }, [isFullscreen]);
+
+  // Intersection Observer to trigger preloading only when visible
+  useEffect(() => {
+    if (typeof window === "undefined" || priority) return;
+    
+    const el = mediaContainerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldPreload(true);
+          observer.disconnect();
+        }
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: "400px" // Even more aggressive margin
+      }
+    );
+
+    observer.observe(el);
+
+    // Initial check in case it's in viewport but observer hasn't fired
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setShouldPreload(true);
+    }
+
+    return () => observer.disconnect();
+  }, [priority]);
+
+  // Force video loading when shouldPreload changes
+  useEffect(() => {
+    if (shouldPreload && videoRef.current) {
+      videoRef.current.load();
+    }
+  }, [shouldPreload]);
+
+  // Safety timeout for loading state
+  useEffect(() => {
+    if (!isLoaded && shouldPreload) {
+      const timer = setTimeout(() => {
+        setIsLoaded(true); // Dismiss loader if it takes too long
+      }, 6000); 
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded, shouldPreload]);
+
+  const handleVideoLoad = useCallback(() => {
+    setIsLoaded(true);
+  }, []);
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -247,16 +304,25 @@ export const RoomCard = ({
                 <video
                   ref={videoRef}
                   src={current.src}
+                  poster={current.poster}
                   className={cn(
                     "w-full h-full object-contain transition-opacity duration-500",
                     isLoaded ? "opacity-100" : "opacity-0"
                   )}
                   playsInline
+                  autoPlay={priority}
+                  loop={priority}
                   muted
+                  preload={shouldPreload ? "auto" : "none"}
                   onClick={togglePlayPause}
-                  onCanPlayThrough={() => setIsLoaded(true)}
-                  onLoadedData={() => setIsLoaded(true)}
+                  onCanPlay={handleVideoLoad}
+                  onCanPlayThrough={handleVideoLoad}
+                  onLoadedData={handleVideoLoad}
+                  onLoadedMetadata={handleVideoLoad}
+                  onPlay={handleVideoLoad}
+                  onPlaying={handleVideoLoad}
                   onLoadStart={() => setIsLoaded(false)}
+                  onError={handleVideoLoad}
                 >
                   <track kind="captions" />
                 </video>

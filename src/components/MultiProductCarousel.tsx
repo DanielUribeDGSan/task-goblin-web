@@ -47,6 +47,16 @@ const CarouselContent = () => {
     };
   }, [isPaused]);
 
+  // Safety timeout for video loading
+  useEffect(() => {
+    if (!isVideoLoaded) {
+      const timer = setTimeout(() => {
+        setIsVideoLoaded(true);
+      }, 10000); // 10 seconds timeout for the hero video
+      return () => clearTimeout(timer);
+    }
+  }, [activeApp.id, isVideoLoaded]);
+
   // Update global CSS variables based on active app colors
   useEffect(() => {
     const root = document.documentElement;
@@ -129,7 +139,8 @@ const CarouselContent = () => {
                 </div>
                 {/* Preview Media */}
                 <div className="w-full h-full relative">
-                  {(activeApp as any).heroVideo ? (
+                  {/* Forzamos imagen en el carrusel principal como se solicitó anteriormente */}
+                  {false && (activeApp as any).heroVideo ? (
                     <>
                       {!isVideoLoaded && (
                         <div className="absolute inset-0 z-30">
@@ -143,9 +154,13 @@ const CarouselContent = () => {
                         muted
                         loop
                         playsInline
+                        onCanPlay={() => setIsVideoLoaded(true)}
                         onCanPlayThrough={() => setIsVideoLoaded(true)}
                         onLoadedData={() => setIsVideoLoaded(true)}
+                        onLoadedMetadata={() => setIsVideoLoaded(true)}
+                        onPlaying={() => setIsVideoLoaded(true)}
                         onLoadStart={() => setIsVideoLoaded(false)}
+                        onError={() => setIsVideoLoaded(true)}
                         className={`w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
                       />
                     </>

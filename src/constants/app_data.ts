@@ -209,7 +209,7 @@ export const APP_CONFIGS = {
     backgroundColor: "#212124",
     rooms: TASK_GOBLIN_ROOMS,
     heroIcon: "/icon/bot.gif",
-    // heroVideo: "/home/video.mp4",
+    heroVideo: "/home/video.mp4",
     heroPoster: "/apps/task-goblin.png",
     heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
     path: "/task-goblin-app",
@@ -222,7 +222,7 @@ export const APP_CONFIGS = {
     backgroundColor: "#0A0D0A",
     rooms: FLOATY_ROOMS,
     heroIcon: "/icon/floaty.png",
-    // heroVideo: "/floaty/video.mp4",
+    heroVideo: "/floaty/video.mp4",
     heroPoster: "/apps/floaty.png",
     heroImages: [
       "/apps/floaty.png",
