@@ -43,6 +43,66 @@ export const TASK_GOBLIN_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = 
   ],
   bottom: [
     {
+      id: "magic-eraser",
+      title: "magic-eraser",
+      distance: "",
+      icon: "/task-goblin/images/clean.gif",
+      aspectRatio: "video",
+      mediaItems: [
+        { type: "video", src: "/task-goblin/video/borrador-magico.mov" },
+      ],
+    },
+    {
+      id: "audio-to-text",
+      title: "audio-to-text",
+      distance: "",
+      icon: "/task-goblin/images/microphone.gif",
+      aspectRatio: "video",
+      mediaItems: [
+        { type: "video", src: "/task-goblin/video/mp3-audio.mov" },
+      ],
+    },
+    {
+      id: "ai-palette",
+      title: "ai-palette",
+      distance: "",
+      icon: "/task-goblin/images/palette.gif",
+      aspectRatio: "video",
+      mediaItems: [
+        { type: "video", src: "/task-goblin/video/paleta-ia.mov" },
+      ],
+    },
+    {
+      id: "reduce-video",
+      title: "reduce-video",
+      distance: "",
+      icon: "/task-goblin/images/video.gif",
+      aspectRatio: "video",
+      mediaItems: [
+        { type: "video", src: "/task-goblin/video/reducir-video.mov" },
+      ],
+    },
+    {
+      id: "pdf-summary",
+      title: "pdf-summary",
+      distance: "",
+      icon: "/task-goblin/images/resumen.gif",
+      aspectRatio: "video",
+      mediaItems: [
+        { type: "video", src: "/task-goblin/video/resumen-ia.mov" },
+      ],
+    },
+    {
+      id: "smart-translator",
+      title: "smart-translator",
+      distance: "",
+      icon: "/task-goblin/images/translate.gif",
+      aspectRatio: "video",
+      mediaItems: [
+        { type: "video", src: "/task-goblin/video/traducir-texto.mov" },
+      ],
+    },
+    {
       id: "screenshot-to-text",
       title: "Screenshot to Text",
       distance: "",
