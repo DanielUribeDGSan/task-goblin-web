@@ -159,9 +159,9 @@ const CarouselContent = () => {
                 </div>
 
                 {/* Overlay with info */}
-                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-8 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-12 bg-gradient-to-t from-black via-black/80 via-black/40 to-transparent z-20">
                   <motion.h1
-                    className="text-2xl sm:text-6xl font-bold text-white mb-1 sm:mb-2 truncate"
+                    className="text-2xl sm:text-6xl font-bold text-white mb-1 sm:mb-2 truncate drop-shadow-2xl"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
@@ -169,7 +169,7 @@ const CarouselContent = () => {
                     {(activeApp as any).name}
                   </motion.h1>
                   <motion.p
-                    className="text-white/70 text-sm sm:text-lg max-w-xl mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-none"
+                    className="text-white/70 text-sm sm:text-lg max-w-xl mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-none drop-shadow-md"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}

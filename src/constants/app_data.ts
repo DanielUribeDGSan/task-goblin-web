@@ -209,9 +209,9 @@ export const APP_CONFIGS = {
     backgroundColor: "#212124",
     rooms: TASK_GOBLIN_ROOMS,
     heroIcon: "/icon/bot.gif",
-    heroVideo: "/home/video.mp4",
-    heroPoster: "/task-goblin/images/task-goblin-general.png",
-    heroImages: ["/task-goblin/images/task-goblin-general.png", "/home/image-1.png", "/home/image-2.png"],
+    // heroVideo: "/home/video.mp4",
+    heroPoster: "/apps/task-goblin.png",
+    heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
     path: "/task-goblin-app",
   },
   "floaty": {
@@ -222,15 +222,15 @@ export const APP_CONFIGS = {
     backgroundColor: "#0A0D0A",
     rooms: FLOATY_ROOMS,
     heroIcon: "/icon/floaty.png",
-    heroVideo: "/floaty/video.mp4",
-    heroPoster: "/floaty/image-2.png",
+    // heroVideo: "/floaty/video.mp4",
+    heroPoster: "/apps/floaty.png",
     heroImages: [
-      "/floaty/image-2.png",
+      "/apps/floaty.png",
       "/floaty/imagen-1.png"
     ],
     path: "/floaty-app",
   },
-  "nexo": {
+  /* "nexo": {
     name: "Nexo",
     iconPath: "/icon/computer.png",
     accentColor: "#C693FA",
@@ -250,7 +250,7 @@ export const APP_CONFIGS = {
       "/nexo/images/snippets.png"
     ],
     path: "/nexo-app",
-  }
+  } */
 } as const;
 
 export const TASK_GOBLIN_URLS = [
