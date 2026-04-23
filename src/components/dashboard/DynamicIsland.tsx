@@ -105,7 +105,7 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
 
                 {/* Right: More Apps Switcher */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="flex items-center gap-2 text-white/20">
+                  <div className="flex items-center gap-2 text-white">
                     <span className="text-[10px] sm:text-[11px] font-black tracking-[0.2em] uppercase">
                       {t.moreAppsTitle}
                     </span>
@@ -142,7 +142,8 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center mt-2 text-white/20"
+          onClick={() => setIsExpanded(true)}
+          className="flex flex-col items-center mt-2 text-white cursor-pointer hover:text-white/80 transition-colors"
         >
           <ChevronUp size={14} className="animate-bounce" />
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] -mt-1">

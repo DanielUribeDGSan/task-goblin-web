@@ -296,6 +296,16 @@ function DashboardContent({ appType }: { appType: AppType }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('buy') === 'true') {
+      setIsPaymentModalOpen(true);
+      // Clean up the URL to avoid re-opening on refresh
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+  }, []);
+
+  useEffect(() => {
     const isMobileScroll = window.innerWidth < 1024;
     const target = isMobileScroll ? window : scrollContainerRef.current;
     if (!target) return;

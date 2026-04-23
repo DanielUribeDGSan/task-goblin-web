@@ -5,7 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp, ChevronDown, ArrowRight, Languages } from "lucide-react";
 import { APP_CONFIGS } from "../constants/app_data";
 import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
+import { LayoutProvider } from "../contexts/LayoutContext";
 import { VideoLoader } from "./VideoLoader";
+import { Sparkles } from "lucide-react";
+import { PaymentModal } from "./PaymentModal";
 
 const APPS = Object.entries(APP_CONFIGS).map(([id, config]) => ({
   id,
@@ -15,7 +18,9 @@ const APPS = Object.entries(APP_CONFIGS).map(([id, config]) => ({
 export const MultiProductCarousel = () => {
   return (
     <LanguageProvider>
-      <CarouselContent />
+      <LayoutProvider>
+        <CarouselContent />
+      </LayoutProvider>
     </LanguageProvider>
   );
 };
@@ -25,6 +30,7 @@ const CarouselContent = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeApp = APPS[activeIndex] as any;
@@ -74,6 +80,29 @@ const CarouselContent = () => {
 
   return (
     <div className="relative min-h-screen bg-black overflow-hidden flex flex-col sm:flex-row justify-center">
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-[110]">
+        <motion.a
+          href={`${activeApp.path}?buy=true`}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
+          whileTap={{ scale: 0.95 }}
+          className="group flex items-center gap-3 text-black font-bold py-3 px-6 rounded-full shadow-2xl transition-all border border-white/20 whitespace-nowrap no-underline"
+          style={{ 
+            backgroundColor: accentColor,
+            boxShadow: `0 10px 30px -5px ${accentColor}4D`
+          }}
+        >
+          <Sparkles size={20} className="animate-pulse" />
+          <span className="text-sm uppercase tracking-wider">{t.bottomBar.buyLicense}</span>
+        </motion.a>
+      </div>
+
+      <PaymentModal 
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        appType={activeApp.id}
+      />
       {/* Language Switcher */}
       <div className="absolute top-4 right-4 sm:top-8 sm:right-8 z-[100] flex items-center gap-2">
         <Languages size={18} className="text-white/40" />
