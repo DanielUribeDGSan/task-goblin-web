@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Home, Bot, Search, Lock, Download, HelpCircle, CreditCard, Clock, Mail, ArrowLeft } from "lucide-react";
+import { MessageCircle, X, Home, Bot, Search, Lock, Download, HelpCircle, CreditCard, Clock, Mail, ArrowLeft, Sparkles } from "lucide-react";
 import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
+import { LayoutProvider } from "../contexts/LayoutContext";
+import { PaymentModal } from "./PaymentModal";
 
 interface ChatMessage {
     id: string;
@@ -16,17 +18,24 @@ interface ChatOption {
     action?: () => void;
 }
 
-export const FloatingChat: React.FC = () => {
+interface FloatingChatProps {
+    appType?: "task-goblin" | "floaty" | "nexo";
+}
+
+export const FloatingChat: React.FC<FloatingChatProps> = ({ appType = "task-goblin" }) => {
     return (
         <LanguageProvider>
-            <FloatingChatContent />
+            <LayoutProvider>
+                <FloatingChatContent appType={appType} />
+            </LayoutProvider>
         </LanguageProvider>
     );
 };
 
-const FloatingChatContent: React.FC = () => {
+const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-goblin" }) => {
     const { t, lang } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [history, setHistory] = useState<ChatMessage[]>([]);
     const [currentOptions, setCurrentOptions] = useState<ChatOption[]>([]);
     const [viewStack, setViewStack] = useState<string[]>([]);
@@ -190,15 +199,40 @@ const FloatingChatContent: React.FC = () => {
         showInitialOptions();
     };
 
+    const isFloaty = appType === "floaty";
+    const isNexo = appType === "nexo";
+    const accentColor = isFloaty ? "#2BE46A" : isNexo ? "#C693FA" : "#9782ff";
+    const accentShadow = isFloaty 
+        ? "rgba(43, 228, 106, 0.3)" 
+        : isNexo 
+            ? "rgba(198, 147, 250, 0.3)" 
+            : "rgba(151, 130, 255, 0.3)";
+
     return (
-        <div className="fixed bottom-10 lg:bottom-35 right-4 sm:right-6 z-9999 font-sans">
+        <div className="fixed bottom-10 lg:bottom-35 right-4 sm:right-6 z-9999 font-sans flex flex-col items-end gap-4">
+            <motion.button
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsPaymentModalOpen(true)}
+                className="group flex items-center gap-3 text-black font-bold py-3 px-5 rounded-3xl shadow-2xl cursor-pointer transition-all border border-white/20"
+                style={{ 
+                    backgroundColor: accentColor,
+                    boxShadow: `0 10px 25px -5px ${accentShadow}`
+                }}
+            >
+                <Sparkles size={20} className="animate-pulse" />
+                <span className="text-sm whitespace-nowrap">{t.bottomBar.buyLicense}</span>
+            </motion.button>
+
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, y: 20, scale: 0.9, transformOrigin: "bottom right" }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                        className="mb-4 w-[calc(100vw-2rem)] sm:w-[360px] h-[700px] max-h-[85dvh] glass-card rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl border border-white/10"
+                        className="absolute bottom-20 right-0 w-[calc(100vw-2rem)] sm:w-[360px] h-[700px] max-h-[85dvh] glass-card rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl border border-white/10"
                         style={{
                             background: "linear-gradient(180deg, rgba(25, 25, 28, 0.95) 0%, rgba(15, 15, 18, 0.98) 100%)",
                             backdropFilter: "blur(20px)"
@@ -350,6 +384,12 @@ const FloatingChatContent: React.FC = () => {
                     )}
                 </AnimatePresence>
             </motion.button>
+
+            <PaymentModal
+                isOpen={isPaymentModalOpen}
+                appType={appType}
+                onClose={() => setIsPaymentModalOpen(false)}
+            />
         </div>
     );
 };

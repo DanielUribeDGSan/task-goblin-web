@@ -14,6 +14,7 @@ export const translations = {
     nexoIntro: "Nexo is the command center for developers. Simplify your local environment, manage projects, master your ports, and share your work in seconds. Designed to boost your productivity and eliminate daily friction.",
     floatyIntro: "Floaty is an app that opens floating windows so you can watch your favorite movies, series or videos while you work or use your computer without needing another monitor or adapting the size of a browser tab.",
     moreAppsTitle: "More Apps",
+    seeMoreApps: "See more applications",
     permissionsCard: {
       title: "Permissions required in the app",
       featuresTitle: "Everything you need, in one app:",
@@ -191,12 +192,14 @@ export const translations = {
       downloadWindows: "Download for Windows",
       obtainLicense: "Get Pro Features",
       checkLicense: "Account Details",
+      buyLicense: "Buy license",
       mac: "Mac",
       windows: "Windows",
       appleSilicon: "Apple Silicon (M1/M2/M3)",
       intel: "Intel",
       mobileDownloadNotice:
         "Downloads are not available on mobile. Please use the website on a computer to download the app.",
+      downloadApp: "Download application",
     },
     downloadModal: {
       macSilicon: "macOS — Apple Silicon",
@@ -283,7 +286,7 @@ export const translations = {
       consultQuestion: "How do I check my account status?",
       consultResponse: "You can check your activation status in the menu below, using the Search icon (magnifying glass).",
       priceQuestion: "How much does each app cost?",
-      priceResponse: "Task Goblin: $249 MXN / $13 USD. Nexo: $149 MXN / $8 USD. Floaty: $99 MXN / $5 USD.",
+      priceResponse: "Task Goblin: $199 MXN / $13 USD. Nexo: $149 MXN / $8 USD. Floaty: $99 MXN / $5 USD.",
       downloadQuestion: "Where do I download it?",
       downloadResponse: "Download links are in the bottom menu (Mac and Windows icons). Click them to open a modal where you'll find the download button after the system compatibility info.",
       trialQuestion: "How long are the pro features active?",
@@ -310,6 +313,7 @@ export const translations = {
     nexoIntro: "Nexo es el centro de mando para desarrolladores. Simplifica tu entorno local, gestiona proyectos, domina tus puertos y comparte tu trabajo en segundos. Diseñado para potenciar tu productividad y eliminar las fricciones del día a día.",
     floatyIntro: "Es una app que abre ventanas flotantes para poder ver tus películas, series o videos favoritos mientras trabajas o usas tu computadora sin necesidad de tener otro monitor o adaptar el tamaño de una pestaña del navegador.",
     moreAppsTitle: "Más Apps",
+    seeMoreApps: "Ver más aplicaciones",
     permissionsCard: {
       title: "Permisos solicitados en la aplicación",
       featuresTitle: "Todo lo que necesitas, en una sola app:",
@@ -488,12 +492,14 @@ export const translations = {
       downloadWindows: "Descargar para Windows",
       obtainLicense: "Obtener Funciones Pro",
       checkLicense: "Detalles de Cuenta",
+      buyLicense: "Comprar licencia",
       mac: "Mac",
       windows: "Windows",
       appleSilicon: "Apple Silicon (M1/M2/M3)",
       intel: "Intel",
       mobileDownloadNotice:
         "No puedes descargar en móvil. Usa el sitio web en un ordenador para descargar la aplicación.",
+      downloadApp: "Descargar aplicación",
     },
     downloadModal: {
       macSilicon: "macOS — Apple Silicon",
@@ -580,7 +586,7 @@ export const translations = {
       consultQuestion: "¿Cómo consulto mi estado de cuenta?",
       consultResponse: "Puedes consultar tu estado de activación en el menú de abajo, usando el icono de Búsqueda (lupa).",
       priceQuestion: "¿Cuánto cuesta cada app?",
-      priceResponse: "Task Goblin: $249 MXN / $13 USD. Nexo: $149 MXN / $8 USD. Floaty: $99 MXN / $5 USD.",
+      priceResponse: "Task Goblin: $199 MXN / $13 USD. Nexo: $149 MXN / $8 USD. Floaty: $99 MXN / $5 USD.",
       downloadQuestion: "¿Dónde la descargo?",
       downloadResponse: "Los enlaces de descarga están en el menú de abajo (iconos de Mac y Windows). Al abrirlos verás un modal con el botón de descarga después de la información de compatibilidad.",
       trialQuestion: "¿Cuánto tiempo están activas las funciones pro?",

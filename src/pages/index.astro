@@ -47,7 +47,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
   <body class="antialiased font-sans bg-black">
     <GlobalLoader client:load />
     <MultiProductCarousel client:load />
-    <FloatingChat client:load />
+    <FloatingChat client:load appType="task-goblin" />
 
     <!-- JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify({

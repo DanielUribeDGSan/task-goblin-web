@@ -22,7 +22,7 @@ export const APP_CONFIG = {
   PRODUCTS: {
     'task-goblin': {
       name: 'Task Goblin Pro',
-      price: 249,
+      price: 199,
       priceUSD: 13,
     },
     'nexo': {

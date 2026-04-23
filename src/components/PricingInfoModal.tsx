@@ -102,7 +102,7 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
         usd: 5,
         originalUsd: 8
     } : {
-        mxn: 249,
+        mxn: 199,
         originalMxn: 299,
         usd: 13,
         originalUsd: 16

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import { APP_CONFIGS } from "../../constants/app_data";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
@@ -26,7 +27,7 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
   const activeDesc = rawDesc.length > 50 ? `${rawDesc.substring(0, 47)}...` : rawDesc;
 
   return (
-    <div className={`relative flex justify-center w-full ${isMobile ? 'h-[56px] pt-2' : 'h-[64px] pt-4'} pointer-events-auto z-[200]`}>
+    <div className={`relative flex flex-col items-center w-full ${isMobile ? 'min-h-[80px] pt-2' : 'min-h-[100px] pt-4'} pointer-events-auto z-[200]`}>
       <motion.div
         onClick={() => isMobile && setIsExpanded(!isExpanded)}
         onMouseEnter={() => !isMobile && setIsExpanded(true)}
@@ -72,9 +73,6 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
                     </div>
                   ))}
                 </div>
-                <span className="text-[8px] font-bold text-white/20 tracking-tighter uppercase">
-                  {t.moreAppsTitle}
-                </span>
               </div>
             </motion.div>
           ) : (
@@ -107,9 +105,12 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
 
                 {/* Right: More Apps Switcher */}
                 <div className="flex flex-col items-center gap-2">
-                  <span className="text-[8px] sm:text-[10px] font-black text-white/20 tracking-widest uppercase">
-                    {t.moreAppsTitle}
-                  </span>
+                  <div className="flex items-center gap-2 text-white/20">
+                    <span className="text-[10px] sm:text-[11px] font-black tracking-[0.2em] uppercase">
+                      {t.moreAppsTitle}
+                    </span>
+                    <ChevronDown size={18} className="animate-bounce" />
+                  </div>
                   <div className="flex gap-2">
                     {inactiveAppIds.map(id => {
                       const cfg = APP_CONFIGS[id];
@@ -136,6 +137,19 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
           )}
         </AnimatePresence>
       </motion.div>
+
+      {!isExpanded && (
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center mt-2 text-white/20"
+        >
+          <ChevronUp size={14} className="animate-bounce" />
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] -mt-1">
+            {t.seeMoreApps}
+          </span>
+        </motion.div>
+      )}
     </div>
   );
 };

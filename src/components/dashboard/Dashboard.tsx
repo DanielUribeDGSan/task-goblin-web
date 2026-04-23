@@ -16,10 +16,10 @@ import {
   MessageCircle,
   ShieldCheck,
   ChevronRight,
-  X,
   Sparkles,
 } from "lucide-react";
 import { APP_CONFIGS, type MediaSlide, type RoomCardAspectRatio } from "../../constants/app_data";
+import { PaymentModal } from "../PaymentModal";
 
 type AppType = keyof typeof APP_CONFIGS;
 
@@ -79,6 +79,7 @@ type MasonryProps = {
   t: ReturnType<typeof useLanguage>["t"];
   setPermissionsModalOpen: (v: boolean) => void;
   setInfoModalOpen: (v: boolean) => void;
+  setPaymentModalOpen: (v: boolean) => void;
 };
 
 const itemVariants = {
@@ -123,6 +124,7 @@ function MasonryLayout({
   t,
   setPermissionsModalOpen,
   setInfoModalOpen,
+  setPaymentModalOpen,
 }: MasonryProps) {
   let { ref: containerRef, cols } = useMasonryCols();
   if (appType === "floaty") {
@@ -182,11 +184,12 @@ function MasonryLayout({
               </ul>
               <button
                 type="button"
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 py-2 mb-4 hover:bg-white/[0.08] hover:border-white/20 transition-colors cursor-pointer"
+                onClick={() => setPaymentModalOpen(true)}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#9782ff] border border-white/20 px-3 py-2.5 mb-2 hover:opacity-90 transition-all cursor-pointer shadow-[0_0_20px_rgba(151,130,255,0.4)]"
               >
                 <span className="flex items-center gap-2 group/btn">
-                  <Sparkles size={18} className="shrink-0 transition-colors" style={{ color: config.accentColor }} />
-                  <span className="text-white group-hover/btn:text-white transition-colors">
+                  <Sparkles size={18} className="shrink-0 text-black" />
+                  <span className="text-black font-bold text-sm">
                     {t.permissionsCard.getTaskGoblinPro}
                   </span>
                 </span>
@@ -194,7 +197,7 @@ function MasonryLayout({
               <button
                 type="button"
                 onClick={() => setInfoModalOpen(true)}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand-cyan/20 border border-brand-cyan/40 py-2.5 text-sm font-semibold text-white hover:bg-brand-cyan/30 transition-colors cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors cursor-pointer"
               >
                 {t.permissionsCard.getMoreInfo}
                 <ChevronRight size={18} />
@@ -286,6 +289,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
   const { devices, toggleDevice } = useDashboardState();
   const [permissionsModalOpen, setPermissionsModalOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const [showTopBar, setShowTopBar] = useState(true);
   const lastScrollY = useRef(0);
@@ -373,6 +377,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
               appType={appType}
               setPermissionsModalOpen={setPermissionsModalOpen}
               setInfoModalOpen={setInfoModalOpen}
+              setPaymentModalOpen={setIsPaymentModalOpen}
             />
 
             {/* ── Modals (renderizados via createPortal en document.body) ── */}
@@ -522,6 +527,12 @@ function DashboardContent({ appType }: { appType: AppType }) {
                 </>,
                 document.body,
               )}
+
+            <PaymentModal
+              isOpen={isPaymentModalOpen}
+              appType={appType}
+              onClose={() => setIsPaymentModalOpen(false)}
+            />
           </div>
 
           <div className="relative z-[500] shrink-0">

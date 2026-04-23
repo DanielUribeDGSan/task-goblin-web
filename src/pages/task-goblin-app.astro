@@ -57,7 +57,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <body class="antialiased font-sans bg-black">
     <GlobalLoader client:load />
     <Dashboard client:load appType="task-goblin" />
-    <FloatingChat client:load />
+    <FloatingChat client:load appType="task-goblin" />
 
     <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication, WebSite, Organization) -->
     <script
