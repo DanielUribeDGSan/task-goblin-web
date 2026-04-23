@@ -109,7 +109,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   }
 
   return (
-    <div className="flex flex-col xl:flex-row items-stretch sm:items-end xl:items-center justify-end p-4 sm:p-6 gap-4 sm:gap-6 w-full max-w-full overflow-hidden">
+    <div className="flex flex-col lg:flex-row items-stretch lg:items-center lg:justify-start xl:justify-center p-4 sm:p-6 gap-6 w-full max-w-full overflow-hidden">
       {isMobile && (
         <div className="flex items-center gap-2 w-full sm:hidden">
           <motion.div
@@ -167,168 +167,174 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
           </p>
         </div>
       ) : (
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-12">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-[0.2em] mb-1">
-              {t.bottomBar.downloadApp}
-            </span>
-            <motion.div
-              className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 glass rounded-xl sm:rounded-[2rem] px-4 sm:px-8 py-3 min-w-0 border border-white/5"
-              whileHover={{
-                scale: 1.02,
-                transition: { type: "spring", stiffness: 400, damping: 25 },
-              }}
-            >
-              <div 
-                className="relative" 
-                ref={menuRef}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-12">
+          {/* Columna 1: Precio y Descarga */}
+          <div className="flex flex-col xl:flex-row items-center lg:items-start xl:items-center gap-4 order-2 lg:order-1">
+            {!isMobile && (
+              <motion.div
+                className="flex items-center justify-center sm:justify-start gap-3 glass rounded-xl sm:rounded-[1.5rem] px-3 sm:px-4 py-2 sm:py-2.5 min-w-0 shrink-0 border border-white/5"
+                whileHover={{
+                  scale: 1.04,
+                  transition: { type: "spring", stiffness: 400, damping: 25 },
+                }}
               >
+                <Tag size={18} className="shrink-0 text-sh-text-muted" aria-hidden />
+                <div className="flex items-center gap-2">
+                  {showUsd ? (
+                    <p className="text-sm font-bold text-white whitespace-nowrap">
+                      <span className="line-through text-sh-text-muted font-normal mr-1">
+                        ${prices.originalUsd}
+                      </span>{" "}
+                      ${prices.usd}{" "}
+                      <span className="text-sh-text-muted font-normal text-xs">USD</span>
+                      <span className="ml-1 text-[10px] font-semibold uppercase" style={{ color: 'var(--sh-accent)' }}>
+                        {t.bottomBar.promotion}
+                      </span>
+                    </p>
+                  ) : (
+                    <p className="text-sm font-bold text-white whitespace-nowrap">
+                      <span className="line-through text-sh-text-muted font-normal mr-1">
+                        ${prices.originalMxn}
+                      </span>{" "}
+                      ${prices.mxn}{" "}
+                      <span className="text-sh-text-muted font-normal text-xs">MXN</span>
+                      <span className="ml-1 text-[10px] font-semibold uppercase" style={{ color: 'var(--sh-accent)' }}>
+                        {t.bottomBar.promotion}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-[0.2em] mb-1">
+                {t.bottomBar.downloadApp}
+              </span>
+              <motion.div
+                className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 glass rounded-xl sm:rounded-[2rem] px-4 sm:px-8 py-3 min-w-0 border border-white/5"
+                whileHover={{
+                  scale: 1.02,
+                  transition: { type: "spring", stiffness: 400, damping: 25 },
+                }}
+              >
+                <div 
+                  className="relative" 
+                  ref={menuRef}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <button
+                    ref={macButtonRef}
+                    type="button"
+                    onClick={() => setMacMenuOpen((o) => !o)}
+                    className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors cursor-pointer"
+                    aria-label={t.bottomBar.downloadMac}
+                    aria-expanded={macMenuOpen}
+                    aria-haspopup="true"
+                  >
+                    <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
+                      <Apple size={22} />
+                    </span>
+                    <span className="text-sm font-semibold">{t.bottomBar.mac}</span>
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform ${macMenuOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {macMenuOpen && dropdownRect &&
+                    createPortal(
+                      <>
+                        <button
+                          type="button"
+                          aria-hidden
+                          tabIndex={-1}
+                          className="fixed inset-0 z-[99998] cursor-default"
+                          style={{ background: "transparent" }}
+                          onClick={() => setMacMenuOpen(false)}
+                        />
+                        <div
+                          ref={dropdownRef}
+                          role="menu"
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                          className="fixed min-w-[200px] rounded-xl py-2 shadow-2xl z-[99999] border border-white/10 bg-[#1c1c1c]"
+                          style={{
+                            top: dropdownRect.top,
+                            left: dropdownRect.left,
+                            transform: "translate3d(0, -100%, 0)",
+                            isolation: "isolate",
+                          }}
+                        >
+                          <button
+                            type="button"
+                            role="menuitem"
+                            className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                            onClick={() => openDownloadModal(0)}
+                          >
+                            {t.bottomBar.appleSilicon}
+                          </button>
+                          <button
+                            type="button"
+                            role="menuitem"
+                            className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                            onClick={() => openDownloadModal(1)}
+                          >
+                            {t.bottomBar.intel}
+                          </button>
+                        </div>
+                      </>,
+                      document.body,
+                    )}
+                </div>
+                <div className="w-px h-6 bg-white/10" />
                 <button
-                  ref={macButtonRef}
                   type="button"
-                  onClick={() => setMacMenuOpen((o) => !o)}
+                  onClick={() => openDownloadModal(2)}
                   className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors cursor-pointer"
-                  aria-label={t.bottomBar.downloadMac}
-                  aria-expanded={macMenuOpen}
-                  aria-haspopup="true"
+                  aria-label={t.bottomBar.downloadWindows}
                 >
                   <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
-                    <Apple size={22} />
+                    <WindowsIcon size={20} />
                   </span>
-                  <span className="text-sm font-semibold">{t.bottomBar.mac}</span>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform ${macMenuOpen ? "rotate-180" : ""}`}
-                  />
+                  <span className="text-sm font-semibold">{t.bottomBar.windows}</span>
                 </button>
-                {macMenuOpen && dropdownRect &&
-                  createPortal(
-                    <>
-                      <button
-                        type="button"
-                        aria-hidden
-                        tabIndex={-1}
-                        className="fixed inset-0 z-[99998] cursor-default"
-                        style={{ background: "transparent" }}
-                        onClick={() => setMacMenuOpen(false)}
-                      />
-                      <div
-                        ref={dropdownRef}
-                        role="menu"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        className="fixed min-w-[200px] rounded-xl py-2 shadow-2xl z-[99999] border border-white/10 bg-[#1c1c1c]"
-                        style={{
-                          top: dropdownRect.top,
-                          left: dropdownRect.left,
-                          transform: "translate3d(0, -100%, 0)",
-                          isolation: "isolate",
-                        }}
-                      >
-                        <button
-                          type="button"
-                          role="menuitem"
-                          className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-                          onClick={() => openDownloadModal(0)}
-                        >
-                          {t.bottomBar.appleSilicon}
-                        </button>
-                        <button
-                          type="button"
-                          role="menuitem"
-                          className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-                          onClick={() => openDownloadModal(1)}
-                        >
-                          {t.bottomBar.intel}
-                        </button>
-                      </div>
-                    </>,
-                    document.body,
-                  )}
-              </div>
-              <div className="w-px h-6 bg-white/10" />
-              <button
-                type="button"
-                onClick={() => openDownloadModal(2)}
-                className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors cursor-pointer"
-                aria-label={t.bottomBar.downloadWindows}
-              >
-                <span className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white">
-                  <WindowsIcon size={20} />
-                </span>
-                <span className="text-sm font-semibold">{t.bottomBar.windows}</span>
-              </button>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
 
-          {!isMobile && (
-            <motion.div
-              className="flex items-center justify-center sm:justify-start gap-3 glass rounded-xl sm:rounded-[1.5rem] px-3 sm:px-4 py-2 sm:py-2.5 min-w-0 shrink-0"
-              whileHover={{
-                scale: 1.04,
-                transition: { type: "spring", stiffness: 400, damping: 25 },
-              }}
+          {/* Columna 2: Botones de Acción */}
+          <div className="flex items-center gap-6 lg:gap-8 order-1 lg:order-2">
+            <button
+              type="button"
+              onClick={() => setIsPaymentModalOpen(true)}
+              className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none"
             >
-              <Tag size={18} className="shrink-0 text-sh-text-muted" aria-hidden />
-              <div className="flex items-center gap-2">
-                {showUsd ? (
-                  <p className="text-sm font-bold text-white whitespace-nowrap">
-                    <span className="line-through text-sh-text-muted font-normal mr-1">
-                      ${prices.originalUsd}
-                    </span>{" "}
-                    ${prices.usd}{" "}
-                    <span className="text-sh-text-muted font-normal text-xs">USD</span>
-                    <span className="ml-1 text-[10px] font-semibold uppercase" style={{ color: 'var(--sh-accent)' }}>
-                      {t.bottomBar.promotion}
-                    </span>
-                  </p>
-                ) : (
-                  <p className="text-sm font-bold text-white whitespace-nowrap">
-                    <span className="line-through text-sh-text-muted font-normal mr-1">
-                      ${prices.originalMxn}
-                    </span>{" "}
-                    ${prices.mxn}{" "}
-                    <span className="text-sh-text-muted font-normal text-xs">MXN</span>
-                    <span className="ml-1 text-[10px] font-semibold uppercase" style={{ color: 'var(--sh-accent)' }}>
-                      {t.bottomBar.promotion}
-                    </span>
-                  </p>
-                )}
+              <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all font-bold mb-2">
+                <Unlock size={20} className="group-hover:hidden" />
+                <Lock size={20} className="hidden group-hover:block" />
               </div>
-            </motion.div>
-          )}
+              <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
+                {t.bottomBar.obtainLicense}
+              </span>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => setIsPaymentModalOpen(true)}
-            className="flex flex-col items-center gap-1 group cursor-pointer focus:outline-none"
-          >
-            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted group-hover:text-sh-accent transition-all font-bold mb-2">
-              <Unlock size={20} className="group-hover:hidden" />
-              <Lock size={20} className="hidden group-hover:block" />
-            </div>
-            <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
-              {t.bottomBar.obtainLicense}
-            </span>
-          </button>
-
-          <a
-            href="/license"
-            className="group flex flex-col items-center gap-1.5 transition-colors focus:outline-none no-underline"
-            style={{ viewTransitionName: 'license-card' }}
-          >
-            <div
-              className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted transition-all mb-2"
-              style={{ color: 'var(--sh-accent)' }}
+            <a
+              href="/license"
+              className="group flex flex-col items-center gap-1.5 transition-colors focus:outline-none no-underline"
+              style={{ viewTransitionName: 'license-card' }}
             >
-              <Search size={20} />
-            </div>
-            <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
-              {t.bottomBar.checkLicense}
-            </span>
-          </a>
+              <div
+                className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sh-text-muted transition-all mb-2"
+                style={{ color: 'var(--sh-accent)' }}
+              >
+                <Search size={20} />
+              </div>
+              <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-widest">
+                {t.bottomBar.checkLicense}
+              </span>
+            </a>
+          </div>
         </div>
       )}
 

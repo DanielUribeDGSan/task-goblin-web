@@ -29,10 +29,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet"
         />
+        <style is:global>
+            /* Habilitar scroll en esta página específica */
+            body {
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                height: auto !important;
+                min-height: 100vh;
+            }
+        </style>
     </head>
     <body class="antialiased font-sans bg-black">
         <main
-            class="min-h-screen bg-[#060606] relative overflow-hidden flex items-center justify-center p-4"
+            class="min-h-screen bg-[#060606] relative overflow-y-auto flex flex-col items-center justify-center p-4 py-12 md:py-20"
         >
             <div class="absolute inset-0 z-0">
                 <div

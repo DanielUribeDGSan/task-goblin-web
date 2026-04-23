@@ -301,6 +301,7 @@ export const translations = {
       emailSupport: "Email Support",
     },
     loading: "Loading...",
+    newFeaturesNotice: "More features coming soon",
   },
   es: {
     appName: "Task Goblin",
@@ -603,5 +604,6 @@ export const translations = {
       emailSupport: "Enviar Email",
     },
     loading: "Cargando...",
+    newFeaturesNotice: "Pronto nuevas funcionalidades",
   },
 } as const;

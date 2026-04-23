@@ -16,7 +16,7 @@ interface DownloadModalProps {
 const macRows = [
   { version: "High Sierra", number: "10.13", year: "2017", status: "warn" },
   { version: "Mojave", number: "10.14", year: "2018", status: "warn" },
-  { version: "Catalina", number: "10.15", year: "2019", status: "partial" },
+  { version: "Catalina", number: "10.15", year: "2019", status: "warn" },
   { version: "Big Sur", number: "11", year: "2020", status: "ok" },
   { version: "Monterey", number: "12", year: "2021", status: "ok" },
   { version: "Ventura", number: "13", year: "2022", status: "ok" },

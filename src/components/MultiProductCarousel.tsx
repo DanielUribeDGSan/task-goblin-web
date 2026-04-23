@@ -80,7 +80,7 @@ const CarouselContent = () => {
 
   return (
     <div className="relative min-h-screen bg-black overflow-hidden flex flex-col sm:flex-row justify-center">
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-[110]">
+      <div className="absolute top-14 sm:top-2 left-1/2 -translate-x-1/2 z-[110]">
         <motion.a
           href={`${activeApp.path}?buy=true`}
           initial={{ opacity: 0, y: -20 }}
@@ -104,7 +104,7 @@ const CarouselContent = () => {
         appType={activeApp.id}
       />
       {/* Language Switcher */}
-      <div className="absolute top-4 right-4 sm:top-8 sm:right-8 z-[100] flex items-center gap-2">
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 sm:left-auto sm:right-8 sm:top-8 z-[100] flex items-center gap-2">
         <Languages size={18} className="text-white/40" />
         <div className="flex rounded-xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md">
           <button
