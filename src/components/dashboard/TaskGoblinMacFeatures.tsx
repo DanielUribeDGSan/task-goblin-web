@@ -171,7 +171,7 @@ export const TaskGoblinMacFeatures = ({
                                  videoRef.current.currentTime = pos * duration;
                                }}>
                             <div 
-                              className="absolute top-0 left-0 h-full bg-[#5B518D] rounded-full"
+                              className="absolute top-0 left-0 h-full bg-[#9782ff] rounded-full"
                               style={{ width: `${(currentTime / duration) * 100}%` }}
                             />
                             <div 
@@ -184,7 +184,7 @@ export const TaskGoblinMacFeatures = ({
                             <div className="flex items-center gap-4">
                               <button
                                 onClick={togglePlay}
-                                className="text-white hover:text-[#8E84C1] transition-colors cursor-pointer"
+                                className="text-white hover:text-[#b8a8ff] transition-colors cursor-pointer"
                               >
                                 {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
                               </button>

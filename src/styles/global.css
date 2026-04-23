@@ -11,15 +11,15 @@
   --sh-panel-border: rgba(170, 121, 21, 0.08);
   --sh-text: rgba(255, 255, 255, 1);
   --sh-text-muted: rgba(255, 255, 255, 0.5);
-  --sh-accent: #5B518D;
-  --sh-accent-muted: rgba(91, 81, 141, 0.2);
-  --sh-glow-orange: rgba(91, 81, 141, 0.15);
-  --sh-glow-cyan: rgba(91, 81, 141, 0.1);
+  --sh-accent: #9782ff;
+  --sh-accent-muted: rgba(151, 130, 255, 0.2);
+  --sh-glow-orange: rgba(151, 130, 255, 0.15);
+  --sh-glow-cyan: rgba(151, 130, 255, 0.1);
 
   /* TaskGoblin legacy variables for compatibility */
-  --tg-accent: #5B518D;
-  --tg-accent-soft: rgba(91, 81, 141, 0.1);
-  --tg-accent-bright: #4A4175;
+  --tg-accent: #9782ff;
+  --tg-accent-soft: rgba(151, 130, 255, 0.1);
+  --tg-accent-bright: #7a65e6;
   --tg-border: rgba(255, 255, 255, 0.1);
   --tg-panel-border: rgba(255, 255, 255, 0.05);
   --tg-surface: #0e0e0e;

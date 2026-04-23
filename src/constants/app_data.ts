@@ -264,8 +264,8 @@ export const APP_CONFIGS = {
   "task-goblin": {
     name: "TaskGoblin",
     iconPath: "/icon/TaskGoblin.png",
-    accentColor: "#5B518D",
-    secondaryColor: "#554D84",
+    accentColor: "#9782ff",
+    secondaryColor: "#8a75f0",
     backgroundColor: "#212124",
     rooms: TASK_GOBLIN_ROOMS,
     heroIcon: "/icon/bot.gif",

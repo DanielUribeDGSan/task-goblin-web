@@ -133,7 +133,7 @@ export const LicenseViewer: React.FC = () => {
                 <div className="text-center space-y-2 mt-4 mb-8">
                     <div 
                         className="w-12 h-12 rounded-2xl glass flex items-center justify-center mx-auto mb-4"
-                        style={{ color: '#5B518D' }}
+                        style={{ color: '#9782ff' }}
                     >
                         {isCheckoutCancel ? <AlertCircle size={24} className="text-orange-400" /> : <Search size={24} />}
                     </div>
@@ -169,7 +169,7 @@ export const LicenseViewer: React.FC = () => {
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder={t.licensePage.emailPlaceholder}
                                         className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 transition-all"
-                                        style={{ focusRingColor: '#5B518D50', focusBorderColor: '#5B518D' } as any}
+                                        style={{ focusRingColor: '#9782ff50', focusBorderColor: '#9782ff' } as any}
                                     />
                                 </div>
                             </div>
@@ -178,7 +178,7 @@ export const LicenseViewer: React.FC = () => {
                                     type="submit"
                                     disabled={!email.includes('@')}
                                     className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2"
-                                    style={{ backgroundColor: '#5B518D' }}
+                                    style={{ backgroundColor: '#9782ff' }}
                                 >
                                 {isCheckoutSuccess ? <CheckCircle size={18} /> : <Search size={18} />}
                                 {isCheckoutSuccess ? t.licensePage.associateButton : t.licensePage.searchButton}
@@ -196,7 +196,7 @@ export const LicenseViewer: React.FC = () => {
                         >
                             <div 
                                 className="w-10 h-10 border-4 border-white/10 rounded-full animate-spin" 
-                                style={{ borderTopColor: '#5B518D' }}
+                                style={{ borderTopColor: '#9782ff' }}
                             />
                             <p className="text-white/70 font-medium">{t.licensePage.searching}</p>
                         </motion.div>
@@ -231,7 +231,7 @@ export const LicenseViewer: React.FC = () => {
                                 <div className="space-y-3">
                                     <span 
                                         className="text-sm font-medium block"
-                                        style={{ color: '#5B518D' }}
+                                        style={{ color: '#9782ff' }}
                                     >
                                         {licenseKeys.length > 1 ? t.licensePage.licenseKeyLabel + " (" + licenseKeys.length + ")" : t.licensePage.licenseKeyLabel}
                                     </span>
@@ -240,7 +240,7 @@ export const LicenseViewer: React.FC = () => {
                                         {licenseKeys.map((item, i) => (
                                             <div key={item.key} className="flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden">
                                                 <div className="flex flex-col py-3 px-4 min-w-0 flex-1">
-                                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#5B518D] mb-1">
+                                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#9782ff] mb-1">
                                                         {item.app.replace('-', ' ')}
                                                     </span>
                                                     <code className="text-sm text-white/90 font-mono tracking-wider truncate">
@@ -262,7 +262,7 @@ export const LicenseViewer: React.FC = () => {
 
                             <div className="glass bg-white/5 rounded-xl p-4 text-sm">
                                 <h4 className="font-semibold text-white/90 mb-2 flex items-center gap-2">
-                                    <AlertCircle size={16} style={{ color: '#5B518D' }} />
+                                    <AlertCircle size={16} style={{ color: '#9782ff' }} />
                                     {t.licensePage.instructionHeading}
                                 </h4>
                                 <ul className="list-disc list-inside text-white/70 space-y-1 text-xs">

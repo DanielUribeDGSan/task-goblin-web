@@ -207,7 +207,7 @@ const FloatingChatContent: React.FC = () => {
                         {/* Header */}
                         <div className="p-6 pb-4 flex items-center justify-between border-b border-white/5">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-2xl bg-linear-to-tr from-[#5B518D] to-[#8E84C1] flex items-center justify-center text-white shadow-lg">
+                                <div className="w-10 h-10 rounded-2xl bg-linear-to-tr from-[#9782ff] to-[#b8a8ff] flex items-center justify-center text-white shadow-lg">
                                     <Bot size={24} />
                                 </div>
                                 <div>
@@ -240,7 +240,7 @@ const FloatingChatContent: React.FC = () => {
                                 >
                                     <div className={`max-w-[85%] p-4 rounded-3xl text-sm leading-relaxed ${msg.role === "bot"
                                         ? "bg-white/5 text-white/90 rounded-tl-none border border-white/5"
-                                        : "bg-[#5B518D] text-white rounded-tr-none shadow-lg shadow-[#5B518D]/20"
+                                        : "bg-[#9782ff] text-white rounded-tr-none shadow-lg shadow-[#9782ff]/20"
                                         }`}>
                                         {msg.content.split('\n').map((line, i) => {
                                             const lineKey = `${msg.id}-l-${i}`;
@@ -257,7 +257,7 @@ const FloatingChatContent: React.FC = () => {
                                                                 {index < parts.length - 1 && (
                                                                     <a 
                                                                         href="mailto:task.goblin.apps@gmail.com" 
-                                                                        className="text-[#8E84C1] hover:underline font-medium"
+                                                                        className="text-[#b8a8ff] hover:underline font-medium"
                                                                     >
                                                                         task.goblin.apps@gmail.com
                                                                     </a>
@@ -325,7 +325,7 @@ const FloatingChatContent: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 rounded-3xl bg-[#151515] shadow-2xl shadow-[#5B518D]/40 flex items-center justify-center text-white cursor-pointer group relative overflow-hidden"
+                className="w-14 h-14 rounded-3xl bg-[#151515] shadow-2xl shadow-[#9782ff]/40 flex items-center justify-center text-white cursor-pointer group relative overflow-hidden"
             >
                 <div className="absolute inset-0 bg-linear-to-tr from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <AnimatePresence mode="wait">
