@@ -72,7 +72,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
   };
 
   const getArch = () => {
-    if (platform === "mac-silicon") return "Apple Silicon (M1 / M2 / M3 / M4)";
+    if (platform === "mac-silicon") return "Apple Silicon (M1 / M2 / M3 / M4 / M5)";
     if (platform === "mac-intel") return "Intel (x86-64)";
     return "Windows (x64)";
   };
@@ -280,7 +280,11 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                   style={{ backgroundColor: 'var(--sh-accent)' }}
                 >
                   <Download size={18} />
-                  {dm.downloadFor} {getArch()}
+                  {platform === "mac-silicon" 
+                    ? (dm as any).downloadMacSilicon 
+                    : platform === "mac-intel" 
+                      ? (dm as any).downloadMacIntel 
+                      : `${dm.downloadFor} ${getArch()}`}
                 </button>
 
                 <p className="text-center text-xs text-white/30 mt-3">
