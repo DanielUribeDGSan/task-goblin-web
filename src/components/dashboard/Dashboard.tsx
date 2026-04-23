@@ -313,7 +313,7 @@ function DashboardContent({ appType }: { appType: AppType }) {
     const handleScroll = () => {
       const currentScrollY = isMobileScroll ? window.scrollY : (target as HTMLElement).scrollTop;
       
-      // Calculate max scroll to handle rubber-banding/elastic scroll on iOS
+      // 1. Ignore elastic scroll values (bouncing at top or bottom)
       const scrollHeight = isMobileScroll 
         ? document.documentElement.scrollHeight 
         : (target as HTMLElement).scrollHeight;
@@ -322,37 +322,27 @@ function DashboardContent({ appType }: { appType: AppType }) {
         : (target as HTMLElement).clientHeight;
       const maxScroll = scrollHeight - clientHeight;
 
-      // 1. Ignore elastic scroll values (bouncing at top or bottom)
-      // This prevents the header from flickering when the user hits the scroll limits
       if (currentScrollY < 0 || (maxScroll > 0 && currentScrollY > maxScroll)) {
         return;
       }
 
-      // Determine if we are scrolling up or down
-      const isScrollingDown = currentScrollY > lastScrollY.current;
-      const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
-
-      // 2. Show header if we are near the top (e.g. top 50px) regardless of scroll direction
-      if (currentScrollY < 50) {
+      // 2. Force show near the top
+      if (currentScrollY < 30) {
         setShowTopBar(true);
-      }
-      // 3. Prevent showing header if we are near the very bottom
-      // This is an extra safety layer against bottom-bounce glitches
-      else if (maxScroll > 0 && currentScrollY > maxScroll - 30) {
-        // Stay in current state or force hide if scrolling down
-        if (isScrollingDown) setShowTopBar(false);
-      }
-      // 4. Only toggle if we've scrolled more than a significant threshold (e.g. 25px)
-      // This prevents "jitter" or "bouncing" from tiny movements
-      else if (scrollDifference > 25) {
-        if (isScrollingDown) {
-          setShowTopBar(false);
-        } else {
-          setShowTopBar(true);
-        }
+        lastScrollY.current = currentScrollY;
+        return;
       }
 
-      lastScrollY.current = currentScrollY;
+      // 3. Logic for hiding/showing based on direction and cumulative delta
+      if (currentScrollY > lastScrollY.current) {
+        // Scrolling down: Hide immediately
+        setShowTopBar(false);
+        lastScrollY.current = currentScrollY;
+      } else if (currentScrollY < lastScrollY.current - 25) {
+        // Scrolling up: Show after scrolling up at least 25px (cumulative)
+        setShowTopBar(true);
+        lastScrollY.current = currentScrollY;
+      }
     };
 
     target.addEventListener("scroll", handleScroll, { passive: true });
