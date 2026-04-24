@@ -18,31 +18,6 @@ export interface RoomConfig {
 export const TASK_GOBLIN_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
   right: [
     {
-      id: "move-mouse",
-      title: "Move Mouse",
-      distance: "",
-      icon: "/icon/move.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/mouse/video.mp4", poster: "/mouse/image-1.png" },
-        { type: "image", src: "/mouse/image-1.png" },
-      ],
-    },
-    {
-      id: "whatsapp-msg",
-      title: "WhatsApp Msg",
-      distance: "",
-      icon: "/icon/chat.gif",
-      aspectRatio: "square",
-      mediaItems: [
-        { type: "video", src: "/whatsaap/video.mp4", poster: "/whatsaap/image-1.png" },
-        { type: "image", src: "/whatsaap/image-1.png" },
-        { type: "image", src: "/whatsaap/image-2.png" },
-      ],
-    },
-  ],
-  bottom: [
-    {
       id: "magic-eraser",
       title: "magic-eraser",
       distance: "",
@@ -62,6 +37,8 @@ export const TASK_GOBLIN_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = 
         { type: "video", src: "/task-goblin/video/mp3-audio.mov" },
       ],
     },
+  ],
+  bottom: [
     {
       id: "ai-palette",
       title: "ai-palette",
@@ -178,6 +155,29 @@ export const TASK_GOBLIN_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = 
         { type: "video", src: "/image-convert/video.mp4", poster: "/image-convert/image-1.png" },
         { type: "image", src: "/image-convert/image-1.png" },
         { type: "image", src: "/image-convert/image-2.png" },
+      ],
+    },
+    {
+      id: "move-mouse",
+      title: "Move Mouse",
+      distance: "",
+      icon: "/icon/move.gif",
+      aspectRatio: "4/3",
+      mediaItems: [
+        { type: "video", src: "/mouse/video.mp4", poster: "/mouse/image-1.png" },
+        { type: "image", src: "/mouse/image-1.png" },
+      ],
+    },
+    {
+      id: "whatsapp-msg",
+      title: "WhatsApp Msg",
+      distance: "",
+      icon: "/icon/chat.gif",
+      aspectRatio: "square",
+      mediaItems: [
+        { type: "video", src: "/whatsaap/video.mp4", poster: "/whatsaap/image-1.png" },
+        { type: "image", src: "/whatsaap/image-1.png" },
+        { type: "image", src: "/whatsaap/image-2.png" },
       ],
     },
   ]

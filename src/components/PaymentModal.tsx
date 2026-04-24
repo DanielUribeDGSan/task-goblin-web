@@ -35,6 +35,26 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     // Simple Mexico detection based on Timezone
     const isMexico = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
 
+    const isNexo = appType === "nexo";
+    const isFloaty = appType === "floaty";
+
+    const prices = isNexo ? {
+        mxn: 149,
+        originalMxn: 199,
+        usd: 8,
+        originalUsd: 11
+    } : isFloaty ? {
+        mxn: 99,
+        originalMxn: 149,
+        usd: 5,
+        originalUsd: 8
+    } : {
+        mxn: 199,
+        originalMxn: 299,
+        usd: 13,
+        originalUsd: 16
+    };
+
     const handleCheckout = async (gateway: "mercadopago" | "paypal") => {
         if (!APP_CONFIG.ENABLE_LICENSING) {
             alert(t.paymentModal.disabledMessage);
@@ -125,6 +145,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                             </span>
                                         </p>
                                         <div className="flex flex-col items-center gap-3 pt-2">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-sh-text-muted line-through text-sm opacity-50">
+                                                    {isMexico ? `$${prices.originalMxn} MXN` : `$${prices.originalUsd} USD`}
+                                                </span>
+                                                <span className="text-white font-bold text-xl">
+                                                    {isMexico ? `$${prices.mxn} MXN` : `$${prices.usd} USD`}
+                                                </span>
+                                            </div>
                                             <div className="h-px w-6 rounded-full" style={{ backgroundColor: 'var(--sh-accent)', opacity: 0.3 }} />
                                             <div 
                                                 className="px-4 py-1.5 rounded-2xl border text-[10px] font-bold uppercase tracking-widest shadow-lg"
@@ -166,8 +194,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                                 <span className="text-sm font-medium">{t.paymentModal.paypalButton}</span>
                                                 <span className="text-[10px] uppercase tracking-tighter opacity-60">
                                                     PayPal {isMexico 
-                                                        ? `${APP_CONFIG.PRODUCTS[appType].price} MXN` 
-                                                        : `${APP_CONFIG.PRODUCTS[appType].priceUSD} USD`}
+                                                        ? `${prices.mxn} MXN` 
+                                                        : `${prices.usd} USD`}
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-1">

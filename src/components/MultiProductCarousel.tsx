@@ -46,7 +46,7 @@ const CarouselContent = () => {
 
   useEffect(() => {
     if (!isPaused) {
-      autoPlayRef.current = setInterval(handleNext, 10000);
+      autoPlayRef.current = setInterval(handleNext, 15000);
     }
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
@@ -150,7 +150,7 @@ const CarouselContent = () => {
             className="relative w-full max-w-4xl"
           >
             {/* Monitor/UI Container */}
-            <div className="relative group">
+            <a href={activeApp.path} className="relative group block no-underline cursor-pointer">
               <div
                 className="absolute -inset-1 bg-gradient-to-r from-white/20 to-transparent rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"
                 style={{ backgroundColor: accentColor }}
@@ -201,7 +201,7 @@ const CarouselContent = () => {
                     />
                   )}
                 </div>
-
+ 
                 {/* Overlay with info */}
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-12 bg-gradient-to-t from-black via-black/80 via-black/40 to-transparent z-20">
                   <motion.h1
@@ -224,20 +224,22 @@ const CarouselContent = () => {
                         ? t.nexoMarketing
                         : t.floatyMarketing}
                   </motion.p>
-                  <motion.a
-                    href={activeApp.path}
+                  <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-white text-black text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl hover:scale-105 transition-transform"
-                    style={{ viewTransitionName: 'page-transition-button' }}
+                    className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-white text-black text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl group-hover:scale-105 transition-transform"
+                    style={{ 
+                      viewTransitionName: 'page-transition-button',
+                      backgroundColor: 'white'
+                    }}
                   >
                     {lang === 'es' ? 'Entrar' : 'Enter'}
                     <ArrowRight size={18} />
-                  </motion.a>
+                  </motion.div>
                 </div>
               </div>
-            </div>
+            </a>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -307,7 +309,7 @@ const CarouselContent = () => {
                           style={{ backgroundColor: app.accentColor }}
                           initial={{ width: "0%" }}
                           animate={{ width: "100%" }}
-                          transition={{ duration: 10, ease: "linear" }}
+                          transition={{ duration: 15, ease: "linear" }}
                         />
                       </motion.div>
                     )}
