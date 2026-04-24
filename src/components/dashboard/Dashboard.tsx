@@ -297,6 +297,18 @@ function DashboardContent({ appType }: { appType: AppType }) {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    
+    // Check for license-related parameters from payment providers
+    const hasLicenseParams = params.get("status") || 
+                           params.get("payment_id") || 
+                           params.get("collection_id") || 
+                           params.get("id");
+
+    if (hasLicenseParams && !params.get('buy')) {
+      window.location.href = `/license${window.location.search}`;
+      return;
+    }
+
     if (params.get('buy') === 'true') {
       setIsPaymentModalOpen(true);
       // Clean up the URL to avoid re-opening on refresh

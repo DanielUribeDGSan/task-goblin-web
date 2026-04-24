@@ -272,7 +272,7 @@ export const APP_CONFIGS = {
     heroVideo: "/home/video.mp4",
     heroPoster: "/apps/task-goblin.png",
     heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
-    path: "/task-goblin-app",
+    path: "/",
   },
   "floaty": {
     name: "Floaty",
