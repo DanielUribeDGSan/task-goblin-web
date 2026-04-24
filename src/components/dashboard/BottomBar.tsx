@@ -110,7 +110,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
       {isMobile && (
         <div className="flex items-center gap-2 w-full sm:hidden">
           <motion.div
-            className="flex flex-1 items-center justify-center sm:justify-start gap-3 glass rounded-xl sm:rounded-[1.5rem] px-3 sm:px-4 py-2 sm:py-2.5 min-w-0 shrink-0"
+            className="flex flex-1 items-center justify-center sm:justify-start gap-3 glass rounded-xl sm:rounded-[1.5rem] px-2 sm:px-4 py-1.5 sm:py-2.5 min-w-0 shrink-0"
             whileHover={{
               scale: 1.02,
               transition: { type: "spring", stiffness: 400, damping: 25 },
@@ -157,7 +157,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
 
       {isMobile ? (
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-1">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -170,7 +170,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
           >
             {t.bottomBar.freeTrialTag}
           </motion.div>
-          <div className="flex items-center gap-3 glass rounded-xl px-4 py-3 text-center">
+          <div className="flex items-center gap-3 glass rounded-xl px-3 py-2 text-center">
             <Smartphone size={20} className="shrink-0" style={{ color: 'var(--sh-accent)' }} />
             <p className="text-xs text-sh-text-muted">
               {t.bottomBar.mobileDownloadNotice}

@@ -255,7 +255,7 @@ export const AppMacFeatures = ({
             </div>
             <div className="absolute -bottom-6 w-full h-6 bg-black/30 blur-xl"></div>
 
-            <div className="lg:hidden mt-10 sm:mt-0 relative sm:absolute sm:-bottom-10 sm:left-4 sm:right-auto w-full sm:w-[320px] bg-[#1A1A1A] sm:bg-[#1A1A1A]/90 backdrop-blur-xl border border-white/10 rounded-3xl p-4 shadow-[0_20px_40px_rgba(0,0,0,0.6)] z-40 flex flex-col mb-8 sm:mb-0">
+            <div className="lg:hidden mt-10 sm:mt-0 relative sm:absolute sm:-bottom-10 sm:left-4 sm:right-auto w-full sm:w-[320px] bg-[#1A1A1A] sm:bg-[#1A1A1A]/90 backdrop-blur-xl border border-white/10 rounded-3xl p-3 shadow-[0_20px_40px_rgba(0,0,0,0.6)] z-40 flex flex-col mb-8 sm:mb-0">
               <div className="flex justify-between items-start mb-2 shrink-0">
                 <div className="flex items-center gap-3 leading-tight">
                   <div className="w-9 h-9 shrink-0 rounded-full bg-white/5 flex items-center justify-center p-2">
@@ -287,7 +287,7 @@ export const AppMacFeatures = ({
 
                 {appType === 'task-goblin' && activeId === 'general-intro' && (
                   <div className="flex flex-col gap-3 mt-4">
-                    <ul className="list-disc list-inside text-sm text-[#A1A1A6] space-y-1.5 mb-2">
+                    <ul className="list-disc list-inside text-[13px] text-[#A1A1A6] space-y-1 mb-2">
                       {t.featuresList.slice(0, 4).map((item) => (
                         <li key={'m-' + item} className="break-words">
                           {item}
@@ -314,7 +314,7 @@ export const AppMacFeatures = ({
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); setPaymentModalOpen(true); }}
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#9782ff] border border-white/20 px-3 py-3 hover:opacity-90 transition-all cursor-pointer shadow-[0_0_20px_rgba(151,130,255,0.4)]"
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#9782ff] border border-white/20 px-3 py-2.5 hover:opacity-90 transition-all cursor-pointer shadow-[0_0_20px_rgba(151,130,255,0.4)]"
                       >
                         <Sparkles size={16} className="shrink-0 text-black" />
                         <span className="text-sm font-bold text-black">
@@ -324,7 +324,7 @@ export const AppMacFeatures = ({
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); setInfoModalOpen(true); }}
-                        className="w-full flex items-center justify-center gap-1 rounded-xl bg-white/5 border border-white/10 px-3 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors cursor-pointer"
+                        className="w-full flex items-center justify-center gap-1 rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/10 transition-colors cursor-pointer"
                       >
                         {t.permissionsCard.getMoreInfo}
                       </button>
