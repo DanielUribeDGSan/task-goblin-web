@@ -5,6 +5,7 @@ import { Apple, Lock, Unlock, ChevronDown, Tag, Smartphone, ChevronUp, Search } 
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useLayout } from "../../contexts/LayoutContext";
 import { triggerSecureDownload } from "../../utils/download";
+import { logDownloadEvent } from "../../firebase/firebase";
 import { PaymentModal } from "../PaymentModal";
 import { DownloadModal, type Platform as DownloadPlatform } from "../DownloadModal";
 
@@ -293,7 +294,10 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
                             type="button"
                             role="menuitem"
                             className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-                            onClick={() => openDownloadModal(0)}
+                            onClick={() => {
+                              logDownloadEvent(appType, 'mac', 'silicon', 'bottom_bar');
+                              openDownloadModal(0);
+                            }}
                           >
                             {t.bottomBar.appleSilicon}
                           </button>
@@ -301,7 +305,10 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
                             type="button"
                             role="menuitem"
                             className="block w-full text-left px-4 py-2.5 text-sm text-sh-text-muted hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-                            onClick={() => openDownloadModal(1)}
+                            onClick={() => {
+                              logDownloadEvent(appType, 'mac', 'intel', 'bottom_bar');
+                              openDownloadModal(1);
+                            }}
                           >
                             {t.bottomBar.intel}
                           </button>
@@ -313,7 +320,10 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
                 <div className="w-px h-6 bg-white/10" />
                 <button
                   type="button"
-                  onClick={() => openDownloadModal(2)}
+                  onClick={() => {
+                    logDownloadEvent(appType, 'windows', 'x64', 'bottom_bar');
+                    openDownloadModal(2);
+                  }}
                   className="flex items-center gap-3 text-sh-text-muted hover:text-white transition-colors cursor-pointer"
                   aria-label={t.bottomBar.downloadWindows}
                 >

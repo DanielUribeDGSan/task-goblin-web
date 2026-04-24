@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, AlertTriangle, Download, Apple, Monitor, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { logDownloadEvent } from "../firebase/firebase";
 
 export type Platform = "mac-silicon" | "mac-intel" | "windows";
 
@@ -275,7 +276,11 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 <button
                   ref={downloadButtonRef}
                   type="button"
-                  onClick={onConfirm}
+                  onClick={() => {
+                    const [p, arch] = platform.split('-');
+                    logDownloadEvent(appType, p, arch || 'x64', 'modal');
+                    onConfirm();
+                  }}
                   className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                   style={{ backgroundColor: 'var(--sh-accent)' }}
                 >
