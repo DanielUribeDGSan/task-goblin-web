@@ -209,7 +209,8 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
             : "rgba(151, 130, 255, 0.3)";
 
     return (
-        <div className="fixed bottom-10 lg:bottom-35 right-4 sm:right-6 z-9999 font-sans flex flex-col items-end gap-4">
+        <div className="fixed bottom-10 lg:bottom-35 right-4 sm:right-6 z-9999 font-sans flex flex-col items-end gap-3">
+
             <motion.button
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}

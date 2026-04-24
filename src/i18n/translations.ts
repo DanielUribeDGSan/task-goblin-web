@@ -185,6 +185,7 @@ export const translations = {
     },
     bottomBar: {
       price: "Price",
+      freeTrialTag: "3-day free trial",
       promotion: "Pro functions promotion",
       viewInMxn: "View price in MXN",
       viewInUsd: "View price in USD",
@@ -238,6 +239,7 @@ export const translations = {
     paymentModal: {
       title: "Get Pro Features",
       description: "Unlock professional features and boost your productivity.",
+      lifetimeNotice: "Lifetime cost • 1 device",
       checkoutButton: "Checkout securely",
       paypalButton: "Pay with PayPal",
       mercadoPagoButton: "Pay with Mercado Pago",
@@ -292,7 +294,7 @@ export const translations = {
       downloadQuestion: "Where do I download it?",
       downloadResponse: "Download links are in the bottom menu (Mac and Windows icons). Click them to open a modal where you'll find the download button after the system compatibility info.",
       trialQuestion: "How long are the pro features active?",
-      trialResponse: "All our apps offer pro feature access for 48 hours for you to test without commitment.",
+      trialResponse: "All our apps offer pro feature access for 72 hours (3 days) for you to test without commitment.",
       nexoDetail: "Developer command center: projects, port monitoring, project sharing, custom domains, command snippets, and .env management.",
       taskGoblinDetail: "Task automation: mouse movement, scheduled messages, text capture, close all apps, scheduled shutdown, PDF to Word conversion, color extractor, drawing, and image conversion.",
       floatyDetail: "Floaty is an app that opens floating windows so you can watch your favorite movies, series or videos while you work or use your computer without needing another monitor or adapting the size of a browser tab.",
@@ -488,6 +490,7 @@ export const translations = {
     },
     bottomBar: {
       price: "Precio",
+      freeTrialTag: "Prueba gratis de 3 días",
       promotion: "Promoción funciones pro",
       viewInMxn: "Ver precio en MXN",
       viewInUsd: "Ver precio en USD",
@@ -541,6 +544,7 @@ export const translations = {
     paymentModal: {
       title: "Desbloquear Funciones Pro",
       description: "Desbloquea las funciones profesionales y potencia tu productividad.",
+      lifetimeNotice: "Costo de por vida • 1 dispositivo",
       checkoutButton: "Pagar de forma segura",
       paypalButton: "Pagar con PayPal",
       mercadoPagoButton: "Pagar con Mercado Pago",
@@ -595,7 +599,7 @@ export const translations = {
       downloadQuestion: "¿Dónde la descargo?",
       downloadResponse: "Los enlaces de descarga están en el menú de abajo (iconos de Mac y Windows). Al abrirlos verás un modal con el botón de descarga después de la información de compatibilidad.",
       trialQuestion: "¿Cuánto tiempo están activas las funciones pro?",
-      trialResponse: "Todas nuestras apps ofrecen acceso a funciones pro por 48 horas para que las pruebes sin compromiso.",
+      trialResponse: "Todas nuestras apps ofrecen acceso a funciones pro por 72 horas (3 días) para que las pruebes sin compromiso.",
       nexoDetail: "Centro de mando para desarrolladores: mis proyectos, monitor de puertos, compartir proyecto, URL amigables, snippets de comandos y gestión de .env.",
       taskGoblinDetail: "Automatización de tareas: mover mouse, programar mensajes, capturar texto, cerrar todas las apps, programar apagado, convertir pdf a word, extractor de color, dibujar y convertir imágenes.",
       floatyDetail: "Es una app que abre ventanas flotantes para poder ver tus películas, series o videos favoritos mientras trabajas o usas tu computadora sin necesidad de tener otro monitor o adaptar el tamaño de una pestaña del navegador.",

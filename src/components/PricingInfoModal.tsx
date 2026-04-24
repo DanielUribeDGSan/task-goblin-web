@@ -183,9 +183,29 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
                                                     <Tag size={32} />
                                                 </div>
                                                 <h2 className="text-2xl font-bold text-white">{isNexo ? t.nexoAppName : isFloaty ? t.floatyAppName : t.appName}</h2>
-                                                <p className="text-sh-text-muted text-sm px-4">
+                                                <p className="text-sh-text-muted text-sm px-4 flex flex-wrap items-center justify-center gap-1.5">
                                                     {t.modalInfo.subtitle}
+                                                    <span 
+                                                        className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter"
+                                                        style={{ backgroundColor: 'var(--sh-accent)', color: '#000' }}
+                                                    >
+                                                        Pro
+                                                    </span>
                                                 </p>
+                                                <div className="flex flex-col items-center gap-3 pt-2">
+                                                    <div className="h-px w-6 rounded-full" style={{ backgroundColor: 'var(--sh-accent)', opacity: 0.3 }} />
+                                                    <div 
+                                                        className="px-4 py-1.5 rounded-2xl border text-[10px] font-bold uppercase tracking-widest shadow-lg"
+                                                        style={{ 
+                                                            backgroundColor: 'var(--sh-accent-muted)', 
+                                                            borderColor: 'var(--sh-panel-border)',
+                                                            color: 'var(--sh-accent)',
+                                                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                                        }}
+                                                    >
+                                                        {t.paymentModal.lifetimeNotice}
+                                                    </div>
+                                                </div>
 
                                                 <div className="glass bg-white/5 border border-white/10 rounded-2xl p-6 my-6">
                                                     {showUsd ? (

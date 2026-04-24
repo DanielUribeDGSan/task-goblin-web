@@ -104,9 +104,6 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
     return () => document.removeEventListener("click", close);
   }, []);
 
-  if (isMobile) {
-    return null;
-  }
 
   return (
     <div className="flex flex-col lg:flex-row items-stretch lg:items-center lg:justify-start xl:justify-center p-4 sm:p-6 gap-6 w-full max-w-full overflow-hidden">
@@ -160,11 +157,25 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
 
       {isMobile ? (
-        <div className="flex items-center gap-3 glass rounded-xl sm:rounded-[1.5rem] px-4 py-3 text-center">
-          <Smartphone size={20} className="shrink-0" style={{ color: 'var(--sh-accent)' }} />
-          <p className="text-xs sm:text-sm text-sh-text-muted">
-            {t.bottomBar.mobileDownloadNotice}
-          </p>
+        <div className="flex flex-col items-center gap-2">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest border border-white/10"
+            style={{ 
+                background: "rgba(255, 255, 255, 0.05)",
+                color: "var(--sh-accent)",
+                backdropFilter: "blur(4px)"
+            }}
+          >
+            {t.bottomBar.freeTrialTag}
+          </motion.div>
+          <div className="flex items-center gap-3 glass rounded-xl px-4 py-3 text-center">
+            <Smartphone size={20} className="shrink-0" style={{ color: 'var(--sh-accent)' }} />
+            <p className="text-xs text-sh-text-muted">
+              {t.bottomBar.mobileDownloadNotice}
+            </p>
+          </div>
         </div>
       ) : (
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-12">
@@ -207,7 +218,19 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
               </motion.div>
             )}
 
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-1">
+              <motion.div
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border border-white/10"
+                style={{ 
+                    background: "rgba(255, 255, 255, 0.05)",
+                    color: "var(--sh-accent)",
+                    backdropFilter: "blur(4px)"
+                }}
+              >
+                {t.bottomBar.freeTrialTag}
+              </motion.div>
               <span className="text-[10px] font-bold text-sh-text-muted uppercase tracking-[0.2em] mb-1">
                 {t.bottomBar.downloadApp}
               </span>
