@@ -377,52 +377,23 @@ function DashboardContent({ appType }: { appType: AppType }) {
     root.style.setProperty('--sh-background', '#0a0a0a');
   }, [appType]);
 
-  const [isReadyForMasonry, setIsReadyForMasonry] = useState(false);
+    return (
+      <div className="flex text-white min-h-[100dvh] lg:h-screen overflow-x-hidden lg:overflow-hidden p-0 lg:p-4 bg-[#0a0a0a]">
+        <div className="flex w-full min-h-full lg:h-full rounded-2xl lg:rounded-[2.5rem] lg:overflow-hidden shadow-2xl relative bg-[#0a0a0a] flex-col">
+          <TopBar isVisible={showTopBar} appType={appType} />
 
-  useEffect(() => {
-    // Delay masonry loading for better initial performance
-    const timer = setTimeout(() => {
-      setIsReadyForMasonry(true);
-    }, 600);
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <div className="flex text-white min-h-[100dvh] lg:h-screen overflow-x-hidden lg:overflow-hidden p-0 lg:p-4 bg-[#0a0a0a]">
-      <div className="flex w-full min-h-full lg:h-full rounded-2xl lg:rounded-[2.5rem] lg:overflow-hidden shadow-2xl relative bg-[#0a0a0a] flex-col">
-        <TopBar isVisible={showTopBar} appType={appType} />
-
-        <div
-          ref={scrollContainerRef}
-          className="relative z-0 flex-1 overflow-visible lg:overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-40 lg:pt-24 min-h-0 safari-flex-shrink pb-0 sm:pb-32"
-        >
-          <AppMacFeatures
-            appType={appType}
-            setPermissionsModalOpen={setPermissionsModalOpen}
-            setInfoModalOpen={setInfoModalOpen}
-            setPaymentModalOpen={setIsPaymentModalOpen}
-          />
-
-          {isReadyForMasonry && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              className="mt-8 lg:mt-12"
-            >
-              <MasonryLayout
+          <div
+            ref={scrollContainerRef}
+            className="relative z-0 flex-1 overflow-visible lg:overflow-y-auto overflow-x-hidden px-4 sm:px-6 pt-40 lg:pt-24 min-h-0 safari-flex-shrink pb-0 sm:pb-32"
+          >
+              <AppMacFeatures
                 appType={appType}
-                devices={devices}
-                toggleDevice={toggleDevice}
-                t={t}
                 setPermissionsModalOpen={setPermissionsModalOpen}
                 setInfoModalOpen={setInfoModalOpen}
                 setPaymentModalOpen={setIsPaymentModalOpen}
               />
-            </motion.div>
-          )}
 
-          {/* ── Modals (renderizados via createPortal en document.body) ── */}
+              {/* ── Modals (renderizados via createPortal en document.body) ── */}
             {permissionsModalOpen &&
               createPortal(
                 <>
