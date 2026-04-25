@@ -18,6 +18,16 @@ export interface RoomConfig {
 export const TASK_GOBLIN_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
   right: [
     {
+      id: "quiz",
+      title: "quiz",
+      distance: "",
+      icon: "/icon/bot.gif",
+      aspectRatio: "video",
+      mediaItems: [
+        { type: "video", src: "/responder-preguntas/responder-preguntas.mp4" },
+      ],
+    },
+    {
       id: "magic-eraser",
       title: "magic-eraser",
       distance: "",

@@ -38,6 +38,7 @@ export const translations = {
       "AI Video Optimization",
       "AI PDF Summarization",
       "AI Screen Translator",
+      "AI Quiz Solver",
     ],
     modalPermissions: {
       title: "Permissions required in the app",
@@ -124,6 +125,11 @@ export const translations = {
           description:
             "Convert images to multiple formats, including PDF, and reduce their size without losing quality.",
         },
+        {
+          title: "AI Quiz Solver",
+          description:
+            "Solve questions and exams instantly by capturing them from the screen. TaskGoblin recognizes the text and provides the most likely answer using local AI.",
+        },
       ],
     },
     cardTitles: {
@@ -142,6 +148,7 @@ export const translations = {
       "reduce-video": "Reduce Video Size",
       "pdf-summary": "AI PDF Summary",
       "smart-translator": "Smart Translator",
+      quiz: "Quiz Solver AI",
       // Nexo Rooms
       "nexo-proyectos": "Projects",
       "nexo-puertos": "Ports",
@@ -175,6 +182,7 @@ export const translations = {
       "reduce-video": "Optimize and reduce the size of your videos using AI without losing quality.",
       "pdf-summary": "Extract the most important points from any PDF automatically using AI.",
       "smart-translator": "Capture any part of the screen and translate text instantly using local AI.",
+      quiz: "Solve questions and exams instantly by capturing them from the screen using local AI.",
       // Nexo Rooms
       "nexo-proyectos": "Manage your development projects and open them instantly in your favorite IDE. Set up automatic commands to run on startup and launch multiple services at once with a single click.",
       "nexo-puertos": "View all active ports on your system and detect which ones are in use. Instantly free up occupied ports ('kill') to avoid conflicts and ensure your apps always have a place to run.",
@@ -342,6 +350,7 @@ export const translations = {
       "Optimización de Video con IA",
       "Resumen de PDF con IA",
       "Traductor de Pantalla con IA",
+      "Solucionador de Preguntas IA",
     ],
     modalPermissions: {
       title: "Permisos solicitados en la aplicación",
@@ -429,6 +438,11 @@ export const translations = {
           description:
             "Convierte imágenes a múltiples formatos, incluyendo PDF, y reduce su peso sin perder calidad.",
         },
+        {
+          title: "Solucionador de Preguntas IA",
+          description:
+            "Resuelve preguntas y exámenes al instante capturándolos de la pantalla. TaskGoblin reconoce el texto y ofrece la respuesta más probable usando IA local.",
+        },
       ],
     },
     cardTitles: {
@@ -447,6 +461,7 @@ export const translations = {
       "reduce-video": "Reducir Tamaño de Video",
       "pdf-summary": "Resumen PDF IA",
       "smart-translator": "Traductor Inteligente",
+      quiz: "Responder Preguntas IA",
       // Nexo Rooms
       "nexo-proyectos": "Proyectos",
       "nexo-puertos": "Puertos",
@@ -480,6 +495,7 @@ export const translations = {
       "reduce-video": "Optimiza y reduce el tamaño de tus videos con IA sin perder calidad.",
       "pdf-summary": "Extrae automáticamente los puntos más importantes de cualquier PDF con IA.",
       "smart-translator": "Captura cualquier parte de la pantalla y traduce el texto al instante con IA local.",
+      quiz: "Resuelve preguntas y exámenes al instante capturándolos de la pantalla con IA local.",
       // Nexo Rooms
       "nexo-proyectos": "Gestiona tus proyectos de desarrollo y ábrelos instantáneamente en tu IDE favorito. Configura comandos automáticos para que se ejecuten al abrir el proyecto y lanza múltiples servicios a la vez con un solo clic.",
       "nexo-puertos": "Visualiza todos los puertos activos en tu sistema y detecta cuáles están en uso. Libera puertos ocupados ('kill') de forma instantánea para evitar conflictos y asegurar que tus aplicaciones siempre tengan donde correr.",
