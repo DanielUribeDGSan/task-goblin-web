@@ -28,29 +28,22 @@
   --tg-hover: rgba(255, 255, 255, 0.05);
 }
 
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #0e0e0e;
-  background-image:
-    radial-gradient(circle at 0% 0%, #0d0d1a 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, #101828 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, #0e0e0e 0%, transparent 100%);
+  background-color: #202020;
   color: var(--sh-text);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   margin: 0;
-  overflow: hidden;
-  height: 100vh;
-  height: 100dvh;
   min-height: 100vh;
-}
-
-@media (max-width: 1023px) {
-  body {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: auto;
-    min-height: 100dvh;
-  }
+  overflow-x: hidden;
+  overflow-y: visible; /* Strictly delegate scroll to html element to prevent double scrollbars */
 }
 
 .glass {

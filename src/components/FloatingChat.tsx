@@ -19,7 +19,7 @@ interface ChatOption {
 }
 
 interface FloatingChatProps {
-    appType?: "task-goblin" | "floaty" | "nexo";
+    appType?: "task-goblin" | "floaty" | "nexo" | "task-notch";
 }
 
 export const FloatingChat: React.FC<FloatingChatProps> = ({ appType = "task-goblin" }) => {
@@ -74,6 +74,7 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
             case "main":
                 setCurrentOptions([
                     { id: "general", label: t.chat.generalQuestions },
+                    { id: "task-notch", label: "TaskNotch" },
                     { id: "task-goblin", label: "Task Goblin" },
                     { id: "nexo", label: "Nexo" },
                     { id: "floaty", label: "Floaty" },
@@ -89,6 +90,7 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
                     { id: "q_trial", label: t.chat.trialQuestion },
                 ]);
                 break;
+            case "task-notch":
             case "task-goblin":
             case "nexo":
             case "floaty":
@@ -130,6 +132,10 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
                 case "general":
                     response = lang === 'es' ? "¿Qué duda general tienes?" : "What general question do you have?";
                     nextView = "general";
+                    break;
+                case "task-notch":
+                    response = `**TaskNotch**\n\n${(t.chat as any).taskNotchDetail || t.chat.taskGoblinDetail}\n\n${t.chat.trialResponse}`;
+                    nextView = "task-notch";
                     break;
                 case "task-goblin":
                     response = `**Task Goblin**\n\n${t.chat.taskGoblinDetail}\n\n${t.chat.trialResponse}`;
@@ -201,12 +207,15 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
 
     const isFloaty = appType === "floaty";
     const isNexo = appType === "nexo";
-    const accentColor = isFloaty ? "#2BE46A" : isNexo ? "#C693FA" : "#9782ff";
-    const accentShadow = isFloaty 
-        ? "rgba(43, 228, 106, 0.3)" 
-        : isNexo 
-            ? "rgba(198, 147, 250, 0.3)" 
-            : "rgba(151, 130, 255, 0.3)";
+    const isTaskNotch = appType === "task-notch";
+    const accentColor = isTaskNotch ? "#3b82f6" : isFloaty ? "#2BE46A" : isNexo ? "#C693FA" : "#9782ff";
+    const accentShadow = isTaskNotch
+        ? "rgba(59, 130, 246, 0.3)"
+        : isFloaty 
+            ? "rgba(43, 228, 106, 0.3)" 
+            : isNexo 
+                ? "rgba(198, 147, 250, 0.3)" 
+                : "rgba(151, 130, 255, 0.3)";
 
     return (
         <div className="fixed bottom-10 lg:bottom-35 right-4 sm:right-6 z-9999 font-sans flex flex-col items-end gap-3">

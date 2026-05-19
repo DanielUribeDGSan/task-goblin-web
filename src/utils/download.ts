@@ -1,11 +1,12 @@
-import { TASK_GOBLIN_URLS, NEXO_URLS, FLOATY_URLS } from "../constants/app_data";
+import { TASK_NOTCH_URLS, TASK_GOBLIN_URLS, NEXO_URLS, FLOATY_URLS } from "../constants/app_data";
 
 
 export const triggerSecureDownload = (
   index: number, 
-  appType: "task-goblin" | "nexo" | "floaty" = "task-goblin"
+  appType: "task-goblin" | "nexo" | "floaty" | "task-notch" = "task-goblin"
 ) => {
   const urlMap = {
+    "task-notch": TASK_NOTCH_URLS,
     "task-goblin": TASK_GOBLIN_URLS,
     "nexo": NEXO_URLS,
     "floaty": FLOATY_URLS

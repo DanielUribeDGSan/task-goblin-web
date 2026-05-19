@@ -241,7 +241,7 @@ export const LicenseViewer: React.FC = () => {
                                             <div key={item.key} className="flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden">
                                                 <div className="flex flex-col py-3 px-4 min-w-0 flex-1">
                                                     <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#9782ff] mb-1">
-                                                        {item.app.replace('-', ' ')}
+                                                        {item.app === 'task-notch' ? 'TaskNotch' : item.app.replace('-', ' ')}
                                                     </span>
                                                     <code className="text-sm text-white/90 font-mono tracking-wider truncate">
                                                         {item.key}

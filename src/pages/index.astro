@@ -1,21 +1,21 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import { Dashboard } from "../components/dashboard/Dashboard";
+import { TaskNotchLanding } from "../components/dashboard/TaskNotchLanding";
 import { FloatingChat } from "../components/FloatingChat";
 import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
-const title = "Task Goblin — Automatiza tareas en Mac y Windows";
+const title = "TaskNotch — Tu menú interactivo y productivo en Mac";
 const description =
-  "Task Goblin es la app que automatiza tu día a día en Mac y Windows: mover el ratón (auto clicker), programar mensajes de WhatsApp, Screenshot to Text (OCR), apagado programado, cerrar todas las apps, convertir PDF a Word, extraer colores, y más. Descárgala ahora.";
-const ogImage = `${Astro.site}/icon/TaskGoblin.png`;
+  "TaskNotch es la barra interactiva que optimiza tu día a día en Mac: borrador mágico de objetos con IA, conversor de imágenes a WebP, extractor de texto OCR, traducción de pantalla y más. Descárgala ya.";
+const ogImage = `${Astro.site}/icon/TaskNotch.png`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="/icon/TaskGoblin.png" />
+    <link rel="icon" type="image/png" href="/icon/TaskNotch.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
@@ -24,7 +24,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Task Goblin, Nexo, automatización, Mac, Windows, app, mover ratón, WhatsApp programado, PDF a Word, extractor de colores, screenshot to text, utilidades, herramientas, auto clicker"
+      content="TaskNotch, Notch, interactivo, barra de herramientas, borrador mágico, IA, OCR, screenshot to text, traducción de pantalla, Mac, utilidades"
     />
     <link rel="canonical" href={canonical} />
 
@@ -34,7 +34,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:site_name" content="Task Goblin" />
+    <meta property="og:site_name" content="TaskNotch" />
     <meta property="og:locale" content="es_ES" />
 
     <!-- Twitter Card -->
@@ -55,10 +55,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     />
     <ClientRouter />
   </head>
-  <body class="antialiased font-sans bg-black">
-    <GlobalLoader client:load />
-    <Dashboard client:load appType="task-goblin" />
-    <FloatingChat client:load appType="task-goblin" />
+  <body class="antialiased font-sans bg-[#202020]">
+    <TaskNotchLanding client:load />
+    <FloatingChat client:load appType="task-notch" />
 
     <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication, WebSite, Organization) -->
     <script
@@ -70,11 +69,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
             "@type": "WebSite",
             "@id": "https://task-goblin.com/#website",
             url: "https://task-goblin.com/",
-            name: "Task Goblin",
+            name: "TaskNotch",
             description: description,
             publisher: {
               "@type": "Organization",
-              name: "Task Goblin",
+              name: "TaskNotch",
               logo: {
                 "@type": "ImageObject",
                 url: ogImage,
@@ -84,20 +83,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
           {
             "@type": "SoftwareApplication",
             "@id": "https://task-goblin.com/#software",
-            name: "Task Goblin",
+            name: "TaskNotch",
             applicationCategory: "UtilitiesApplication",
-            operatingSystem: "macOS, Windows",
+            operatingSystem: "macOS",
             description: description,
             image: ogImage,
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             featureList: [
-              "Auto mouse mover",
-              "WhatsApp scheduler",
+              "AI Magic Eraser",
               "Screenshot to Text OCR",
-              "Schedule shutdown",
-              "Close all apps",
-              "PDF to Word",
-              "Color extractor",
+              "AI Screen Translation",
+              "Local PDF Tools",
+              "Quick settings",
             ],
           },
         ],

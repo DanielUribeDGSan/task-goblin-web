@@ -8,7 +8,7 @@ import { APP_CONFIG } from "../constants/config";
 
 interface PaymentModalProps {
     isOpen: boolean;
-    appType?: "task-goblin" | "nexo" | "floaty";
+    appType?: "task-goblin" | "nexo" | "floaty" | "task-notch";
     onClose: () => void;
 }
 
@@ -37,8 +37,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
 
     const isNexo = appType === "nexo";
     const isFloaty = appType === "floaty";
+    const isTaskNotch = appType === "task-notch";
 
-    const prices = isNexo ? {
+    const prices = isTaskNotch ? {
+        mxn: 149,
+        originalMxn: 199,
+        usd: 8,
+        originalUsd: 11
+    } : isNexo ? {
         mxn: 149,
         originalMxn: 199,
         usd: 8,

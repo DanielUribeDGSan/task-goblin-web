@@ -25,6 +25,11 @@ export const APP_CONFIG = {
       price: 199,
       priceUSD: 13,
     },
+    'task-notch': {
+      name: 'TaskNotch Pro',
+      price: 149,
+      priceUSD: 8,
+    },
     'nexo': {
       name: 'Nexo Pro',
       price: 149,

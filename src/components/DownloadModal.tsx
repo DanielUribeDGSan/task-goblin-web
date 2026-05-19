@@ -9,7 +9,7 @@ export type Platform = "mac-silicon" | "mac-intel" | "windows";
 interface DownloadModalProps {
   isOpen: boolean;
   platform: Platform;
-  appType?: "task-goblin" | "nexo" | "floaty";
+  appType?: "task-goblin" | "nexo" | "floaty" | "task-notch";
   onClose: () => void;
   onConfirm: () => void;
 }

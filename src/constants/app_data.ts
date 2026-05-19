@@ -271,6 +271,19 @@ export const FLOATY_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
 };
 
 export const APP_CONFIGS = {
+  "task-notch": {
+    name: "TaskNotch",
+    iconPath: "/icon/TaskNotch.png",
+    accentColor: "#3b82f6",
+    secondaryColor: "#2563eb",
+    backgroundColor: "#0d0e12",
+    rooms: TASK_GOBLIN_ROOMS,
+    heroIcon: "/icon/TaskNotch.png",
+    heroVideo: "/home/video.mp4",
+    heroPoster: "/apps/task-goblin.png",
+    heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
+    path: "/",
+  },
   "task-goblin": {
     name: "TaskGoblin",
     iconPath: "/icon/TaskGoblin.png",
@@ -282,7 +295,7 @@ export const APP_CONFIGS = {
     heroVideo: "/home/video.mp4",
     heroPoster: "/apps/task-goblin.png",
     heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
-    path: "/",
+    path: "/task-goblin-app",
   },
   "floaty": {
     name: "Floaty",
@@ -300,28 +313,13 @@ export const APP_CONFIGS = {
     ],
     path: "/floaty-app",
   },
-  /* "nexo": {
-    name: "Nexo",
-    iconPath: "/icon/computer.png",
-    accentColor: "#C693FA",
-    secondaryColor: "#191433",
-    backgroundColor: "#13193C",
-    deepColor: "#0E0D24",
-    rooms: NEXO_ROOMS,
-    heroIcon: "/icon/computer.png",
-    heroVideo: "/nexo/videos/nexo.mp4",
-    heroPoster: "/nexo/images/nexo-general.png",
-    heroImages: [
-      "/nexo/images/nexo-general.png",
-      "/nexo/images/proyectos.png",
-      "/nexo/images/puertos.png",
-      "/nexo/images/env.png",
-      "/nexo/images/urls.png",
-      "/nexo/images/snippets.png"
-    ],
-    path: "/nexo-app",
-  } */
 } as const;
+
+export const TASK_NOTCH_URLS = [
+  "/downloads/task-notch/TaskNotch_aarch64.dmg",
+  "/downloads/task-notch/TaskNotch_x64.dmg",
+  "/downloads/task-notch/TaskNotch_x64-setup.exe",
+];
 
 export const TASK_GOBLIN_URLS = [
   "/downloads/task-goblin/TaskGoblin_aarch64.dmg",

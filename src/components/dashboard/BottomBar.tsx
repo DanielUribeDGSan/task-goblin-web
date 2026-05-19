@@ -25,7 +25,7 @@ const WindowsIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
-export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin" | "nexo" | "floaty" }) => {
+export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin" | "nexo" | "floaty" | "task-notch" }) => {
   const { t, lang } = useLanguage();
   const { isMobile, toggleBottomBar } = useLayout();
   const [macMenuOpen, setMacMenuOpen] = useState(false);
@@ -53,9 +53,15 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
   const isNexo = appType === "nexo";
   const isFloaty = appType === "floaty";
+  const isTaskNotch = appType === "task-notch";
 
   // Pricing configuration
-  const prices = isNexo ? {
+  const prices = isTaskNotch ? {
+    mxn: 149,
+    originalMxn: 199,
+    usd: 8,
+    originalUsd: 11
+  } : isNexo ? {
     mxn: 149,
     originalMxn: 199,
     usd: 8,
