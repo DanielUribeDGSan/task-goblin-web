@@ -330,11 +330,11 @@ const TaskNotchLandingContent = () => {
                 <div className="flex min-[1000px]:hidden items-center justify-between w-full h-full px-6 bg-[#0c0d0f]">
                   {/* Logo */}
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#3b82f6] to-[#8b5cf6] flex items-center justify-center p-[2px] shadow-[0_0_12px_rgba(59,130,246,0.3)]">
-                      <div className="w-full h-full rounded-[6px] bg-[#000000] flex items-center justify-center relative">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shadow-[0_0_8px_#3b82f6] animate-pulse" />
-                      </div>
-                    </div>
+                    <img 
+                      src="/task-notch/logo.png" 
+                      className="w-8 h-8 object-contain rounded-lg shadow-[0_0_12px_rgba(59,130,246,0.3)] border border-white/10" 
+                      alt="TaskNotch Logo" 
+                    />
                     <span className="text-base font-black tracking-wider text-white">
                       TASKNOTCH
                     </span>
@@ -386,12 +386,11 @@ const TaskNotchLandingContent = () => {
                   <div className="absolute top-[2px] left-[2px] w-[240px] h-[80px] flex items-center pl-8 pointer-events-auto">
                     <div className="flex items-center gap-3">
                       {/* Glowing Squircle Logo */}
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#3b82f6] to-[#8b5cf6] flex items-center justify-center p-[2px] shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                        <div className="w-full h-full rounded-[10px] bg-[#000000] flex items-center justify-center relative">
-                          <div className="w-2.5 h-2.5 rounded-full bg-[#3b82f6] shadow-[0_0_10px_#3b82f6] animate-pulse" />
-                          <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-4 h-1 bg-white/20 rounded-full" />
-                        </div>
-                      </div>
+                      <img 
+                        src="/task-notch/logo.png" 
+                        className="w-10 h-10 object-contain rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.5)] border border-white/10" 
+                        alt="TaskNotch Logo" 
+                      />
                       <span className="text-lg font-black tracking-wider bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
                         TASKNOTCH
                       </span>
