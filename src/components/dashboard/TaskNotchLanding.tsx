@@ -383,7 +383,7 @@ const TaskNotchLandingContent = () => {
                   {/* Logo */}
                   <div className="flex items-center gap-2.5">
                     <img 
-                      src="/task-notch/logo.jpeg" 
+                      src="/task-notch/logo.png" 
                       className="w-8 h-8 object-contain rounded-lg shadow-[0_0_12px_rgba(59,130,246,0.3)] border border-white/10" 
                       alt="TaskNotch Logo" 
                     />
@@ -452,7 +452,7 @@ const TaskNotchLandingContent = () => {
                     <div className="flex items-center gap-3">
                       {/* Glowing Squircle Logo */}
                       <img 
-                        src="/task-notch/logo.jpeg" 
+                        src="/task-notch/logo.png" 
                         className="w-10 h-10 object-contain rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.5)] border border-white/10" 
                         alt="TaskNotch Logo" 
                       />
