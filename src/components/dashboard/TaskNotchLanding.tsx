@@ -331,7 +331,7 @@ const TaskNotchLandingContent = () => {
                   {/* Logo */}
                   <div className="flex items-center gap-2.5">
                     <img 
-                      src="/task-notch/logo.png" 
+                      src="/task-notch/logo.jpeg" 
                       className="w-8 h-8 object-contain rounded-lg shadow-[0_0_12px_rgba(59,130,246,0.3)] border border-white/10" 
                       alt="TaskNotch Logo" 
                     />
@@ -387,7 +387,7 @@ const TaskNotchLandingContent = () => {
                     <div className="flex items-center gap-3">
                       {/* Glowing Squircle Logo */}
                       <img 
-                        src="/task-notch/logo.png" 
+                        src="/task-notch/logo.jpeg" 
                         className="w-10 h-10 object-contain rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.5)] border border-white/10" 
                         alt="TaskNotch Logo" 
                       />
@@ -693,6 +693,48 @@ const TaskNotchLandingContent = () => {
                     <span className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
                       {isEn ? "Free version + 1-week trial of Pro features" : "Versión gratuita + prueba de funciones Pro por una semana"}
                     </span>
+                  </div>
+
+                  {/* Other Apps Section */}
+                  <div className="w-full flex flex-col items-center gap-4 pt-2">
+                    <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.18em]">
+                      {isEn ? "Try my other apps" : "Prueba mis otras aplicaciones"}
+                    </span>
+                    <div className="flex flex-wrap items-center justify-center gap-6">
+                      {/* Task Goblin */}
+                      <a
+                        href="/task-goblin-app"
+                        className="flex flex-col items-center gap-2 group cursor-pointer"
+                      >
+                        <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(151,130,255,0.2)] group-hover:shadow-[0_4px_24px_rgba(151,130,255,0.4)] group-hover:border-[#9782ff]/40 transition-all duration-300 group-hover:scale-110">
+                          <img
+                            src="/icon/TaskGoblin.png"
+                            className="w-full h-full object-cover"
+                            alt="Task Goblin"
+                          />
+                        </div>
+                        <span className="text-[10px] font-bold text-white/50 group-hover:text-white/80 transition-colors duration-200 uppercase tracking-wider">
+                          Task Goblin
+                        </span>
+                      </a>
+
+                      {/* Floaty */}
+                      <a
+                        href="/floaty-app"
+                        className="flex flex-col items-center gap-2 group cursor-pointer"
+                      >
+                        <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(43,228,106,0.15)] group-hover:shadow-[0_4px_24px_rgba(43,228,106,0.35)] group-hover:border-[#2BE46A]/40 transition-all duration-300 group-hover:scale-110">
+                          <img
+                            src="/icon/floaty.png"
+                            className="w-full h-full object-cover"
+                            alt="Floaty"
+                          />
+                        </div>
+                        <span className="text-[10px] font-bold text-white/50 group-hover:text-white/80 transition-colors duration-200 uppercase tracking-wider">
+                          Floaty
+                        </span>
+                      </a>
+                    </div>
                   </div>
                 </div>
 

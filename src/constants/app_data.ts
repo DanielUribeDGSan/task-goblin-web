@@ -273,12 +273,12 @@ export const FLOATY_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
 export const APP_CONFIGS = {
   "task-notch": {
     name: "TaskNotch",
-    iconPath: "/icon/TaskNotch.png",
+    iconPath: "/task-notch/logo.jpeg",
     accentColor: "#3b82f6",
     secondaryColor: "#2563eb",
     backgroundColor: "#0d0e12",
     rooms: TASK_GOBLIN_ROOMS,
-    heroIcon: "/icon/TaskNotch.png",
+    heroIcon: "/task-notch/logo.jpeg",
     heroVideo: "/home/video.mp4",
     heroPoster: "/apps/task-goblin.png",
     heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
@@ -316,7 +316,7 @@ export const APP_CONFIGS = {
 } as const;
 
 export const TASK_NOTCH_URLS = [
-  "/downloads/task-notch/TaskNotch_aarch64.dmg",
+  "/downloads/notch-task/NotchIsland_aarch64.dmg",
   "/downloads/task-notch/TaskNotch_x64.dmg",
   "/downloads/task-notch/TaskNotch_x64-setup.exe",
 ];

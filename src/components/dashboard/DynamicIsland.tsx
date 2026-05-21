@@ -20,8 +20,8 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
   const appIds = Object.keys(APP_CONFIGS) as AppType[];
   const inactiveAppIds = appIds.filter(id => id !== activeAppId);
 
-  const activeName = activeAppId === "task-goblin" ? t.appName : activeAppId === "nexo" ? t.nexoAppName : t.floatyAppName;
-  const rawDesc = activeAppId === "task-goblin" ? t.modalInfo.subtitle : activeAppId === "nexo" ? t.nexoIntro.split('.')[0] : t.floatyIntro.split('.')[0];
+  const activeName = activeAppId === "task-goblin" ? t.appName : activeAppId === "nexo" ? t.nexoAppName : activeAppId === "task-notch" ? "TaskNotch" : t.floatyAppName;
+  const rawDesc = activeAppId === "task-goblin" ? t.modalInfo.subtitle : activeAppId === "nexo" ? t.nexoIntro.split('.')[0] : activeAppId === "task-notch" ? "Tu Mac, ahora con superpoderes." : t.floatyIntro.split('.')[0];
   
   // Truncate description to 50 chars
   const activeDesc = rawDesc.length > 50 ? `${rawDesc.substring(0, 47)}...` : rawDesc;
@@ -114,7 +114,7 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
                   <div className="flex gap-2">
                     {inactiveAppIds.map(id => {
                       const cfg = APP_CONFIGS[id];
-                      const name = id === "task-goblin" ? t.appName : id === "nexo" ? t.nexoAppName : t.floatyAppName;
+                      const name = id === "task-goblin" ? t.appName : id === "nexo" ? t.nexoAppName : id === "task-notch" ? "TaskNotch" : t.floatyAppName;
                       return (
                         <a
                           key={id}
