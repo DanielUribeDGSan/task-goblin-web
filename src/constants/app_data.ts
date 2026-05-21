@@ -317,7 +317,7 @@ export const APP_CONFIGS = {
 
 export const TASK_NOTCH_URLS = [
   "/downloads/notch-task/NotchIsland_aarch64.dmg",
-  "/downloads/task-notch/TaskNotch_x64.dmg",
+  "/downloads/notch-task/NotchIsland_x64.dmg",
   "/downloads/task-notch/TaskNotch_x64-setup.exe",
 ];
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Apple,
@@ -30,6 +31,7 @@ import {
   Settings,
   VolumeX,
   Volume2,
+  ChevronDown,
 } from "lucide-react";
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { LayoutProvider } from "../../contexts/LayoutContext";
@@ -173,6 +175,56 @@ const TaskNotchLandingContent = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [pendingDownloadPlatform, setPendingDownloadPlatform] = useState<DownloadPlatform>("mac-silicon");
+
+  const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
+  const downloadButtonRef = useRef<HTMLButtonElement>(null);
+  const downloadButtonRefMobile = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownRect, setDropdownRect] = useState<{ top: number; left: number; width: number } | null>(null);
+  const [activeButtonType, setActiveButtonType] = useState<"desktop" | "mobile" | null>(null);
+  const hoverTimeoutRef = useRef<any>(null);
+
+  const handleMouseEnter = (type: "desktop" | "mobile") => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setActiveButtonType(type);
+    setDownloadMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setDownloadMenuOpen(false);
+      setActiveButtonType(null);
+    }, 300);
+  };
+
+  useEffect(() => {
+    if (!downloadMenuOpen) return;
+    const buttonRef = activeButtonType === "desktop" ? downloadButtonRef : downloadButtonRefMobile;
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    setDropdownRect({
+      top: rect.bottom,
+      left: rect.left,
+      width: rect.width
+    });
+  }, [downloadMenuOpen, activeButtonType]);
+
+  useEffect(() => {
+    const close = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        (downloadButtonRef.current && downloadButtonRef.current.contains(target)) ||
+        (downloadButtonRefMobile.current && downloadButtonRefMobile.current.contains(target)) ||
+        (dropdownRef.current && dropdownRef.current.contains(target))
+      ) {
+        return;
+      }
+      setDownloadMenuOpen(false);
+      setActiveButtonType(null);
+    };
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, []);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const menuScrollRef = useRef<HTMLDivElement>(null);
@@ -364,8 +416,20 @@ const TaskNotchLandingContent = () => {
 
                     {/* Download button */}
                     <button
-                      onClick={() => handleDownloadClick("mac-silicon")}
-                      className="flex items-center gap-1.5 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-3 py-1.5 rounded-xl text-[9px] font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] min-[900px]:px-3.5 min-[900px]:py-2 min-[900px]:text-[10px] cursor-pointer shrink-0"
+                      ref={downloadButtonRefMobile}
+                      onMouseEnter={() => handleMouseEnter("mobile")}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (activeButtonType === "mobile") {
+                          setDownloadMenuOpen(false);
+                          setActiveButtonType(null);
+                        } else {
+                          setActiveButtonType("mobile");
+                          setDownloadMenuOpen(true);
+                        }
+                      }}
+                      className="flex items-center gap-1 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-3 py-1.5 rounded-xl text-[9px] font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] min-[900px]:px-3.5 min-[900px]:py-2 min-[900px]:text-[10px] cursor-pointer shrink-0"
                     >
                       <img src="/task-notch/apple.svg" className="shrink-0 w-[11px] h-[11px] min-[900px]:w-[12px] min-[900px]:h-[12px]" alt="Apple" />
                       <span className="inline min-[900px]:hidden">
@@ -374,6 +438,7 @@ const TaskNotchLandingContent = () => {
                       <span className="hidden min-[900px]:inline">
                         {isEn ? "FREE DOWNLOAD" : "DESCARGAR GRATIS"}
                       </span>
+                      <ChevronDown size={11} className={`transition-transform duration-200 ${downloadMenuOpen && activeButtonType === "mobile" ? "rotate-180" : ""}`} />
                     </button>
                   </div>
                 </div>
@@ -492,11 +557,24 @@ const TaskNotchLandingContent = () => {
 
                     {/* Download button */}
                     <button
-                      onClick={() => handleDownloadClick("mac-silicon")}
+                      ref={downloadButtonRef}
+                      onMouseEnter={() => handleMouseEnter("desktop")}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (activeButtonType === "desktop") {
+                          setDownloadMenuOpen(false);
+                          setActiveButtonType(null);
+                        } else {
+                          setActiveButtonType("desktop");
+                          setDownloadMenuOpen(true);
+                        }
+                      }}
                       className="flex items-center gap-1.5 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-3.5 py-2 rounded-xl text-[10px] font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer shrink-0"
                     >
                       <img src="/task-notch/apple.svg" className="shrink-0 w-[12px] h-[12px]" alt="Apple" />
                       <span>{isEn ? "FREE DOWNLOAD" : "DESCARGAR GRATIS"}</span>
+                      <ChevronDown size={12} className={`transition-transform duration-200 ${downloadMenuOpen && activeButtonType === "desktop" ? "rotate-180" : ""}`} />
                     </button>
                   </div>
                 </div>
@@ -772,6 +850,50 @@ const TaskNotchLandingContent = () => {
         onClose={() => setDownloadModalOpen(false)}
         onConfirm={confirmDownload}
       />
+
+      {downloadMenuOpen && dropdownRect &&
+        createPortal(
+          <div
+            ref={dropdownRef}
+            role="menu"
+            onMouseEnter={() => {
+              if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+            }}
+            onMouseLeave={handleMouseLeave}
+            className="fixed min-w-[220px] rounded-xl py-2 shadow-2xl z-[99999] border border-white/10 bg-[#1c1c1c] text-white animate-fade-in"
+            style={{
+              top: dropdownRect.top + 6,
+              left: Math.max(10, dropdownRect.left + dropdownRect.width - 220),
+              isolation: "isolate",
+            }}
+          >
+            <button
+              type="button"
+              role="menuitem"
+              className="block w-full text-left px-4 py-2.5 text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              onClick={() => {
+                handleDownloadClick("mac-silicon");
+                setDownloadMenuOpen(false);
+                setActiveButtonType(null);
+              }}
+            >
+              {t.bottomBar.appleSilicon}
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              className="block w-full text-left px-4 py-2.5 text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              onClick={() => {
+                handleDownloadClick("mac-intel");
+                setDownloadMenuOpen(false);
+                setActiveButtonType(null);
+              }}
+            >
+              {t.bottomBar.intel}
+            </button>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 };
