@@ -367,7 +367,7 @@ const TaskNotchLandingContent = () => {
                       onClick={() => handleDownloadClick("mac-silicon")}
                       className="flex items-center gap-1.5 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-3 py-1.5 rounded-xl text-[9px] font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] min-[900px]:px-3.5 min-[900px]:py-2 min-[900px]:text-[10px] cursor-pointer shrink-0"
                     >
-                      <Apple className="shrink-0 animate-bounce-slow w-[11px] h-[11px] min-[900px]:w-[12px] min-[900px]:h-[12px]" />
+                      <img src="/task-notch/apple.svg" className="shrink-0 w-[11px] h-[11px] min-[900px]:w-[12px] min-[900px]:h-[12px]" alt="Apple" />
                       <span className="inline min-[900px]:hidden">
                         {isEn ? "FREE" : "GRATIS"}
                       </span>
@@ -495,7 +495,7 @@ const TaskNotchLandingContent = () => {
                       onClick={() => handleDownloadClick("mac-silicon")}
                       className="flex items-center gap-1.5 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-3.5 py-2 rounded-xl text-[10px] font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer shrink-0"
                     >
-                      <Apple size={12} className="shrink-0 animate-bounce-slow" />
+                      <img src="/task-notch/apple.svg" className="shrink-0 w-[12px] h-[12px]" alt="Apple" />
                       <span>{isEn ? "FREE DOWNLOAD" : "DESCARGAR GRATIS"}</span>
                     </button>
                   </div>
