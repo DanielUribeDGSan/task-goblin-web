@@ -732,7 +732,7 @@ const TaskNotchLandingContent = () => {
                       className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer"
                     >
                       <Apple size={16} />
-                      <span>{isEn ? "Download for Mac (M Chip)" : "Descargar para Mac (Chip M)"}</span>
+                      <span>{isEn ? "Download for Mac (M Chip / Apple Silicon)" : "Descargar para Mac (Chip M / Apple Silicon)"}</span>
                     </button>
                     <button
                       onClick={() => handleDownloadClick("mac-intel")}
