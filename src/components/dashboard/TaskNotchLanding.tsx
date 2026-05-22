@@ -98,10 +98,10 @@ const NOTCH_OPTIONS: NotchOption[] = [
     descEn: "Translate any snippet of text or image on your screen to any language immediately.",
   },
   {
-    id: "reducir-tamaño",
+    id: "reducir-tamano",
     nameEs: "Video IA",
     nameEn: "Video AI",
-    video: "/task-notch/reducir-tamaño.mp4",
+    video: "/task-notch/reducir-tamano.mp4",
     icon: Video,
     descEs: "Comprime, optimiza y procesa tus videos de alta resolución de manera ultra rápida.",
     descEn: "Compress, optimize, and process your high-resolution videos ultra fast.",
