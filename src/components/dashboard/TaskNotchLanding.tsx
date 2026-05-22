@@ -713,7 +713,7 @@ const TaskNotchLandingContent = () => {
                   <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] shadow-inner">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] animate-ping" />
                     <span className="text-[10px] font-black uppercase tracking-wider text-white/70">
-                      {isEn ? "Designed for macOS Sequoia & Sonoma" : "Diseñado para macOS Sequoia y Sonoma"}
+                      {isEn ? "Designed for macOS" : "Diseñado para macOS"}
                     </span>
                   </div>
 
@@ -841,7 +841,7 @@ const TaskNotchLandingContent = () => {
                 {/* OS Badge */}
                 <div className="flex items-center gap-2 text-white/40 text-xs">
                   <Apple size={14} />
-                  <span>macOS Sonoma & Sequoia • {isEn ? "Universal App" : "Aplicación Universal"}</span>
+                  <span>macOS • {isEn ? "Universal App" : "Aplicación Universal"}</span>
                 </div>
               </div>
             </motion.div>
