@@ -792,24 +792,24 @@ const TaskNotchLandingContent = () => {
                   </div>
 
                   {/* Other Apps Section */}
-                  <div className="w-full flex flex-col items-center gap-4 pt-2">
-                    <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.18em]">
+                  <div className="w-full flex flex-col items-center gap-6 pt-6">
+                    <span className="text-xs sm:text-sm font-bold text-white/50 uppercase tracking-[0.2em]">
                       {isEn ? "Try my other apps" : "Prueba mis otras aplicaciones"}
                     </span>
-                    <div className="flex flex-wrap items-center justify-center gap-6">
+                    <div className="flex flex-wrap items-center justify-center gap-10">
                       {/* Task Goblin */}
                       <a
                         href="/task-goblin-app"
-                        className="flex flex-col items-center gap-2 group cursor-pointer"
+                        className="flex flex-col items-center gap-3 group cursor-pointer"
                       >
-                        <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(151,130,255,0.2)] group-hover:shadow-[0_4px_24px_rgba(151,130,255,0.4)] group-hover:border-[#9782ff]/40 transition-all duration-300 group-hover:scale-110">
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(151,130,255,0.2)] group-hover:shadow-[0_4px_30px_rgba(151,130,255,0.5)] group-hover:border-[#9782ff]/50 transition-all duration-300 group-hover:scale-110">
                           <img
                             src="/icon/TaskGoblin.png"
                             className="w-full h-full object-cover"
                             alt="Task Goblin"
                           />
                         </div>
-                        <span className="text-[10px] font-bold text-white/50 group-hover:text-white/80 transition-colors duration-200 uppercase tracking-wider">
+                        <span className="text-xs sm:text-sm font-bold text-white/60 group-hover:text-white transition-colors duration-200 uppercase tracking-wider">
                           Task Goblin
                         </span>
                       </a>
@@ -817,16 +817,16 @@ const TaskNotchLandingContent = () => {
                       {/* Floaty */}
                       <a
                         href="/floaty-app"
-                        className="flex flex-col items-center gap-2 group cursor-pointer"
+                        className="flex flex-col items-center gap-3 group cursor-pointer"
                       >
-                        <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(43,228,106,0.15)] group-hover:shadow-[0_4px_24px_rgba(43,228,106,0.35)] group-hover:border-[#2BE46A]/40 transition-all duration-300 group-hover:scale-110">
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(43,228,106,0.15)] group-hover:shadow-[0_4px_30px_rgba(43,228,106,0.4)] group-hover:border-[#2BE46A]/50 transition-all duration-300 group-hover:scale-110">
                           <img
                             src="/icon/floaty.png"
                             className="w-full h-full object-cover"
                             alt="Floaty"
                           />
                         </div>
-                        <span className="text-[10px] font-bold text-white/50 group-hover:text-white/80 transition-colors duration-200 uppercase tracking-wider">
+                        <span className="text-xs sm:text-sm font-bold text-white/60 group-hover:text-white transition-colors duration-200 uppercase tracking-wider">
                           Floaty
                         </span>
                       </a>
