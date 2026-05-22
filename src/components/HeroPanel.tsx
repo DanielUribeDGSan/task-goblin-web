@@ -33,8 +33,9 @@ export default function HeroPanel({ appType = 'task-goblin' }: { appType?: 'task
   const [platform, setPlatform] = useState<Platform>("mac-silicon");
 
   const openModal = (p: Platform) => {
-    setPlatform(p);
-    setModalOpen(true);
+    const index = p === "windows" ? 2 : (p === "mac-silicon" ? 0 : 1);
+    const [plat, arch] = p.split('-');
+    triggerSecureDownload(index, appType);
   };
 
   const handleConfirm = () => {

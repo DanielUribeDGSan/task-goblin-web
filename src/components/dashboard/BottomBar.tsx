@@ -80,9 +80,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
   const openDownloadModal = (index: number) => {
     setMacMenuOpen(false);
-    const platform: DownloadPlatform = index === 0 ? "mac-silicon" : index === 1 ? "mac-intel" : "windows";
-    setPendingDownload({ index, platform });
-    setDownloadModalOpen(true);
+    triggerSecureDownload(index, appType);
   };
 
   const handleDownloadConfirm = () => {

@@ -58,8 +58,8 @@ const NOTCH_OPTIONS: NotchOption[] = [
     nameEn: "Nook",
     video: "/task-notch/home.mp4",
     icon: Pin,
-    descEs: "Un espacio flotante siempre a mano en tu notch para pinear notas, links y recordatorios rápidos.",
-    descEn: "A floating space always at hand in your notch to pin quick notes, links, and reminders.",
+    descEs: "Un espacio flotante siempre a mano en tu notch para resolver preguntas, capturar texto de la pantalla, convertir imágenes, subir archivos, traducir texto con capturas de pantalla, reducir el peso de videos, ver películas, y obtener colores y paletas de imágenes.",
+    descEn: "A floating space always at hand in your notch to solve questions, capture text from the screen, convert images, upload files, translate text with screenshots, reduce video sizes, watch movies, and extract colors and palettes from images.",
   },
   {
     id: "tray",
@@ -274,8 +274,8 @@ const TaskNotchLandingContent = () => {
   };
 
   const handleDownloadClick = (platform: DownloadPlatform) => {
-    setPendingDownloadPlatform(platform);
-    setDownloadModalOpen(true);
+    const index = platform === "windows" ? 2 : (platform === "mac-silicon" ? 0 : 1);
+    triggerSecureDownload(index, "task-notch");
   };
 
   const confirmDownload = () => {
@@ -724,6 +724,24 @@ const TaskNotchLandingContent = () => {
                       Ahora con Superpoderes.
                     </span>
                   </h1>
+
+                  {/* Direct Download Buttons */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full mt-6 mb-6">
+                    <button
+                      onClick={() => handleDownloadClick("mac-silicon")}
+                      className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer"
+                    >
+                      <Apple size={16} />
+                      <span>{isEn ? "Download for Mac (M Chip)" : "Descargar para Mac (Chip M)"}</span>
+                    </button>
+                    <button
+                      onClick={() => handleDownloadClick("mac-intel")}
+                      className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white cursor-pointer"
+                    >
+                      <Apple size={16} />
+                      <span>{isEn ? "Download for Mac (Intel)" : "Descargar para Mac (Intel)"}</span>
+                    </button>
+                  </div>
 
                   {/* Dynamic feature description */}
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed max-w-[650px] whitespace-pre-line">

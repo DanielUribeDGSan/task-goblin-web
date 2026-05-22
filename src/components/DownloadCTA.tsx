@@ -10,8 +10,8 @@ export default function DownloadCTA({ appType = 'task-goblin' }: { appType?: 'ta
   const [platform, setPlatform] = useState<Platform>("mac-silicon");
 
   const openModal = (p: Platform) => {
-    setPlatform(p);
-    setModalOpen(true);
+    const index = p === "windows" ? 2 : (p === "mac-silicon" ? 0 : 1);
+    triggerSecureDownload(index, appType);
   };
 
   const handleConfirm = () => {
