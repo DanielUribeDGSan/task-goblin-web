@@ -22,8 +22,8 @@ export const APP_CONFIG = {
   PRODUCTS: {
     'task-goblin': {
       name: 'Task Goblin Pro',
-      price: 199,
-      priceUSD: 13,
+      price: 149,
+      priceUSD: 8,
     },
     'task-notch': {
       name: 'TaskNotch Pro',
@@ -37,8 +37,8 @@ export const APP_CONFIG = {
     },
     'floaty': {
       name: 'Floaty Pro',
-      price: 99,
-      priceUSD: 5,
+      price: 50,
+      priceUSD: 3,
     },
   },
 };

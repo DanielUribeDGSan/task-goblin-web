@@ -103,15 +103,15 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
         usd: 8,
         originalUsd: 11
     } : isFloaty ? {
-        mxn: 99,
+        mxn: 50,
         originalMxn: 149,
-        usd: 5,
+        usd: 3,
         originalUsd: 8
     } : {
-        mxn: 199,
-        originalMxn: 299,
-        usd: 13,
-        originalUsd: 16
+        mxn: 149,
+        originalMxn: 199,
+        usd: 8,
+        originalUsd: 11
     };
 
     const showUsd = lang === "en";
