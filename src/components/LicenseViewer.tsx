@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, CheckCircle, AlertCircle, Home, Mail, Search } from "lucide-react";
+import { Copy, CheckCircle, AlertCircle, ArrowLeft, Mail, Search } from "lucide-react";
 import { useLanguage, LanguageProvider } from "../contexts/LanguageContext";
 
 export const LicenseViewer: React.FC = () => {
@@ -124,18 +124,18 @@ export const LicenseViewer: React.FC = () => {
             >
                 <button
                     onClick={() => globalThis.location.href = '/'}
-                    className="absolute top-4 left-4 w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                    title={t.licensePage.backToHome}
+                    className="absolute top-6 left-6 flex items-center gap-2 text-white/50 hover:text-white transition-colors cursor-pointer text-sm font-medium"
+                    title={t.chat.back}
                 >
-                    <Home size={18} />
+                    <ArrowLeft size={16} />
+                    <span>{t.chat.back}</span>
                 </button>
 
                 <div className="text-center space-y-2 mt-4 mb-8">
                     <div 
-                        className="w-12 h-12 rounded-2xl glass flex items-center justify-center mx-auto mb-4"
-                        style={{ color: '#9782ff' }}
+                        className="w-12 h-12 rounded-2xl glass flex items-center justify-center mx-auto mb-4 text-white"
                     >
-                        {isCheckoutCancel ? <AlertCircle size={24} className="text-orange-400" /> : <Search size={24} />}
+                        {isCheckoutCancel ? <AlertCircle size={24} className="text-white/70" /> : <Search size={24} className="text-white/70" />}
                     </div>
                     <h2 className="text-2xl font-bold text-white">
                         {titleText}
@@ -168,8 +168,7 @@ export const LicenseViewer: React.FC = () => {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder={t.licensePage.emailPlaceholder}
-                                        className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 transition-all"
-                                        style={{ focusRingColor: '#9782ff50', focusBorderColor: '#9782ff' } as any}
+                                        className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/50 transition-all"
                                     />
                                 </div>
                             </div>
@@ -177,8 +176,7 @@ export const LicenseViewer: React.FC = () => {
                                 <button
                                     type="submit"
                                     disabled={!email.includes('@')}
-                                    className="w-full text-black font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2"
-                                    style={{ backgroundColor: '#9782ff' }}
+                                    className="w-full bg-white text-black hover:bg-white/90 font-bold rounded-xl py-3.5 px-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] flex justify-center items-center gap-2"
                                 >
                                 {isCheckoutSuccess ? <CheckCircle size={18} /> : <Search size={18} />}
                                 {isCheckoutSuccess ? t.licensePage.associateButton : t.licensePage.searchButton}
@@ -195,8 +193,7 @@ export const LicenseViewer: React.FC = () => {
                             className="py-12 flex flex-col items-center justify-center space-y-4"
                         >
                             <div 
-                                className="w-10 h-10 border-4 border-white/10 rounded-full animate-spin" 
-                                style={{ borderTopColor: '#9782ff' }}
+                                className="w-10 h-10 border-4 border-white/10 rounded-full animate-spin border-t-white" 
                             />
                             <p className="text-white/70 font-medium">{t.licensePage.searching}</p>
                         </motion.div>
@@ -212,7 +209,7 @@ export const LicenseViewer: React.FC = () => {
                         >
                             <div className="glass bg-black/20 border border-white/5 rounded-2xl p-4 space-y-4 relative overflow-hidden">
                                 {/* Decorative accent */}
-                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-cyan to-blue-500 opacity-50"></div>
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/40 to-white/10 opacity-50"></div>
 
                                 <div className="flex justify-between items-center pb-2 border-b border-white/10">
                                     <span className="text-sm text-white/60">{t.licensePage.emailLabel}</span>
@@ -223,15 +220,14 @@ export const LicenseViewer: React.FC = () => {
                                             className="p-1.5 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
                                             title="Copy Email"
                                         >
-                                            {copiedIndex === -1 ? <CheckCircle size={14} className="text-green-400" /> : <Copy size={14} />}
+                                            {copiedIndex === -1 ? <CheckCircle size={14} className="text-white" /> : <Copy size={14} />}
                                         </button>
                                     </div>
                                 </div>
 
                                 <div className="space-y-3">
                                     <span 
-                                        className="text-sm font-medium block"
-                                        style={{ color: '#9782ff' }}
+                                        className="text-sm font-medium block text-white/80"
                                     >
                                         {licenseKeys.length > 1 ? t.licensePage.licenseKeyLabel + " (" + licenseKeys.length + ")" : t.licensePage.licenseKeyLabel}
                                     </span>
@@ -240,7 +236,7 @@ export const LicenseViewer: React.FC = () => {
                                         {licenseKeys.map((item, i) => (
                                             <div key={item.key} className="flex bg-black/40 rounded-xl border border-white/10 items-center justify-between group overflow-hidden">
                                                 <div className="flex flex-col py-3 px-4 min-w-0 flex-1">
-                                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#9782ff] mb-1">
+                                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/60 mb-1">
                                                         {item.app === 'task-notch' ? 'TaskNotch' : item.app.replace('-', ' ')}
                                                     </span>
                                                     <code className="text-sm text-white/90 font-mono tracking-wider truncate">
@@ -262,7 +258,7 @@ export const LicenseViewer: React.FC = () => {
 
                             <div className="glass bg-white/5 rounded-xl p-4 text-sm">
                                 <h4 className="font-semibold text-white/90 mb-2 flex items-center gap-2">
-                                    <AlertCircle size={16} style={{ color: '#9782ff' }} />
+                                    <AlertCircle size={16} className="text-white/70" />
                                     {t.licensePage.instructionHeading}
                                 </h4>
                                 <ul className="list-disc list-inside text-white/70 space-y-1 text-xs">

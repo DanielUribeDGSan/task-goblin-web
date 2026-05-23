@@ -39,6 +39,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     const isFloaty = appType === "floaty";
     const isTaskNotch = appType === "task-notch";
 
+    const accentColor = isTaskNotch ? "#0084ff" : isNexo ? "#2D68FF" : isFloaty ? "#2BE46A" : "#9782ff";
+    const accentMuted = isTaskNotch ? "rgba(0, 132, 255, 0.2)" : isNexo ? "rgba(45, 104, 255, 0.2)" : isFloaty ? "rgba(43, 228, 106, 0.2)" : "rgba(151, 130, 255, 0.2)";
+
     const prices = isTaskNotch ? {
         mxn: 149,
         originalMxn: 199,
@@ -107,7 +110,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     const modalContent = (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-11000 flex items-center justify-center p-4 overflow-y-auto scrollbar-hide">
+                <div 
+                    className="fixed inset-0 z-[11000] flex items-center justify-center p-4 overflow-y-auto scrollbar-hide"
+                    style={{ '--sh-accent': accentColor, '--sh-accent-muted': accentMuted } as React.CSSProperties}
+                >
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}

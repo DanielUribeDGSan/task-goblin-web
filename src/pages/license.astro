@@ -56,10 +56,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
                 </div>
             </div>
 
-            <div class="z-10 w-full relative">
+            <div className="z-10 w-full relative">
                 <LicenseApp client:load />
             </div>
         </main>
-        <FloatingChat client:load />
+        <FloatingChat client:load hideBuyButton={true} />
     </body>
 </html>

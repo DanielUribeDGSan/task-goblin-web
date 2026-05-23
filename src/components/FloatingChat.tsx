@@ -20,19 +20,20 @@ interface ChatOption {
 
 interface FloatingChatProps {
     appType?: "task-goblin" | "floaty" | "nexo" | "task-notch";
+    hideBuyButton?: boolean;
 }
 
-export const FloatingChat: React.FC<FloatingChatProps> = ({ appType = "task-goblin" }) => {
+export const FloatingChat: React.FC<FloatingChatProps> = ({ appType = "task-goblin", hideBuyButton = false }) => {
     return (
         <LanguageProvider>
             <LayoutProvider>
-                <FloatingChatContent appType={appType} />
+                <FloatingChatContent appType={appType} hideBuyButton={hideBuyButton} />
             </LayoutProvider>
         </LanguageProvider>
     );
 };
 
-const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-goblin" }) => {
+const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-goblin", hideBuyButton = false }) => {
     const { t, lang } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -220,21 +221,23 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
     return (
         <div className="fixed bottom-10 lg:bottom-35 right-4 sm:right-6 z-9999 font-sans flex flex-col items-end gap-3">
 
-            <motion.button
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsPaymentModalOpen(true)}
-                className="group flex items-center gap-3 text-black font-bold py-3 px-5 rounded-3xl shadow-2xl cursor-pointer transition-all border border-white/20"
-                style={{ 
-                    backgroundColor: accentColor,
-                    boxShadow: `0 10px 25px -5px ${accentShadow}`
-                }}
-            >
-                <Sparkles size={20} className="animate-pulse" />
-                <span className="text-sm whitespace-nowrap">{t.bottomBar.buyLicense}</span>
-            </motion.button>
+            {!hideBuyButton && (
+                <motion.button
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsPaymentModalOpen(true)}
+                    className="group flex items-center gap-3 text-black font-bold py-3 px-5 rounded-3xl shadow-2xl cursor-pointer transition-all border border-white/20"
+                    style={{ 
+                        backgroundColor: accentColor,
+                        boxShadow: `0 10px 25px -5px ${accentShadow}`
+                    }}
+                >
+                    <Sparkles size={20} className="animate-pulse" />
+                    <span className="text-sm whitespace-nowrap">{t.bottomBar.buyLicense}</span>
+                </motion.button>
+            )}
 
             <AnimatePresence>
                 {isOpen && (

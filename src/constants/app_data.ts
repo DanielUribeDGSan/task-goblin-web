@@ -1,4 +1,3 @@
-
 export type MediaSlide =
   | { type: "video"; src: string; poster?: string }
   | { type: "image"; src: string };
@@ -15,183 +14,223 @@ export interface RoomConfig {
   children?: any;
 }
 
-export const TASK_GOBLIN_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
-  right: [
-    {
-      id: "quiz",
-      title: "quiz",
-      distance: "",
-      icon: "/icon/bot.gif",
-      aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/responder-preguntas/responder-preguntas.mp4" },
-      ],
-    },
-    {
-      id: "magic-eraser",
-      title: "magic-eraser",
-      distance: "",
-      icon: "/task-goblin/images/clean.gif",
-      aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/task-goblin/video/borrador-magico.mov" },
-      ],
-    },
-    {
-      id: "audio-to-text",
-      title: "audio-to-text",
-      distance: "",
-      icon: "/task-goblin/images/microphone.gif",
-      aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/task-goblin/video/mp3-audio.mov" },
-      ],
-    },
-  ],
-  bottom: [
-    {
-      id: "ai-palette",
-      title: "ai-palette",
-      distance: "",
-      icon: "/task-goblin/images/palette.gif",
-      aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/task-goblin/video/paleta-ia.mov" },
-      ],
-    },
-    {
-      id: "reduce-video",
-      title: "reduce-video",
-      distance: "",
-      icon: "/task-goblin/images/video.gif",
-      aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/task-goblin/video/reducir-video.mov" },
-      ],
-    },
-    {
-      id: "pdf-summary",
-      title: "pdf-summary",
-      distance: "",
-      icon: "/task-goblin/images/resumen.gif",
-      aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/task-goblin/video/resumen-ia.mov" },
-      ],
-    },
-    {
-      id: "smart-translator",
-      title: "smart-translator",
-      distance: "",
-      icon: "/task-goblin/images/translate.gif",
-      aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/task-goblin/video/traducir-texto.mov" },
-      ],
-    },
-    {
-      id: "screenshot-to-text",
-      title: "Screenshot to Text",
-      distance: "",
-      icon: "/icon/copy.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/capture-text/video.mp4", poster: "/capture-text/image-1.png" },
-        { type: "image", src: "/capture-text/image-1.png" },
-      ],
-    },
-    {
-      id: "close-all-apps",
-      title: "Close All Apps",
-      distance: "",
-      icon: "/icon/close.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/closed-apss/video.mp4", poster: "/closed-apss/image-1.png" },
-        { type: "image", src: "/closed-apss/image-1.png" },
-      ],
-    },
-    {
-      id: "schedule-shutdown",
-      title: "Schedule Shutdown",
-      distance: "",
-      icon: "/icon/off.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/shutdown/video.mp4", poster: "/shutdown/image-1.png" },
-        { type: "image", src: "/shutdown/image-1.png" },
-      ],
-    },
-    {
-      id: "convert-pdf-to-word",
-      title: "Convert PDF to Word",
-      distance: "",
-      icon: "/icon/note.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/pdf-word/video.mp4", poster: "/pdf-word/image-1.png" },
-        { type: "image", src: "/pdf-word/image-1.png" },
-      ],
-    },
-    {
-      id: "color-extractor",
-      title: "Color Extractor",
-      distance: "",
-      icon: "/icon/palette.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/color-extractor/video.mp4", poster: "/color-extractor/image-1.png" },
-        { type: "image", src: "/color-extractor/image-1.png" },
-      ],
-    },
-    {
-      id: "paint",
-      title: "Paint",
-      distance: "",
-      icon: "/icon/paint.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/paint/video.mp4", poster: "/paint/image-1.png" },
-        { type: "image", src: "/paint/image-1.png" },
-      ],
-    },
-    {
-      id: "image-converter",
-      title: "Image & PDF Converter",
-      distance: "",
-      icon: "/icon/camera.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/image-convert/video.mp4", poster: "/image-convert/image-1.png" },
-        { type: "image", src: "/image-convert/image-1.png" },
-        { type: "image", src: "/image-convert/image-2.png" },
-      ],
-    },
-    {
-      id: "move-mouse",
-      title: "Move Mouse",
-      distance: "",
-      icon: "/icon/move.gif",
-      aspectRatio: "4/3",
-      mediaItems: [
-        { type: "video", src: "/mouse/video.mp4", poster: "/mouse/image-1.png" },
-        { type: "image", src: "/mouse/image-1.png" },
-      ],
-    },
-    {
-      id: "whatsapp-msg",
-      title: "WhatsApp Msg",
-      distance: "",
-      icon: "/icon/chat.gif",
-      aspectRatio: "square",
-      mediaItems: [
-        { type: "video", src: "/whatsaap/video.mp4", poster: "/whatsaap/image-1.png" },
-        { type: "image", src: "/whatsaap/image-1.png" },
-        { type: "image", src: "/whatsaap/image-2.png" },
-      ],
-    },
-  ]
-};
+export const TASK_GOBLIN_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } =
+  {
+    right: [
+      {
+        id: "quiz",
+        title: "quiz",
+        distance: "",
+        icon: "/icon/bot.gif",
+        aspectRatio: "video",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/responder-preguntas/responder-preguntas.mp4",
+          },
+        ],
+      },
+      {
+        id: "magic-eraser",
+        title: "magic-eraser",
+        distance: "",
+        icon: "/task-goblin/images/clean.gif",
+        aspectRatio: "video",
+        mediaItems: [
+          { type: "video", src: "/task-goblin/video/borrador-magico.mov" },
+        ],
+      },
+      {
+        id: "audio-to-text",
+        title: "audio-to-text",
+        distance: "",
+        icon: "/task-goblin/images/microphone.gif",
+        aspectRatio: "video",
+        mediaItems: [
+          { type: "video", src: "/task-goblin/video/mp3-audio.mov" },
+        ],
+      },
+    ],
+    bottom: [
+      {
+        id: "ai-palette",
+        title: "ai-palette",
+        distance: "",
+        icon: "/task-goblin/images/palette.gif",
+        aspectRatio: "video",
+        mediaItems: [
+          { type: "video", src: "/task-goblin/video/paleta-ia.mov" },
+        ],
+      },
+      {
+        id: "reduce-video",
+        title: "reduce-video",
+        distance: "",
+        icon: "/task-goblin/images/video.gif",
+        aspectRatio: "video",
+        mediaItems: [
+          { type: "video", src: "/task-goblin/video/reducir-video.mov" },
+        ],
+      },
+      {
+        id: "pdf-summary",
+        title: "pdf-summary",
+        distance: "",
+        icon: "/task-goblin/images/resumen.gif",
+        aspectRatio: "video",
+        mediaItems: [
+          { type: "video", src: "/task-goblin/video/resumen-ia.mov" },
+        ],
+      },
+      {
+        id: "smart-translator",
+        title: "smart-translator",
+        distance: "",
+        icon: "/task-goblin/images/translate.gif",
+        aspectRatio: "video",
+        mediaItems: [
+          { type: "video", src: "/task-goblin/video/traducir-texto.mov" },
+        ],
+      },
+      {
+        id: "screenshot-to-text",
+        title: "Screenshot to Text",
+        distance: "",
+        icon: "/icon/copy.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/capture-text/video.mp4",
+            poster: "/capture-text/image-1.png",
+          },
+          { type: "image", src: "/capture-text/image-1.png" },
+        ],
+      },
+      {
+        id: "close-all-apps",
+        title: "Close All Apps",
+        distance: "",
+        icon: "/icon/close.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/closed-apss/video.mp4",
+            poster: "/closed-apss/image-1.png",
+          },
+          { type: "image", src: "/closed-apss/image-1.png" },
+        ],
+      },
+      {
+        id: "schedule-shutdown",
+        title: "Schedule Shutdown",
+        distance: "",
+        icon: "/icon/off.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/shutdown/video.mp4",
+            poster: "/shutdown/image-1.png",
+          },
+          { type: "image", src: "/shutdown/image-1.png" },
+        ],
+      },
+      {
+        id: "convert-pdf-to-word",
+        title: "Convert PDF to Word",
+        distance: "",
+        icon: "/icon/note.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/pdf-word/video.mp4",
+            poster: "/pdf-word/image-1.png",
+          },
+          { type: "image", src: "/pdf-word/image-1.png" },
+        ],
+      },
+      {
+        id: "color-extractor",
+        title: "Color Extractor",
+        distance: "",
+        icon: "/icon/palette.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/color-extractor/video.mp4",
+            poster: "/color-extractor/image-1.png",
+          },
+          { type: "image", src: "/color-extractor/image-1.png" },
+        ],
+      },
+      {
+        id: "paint",
+        title: "Paint",
+        distance: "",
+        icon: "/icon/paint.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/paint/video.mp4",
+            poster: "/paint/image-1.png",
+          },
+          { type: "image", src: "/paint/image-1.png" },
+        ],
+      },
+      {
+        id: "image-converter",
+        title: "Image & PDF Converter",
+        distance: "",
+        icon: "/icon/camera.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/image-convert/video.mp4",
+            poster: "/image-convert/image-1.png",
+          },
+          { type: "image", src: "/image-convert/image-1.png" },
+          { type: "image", src: "/image-convert/image-2.png" },
+        ],
+      },
+      {
+        id: "move-mouse",
+        title: "Move Mouse",
+        distance: "",
+        icon: "/icon/move.gif",
+        aspectRatio: "4/3",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/mouse/video.mp4",
+            poster: "/mouse/image-1.png",
+          },
+          { type: "image", src: "/mouse/image-1.png" },
+        ],
+      },
+      {
+        id: "whatsapp-msg",
+        title: "WhatsApp Msg",
+        distance: "",
+        icon: "/icon/chat.gif",
+        aspectRatio: "square",
+        mediaItems: [
+          {
+            type: "video",
+            src: "/whatsaap/video.mp4",
+            poster: "/whatsaap/image-1.png",
+          },
+          { type: "image", src: "/whatsaap/image-1.png" },
+          { type: "image", src: "/whatsaap/image-2.png" },
+        ],
+      },
+    ],
+  };
 
 export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
   right: [
@@ -202,7 +241,11 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
-        { type: "video", src: "/nexo/videos/proyectos.mp4", poster: "/nexo/images/proyectos.png" },
+        {
+          type: "video",
+          src: "/nexo/videos/proyectos.mp4",
+          poster: "/nexo/images/proyectos.png",
+        },
         { type: "image", src: "/nexo/images/proyectos.png" },
       ],
     },
@@ -213,7 +256,11 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
-        { type: "video", src: "/nexo/videos/puertosycompartir.mp4", poster: "/nexo/images/puertos.png" },
+        {
+          type: "video",
+          src: "/nexo/videos/puertosycompartir.mp4",
+          poster: "/nexo/images/puertos.png",
+        },
         { type: "image", src: "/nexo/images/puertos.png" },
       ],
     },
@@ -223,9 +270,7 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       distance: "",
       icon: "/icon/computer.png",
       aspectRatio: "video",
-      mediaItems: [
-        { type: "video", src: "/nexo/videos/share-movil.mp4" },
-      ],
+      mediaItems: [{ type: "video", src: "/nexo/videos/share-movil.mp4" }],
     },
   ],
   bottom: [
@@ -236,7 +281,11 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
-        { type: "video", src: "/nexo/videos/env.mp4", poster: "/nexo/images/env.png" },
+        {
+          type: "video",
+          src: "/nexo/videos/env.mp4",
+          poster: "/nexo/images/env.png",
+        },
         { type: "image", src: "/nexo/images/env.png" },
       ],
     },
@@ -247,7 +296,11 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
-        { type: "video", src: "/nexo/videos/urls.mp4", poster: "/nexo/images/urls.png" },
+        {
+          type: "video",
+          src: "/nexo/videos/urls.mp4",
+          poster: "/nexo/images/urls.png",
+        },
         { type: "image", src: "/nexo/images/urls.png" },
       ],
     },
@@ -258,16 +311,20 @@ export const NEXO_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
       icon: "/icon/computer.png",
       aspectRatio: "video",
       mediaItems: [
-        { type: "video", src: "/nexo/videos/snippets.mp4", poster: "/nexo/images/snippets.png" },
+        {
+          type: "video",
+          src: "/nexo/videos/snippets.mp4",
+          poster: "/nexo/images/snippets.png",
+        },
         { type: "image", src: "/nexo/images/snippets.png" },
       ],
     },
-  ]
+  ],
 };
 
 export const FLOATY_ROOMS: { right: RoomConfig[]; bottom: RoomConfig[] } = {
   right: [],
-  bottom: []
+  bottom: [],
 };
 
 export const APP_CONFIGS = {
@@ -281,7 +338,11 @@ export const APP_CONFIGS = {
     heroIcon: "/task-notch/logo.png",
     heroVideo: "/home/video.mp4",
     heroPoster: "/apps/task-goblin.png",
-    heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
+    heroImages: [
+      "/apps/task-goblin.png",
+      "/home/image-1.png",
+      "/home/image-2.png",
+    ],
     path: "/",
   },
   "task-goblin": {
@@ -294,10 +355,14 @@ export const APP_CONFIGS = {
     heroIcon: "/icon/bot.gif",
     heroVideo: "/home/video.mp4",
     heroPoster: "/apps/task-goblin.png",
-    heroImages: ["/apps/task-goblin.png", "/home/image-1.png", "/home/image-2.png"],
+    heroImages: [
+      "/apps/task-goblin.png",
+      "/home/image-1.png",
+      "/home/image-2.png",
+    ],
     path: "/task-goblin-app",
   },
-  "floaty": {
+  floaty: {
     name: "Floaty",
     iconPath: "/icon/floaty.png",
     accentColor: "#2BE46A",
@@ -307,17 +372,14 @@ export const APP_CONFIGS = {
     heroIcon: "/icon/floaty.png",
     heroVideo: "/floaty/video.mp4",
     heroPoster: "/apps/floaty.png",
-    heroImages: [
-      "/apps/floaty.png",
-      "/floaty/imagen-1.png"
-    ],
+    heroImages: ["/apps/floaty.png", "/floaty/imagen-1.png"],
     path: "/floaty-app",
   },
 } as const;
 
 export const TASK_NOTCH_URLS = [
-  "/downloads/notch-task/NotchIsland_aarch64.dmg",
-  "/downloads/notch-task/NotchIsland_x64.dmg",
+  "/downloads/notch-task/Task_Notch_aarch64.dmg",
+  "/downloads/notch-task/Task_Notch_x64.dmg",
   "/downloads/task-notch/TaskNotch_x64-setup.exe",
 ];
 
@@ -339,4 +401,4 @@ export const FLOATY_URLS = [
   "/downloads/floaty/Floaty_x64.exe",
 ];
 
-export type AppType = keyof typeof APP_CONFIGS
+export type AppType = keyof typeof APP_CONFIGS;

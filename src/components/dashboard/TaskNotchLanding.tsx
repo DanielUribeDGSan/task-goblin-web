@@ -32,6 +32,7 @@ import {
   VolumeX,
   Volume2,
   ChevronDown,
+  Search,
 } from "lucide-react";
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { LayoutProvider } from "../../contexts/LayoutContext";
@@ -726,7 +727,7 @@ const TaskNotchLandingContent = () => {
                   </h1>
 
                   {/* Direct Download Buttons */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full mt-6 mb-6">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full mt-6 mb-4">
                     <button
                       onClick={() => handleDownloadClick("mac-silicon")}
                       className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer"
@@ -742,6 +743,14 @@ const TaskNotchLandingContent = () => {
                       <span>{isEn ? "Download for Mac (Intel)" : "Descargar para Mac (Intel)"}</span>
                     </button>
                   </div>
+
+                  <a
+                    href="/license"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white mb-6 cursor-pointer"
+                  >
+                    <Search size={16} className="text-white/70" />
+                    <span>{isEn ? "Check your license" : "Consultar tu licencia"}</span>
+                  </a>
 
                   {/* Dynamic feature description */}
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed max-w-[650px] whitespace-pre-line">
