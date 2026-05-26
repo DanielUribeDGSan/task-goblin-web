@@ -785,6 +785,50 @@ const TaskNotchLandingContent = () => {
                     </div>
                   </div>
 
+                  {/* Pricing Block */}
+                  <div className="flex flex-col items-center gap-2 pt-2">
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-2xl font-black text-white/30 line-through">$199</span>
+                      <span className="text-4xl font-black text-white">$149</span>
+                      <span className="text-xs font-bold text-white/40 uppercase tracking-wider self-end pb-1">
+                        {isEn ? "one-time · Pro features" : "pago único · funciones Pro"}
+                      </span>
+                    </div>
+                    {/* Free Nook badge */}
+                    <div className="flex items-center gap-2 px-4 py-1.5 rounded-full mt-2 mb-1"
+                      style={{
+                        background: "linear-gradient(135deg, #05c46b22, #00e87733)",
+                        border: "1px solid #05c46b55",
+                        boxShadow: "0 0 18px 2px #05c46b33"
+                      }}
+                    >
+                      <span className="text-[11px] font-black uppercase tracking-widest" style={{ color: "#05c46b" }}>
+                        🎉 {isEn ? "The Nook — 100% Free forever" : "El Nook principal — 100% Gratis para siempre"}
+                      </span>
+                    </div>
+                    {/* Free features info */}
+                    <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 mt-1">
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle size={11} className="text-[#05c46b] shrink-0" />
+                        <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
+                          {isEn ? "Media player — Free" : "Reproductor — Gratis"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle size={11} className="text-[#05c46b] shrink-0" />
+                        <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
+                          {isEn ? "Notes — Free" : "Notas — Gratis"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle size={11} className="text-[#05c46b] shrink-0" />
+                        <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
+                          {isEn ? "Calendar — Free" : "Calendario — Gratis"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Quick Actions Buttons */}
                   <div className="flex flex-wrap items-center justify-center gap-4 pt-2.5">
                     <button
@@ -794,10 +838,6 @@ const TaskNotchLandingContent = () => {
                       <Sparkles size={14} className="text-yellow-400" />
                       <span>{isEn ? "Unlock Pro Version" : "Desbloquear Versión Pro"}</span>
                     </button>
-
-                    <span className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
-                      {isEn ? "Free version + 1-week trial of Pro features" : "Versión gratuita + prueba de funciones Pro por una semana"}
-                    </span>
                   </div>
 
                   {/* Other Apps Section */}
