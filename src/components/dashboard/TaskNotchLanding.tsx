@@ -787,15 +787,8 @@ const TaskNotchLandingContent = () => {
 
                   {/* Pricing Block */}
                   <div className="flex flex-col items-center gap-2 pt-2">
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-2xl font-black text-white/30 line-through">$199</span>
-                      <span className="text-4xl font-black text-white">$149</span>
-                      <span className="text-xs font-bold text-white/40 uppercase tracking-wider self-end pb-1">
-                        {isEn ? "one-time · Pro features" : "pago único · funciones Pro"}
-                      </span>
-                    </div>
                     {/* Free Nook badge */}
-                    <div className="flex items-center gap-2 px-4 py-1.5 rounded-full mt-2 mb-1"
+                    <div className="flex items-center gap-2 px-4 py-1.5 rounded-full mb-1"
                       style={{
                         background: "linear-gradient(135deg, #05c46b22, #00e87733)",
                         border: "1px solid #05c46b55",
@@ -826,6 +819,18 @@ const TaskNotchLandingContent = () => {
                           {isEn ? "Calendar — Free" : "Calendario — Gratis"}
                         </span>
                       </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="w-full max-w-[320px] h-px bg-white/[0.06] my-1" />
+
+                    {/* Price */}
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-2xl font-black text-white/30 line-through">$199</span>
+                      <span className="text-4xl font-black text-white">$149</span>
+                      <span className="text-xs font-bold text-white/40 uppercase tracking-wider self-end pb-1">
+                        {isEn ? "one-time · Pro features" : "pago único · funciones Pro"}
+                      </span>
                     </div>
                   </div>
 
