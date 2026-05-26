@@ -5,28 +5,35 @@ import { FloatingChat } from "../components/FloatingChat";
 import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
-const title = "TaskNotch — Tu menú interactivo y productivo en Mac";
+const title = "TaskNotch — Notch Interactivo para Mac | Task Notch App";
 const description =
-  "TaskNotch es la barra interactiva que optimiza tu día a día en Mac: borrador mágico de objetos con IA, conversor de imágenes a WebP, extractor de texto OCR, traducción de pantalla y más. Descárgala ya.";
+  "TaskNotch transforma el notch de tu Mac en un centro de productividad: borrador mágico IA, OCR, traductor de pantalla, reproductor, notas y calendario. Descarga gratis TaskNotch para macOS.";
 const ogImage = `${Astro.site}/icon/TaskNotch.png`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const SITE = "https://task-goblin.com";
 ---
 
 <html lang="es">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/task-notch/logo.png" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- SEO: Google, Bing (Edge), Safari -->
+    <!-- ═══════════════════════════════════════════
+         SEO PRIMARY: Title + Description + Keywords
+         Targets: task notch · tasknotch · notch mac
+         ═══════════════════════════════════════════ -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="TaskNotch, Notch, interactivo, barra de herramientas, borrador mágico, IA, OCR, screenshot to text, traducción de pantalla, Mac, utilidades"
+      content="task notch, tasknotch, notch mac, notch interactivo, notch app, task notch app, TaskNotch, notch macOS, mac notch app, barra notch mac, Task Goblin, Floaty, borrador mágico IA, OCR mac, screenshot to text, traductor pantalla mac, reproductor notch, notas mac, herramientas mac, utilidades mac, productividad mac"
     />
     <link rel="canonical" href={canonical} />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -34,8 +41,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="TaskNotch - Notch Interactivo para Mac" />
     <meta property="og:site_name" content="TaskNotch" />
     <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -43,10 +54,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="TaskNotch - Notch Interactivo para Mac" />
 
     <!-- Sitemap para buscadores -->
     <link rel="sitemap" href="/sitemap-index.xml" />
 
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -56,45 +69,215 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <ClientRouter />
   </head>
   <body class="antialiased font-sans bg-[#202020]">
+    <!-- SEO: Contenido visible para crawlers (task notch, notch mac, tasknotch) -->
+    <!-- Google renderiza JS pero este fallback ayuda con indexación inmediata  -->
+    <noscript>
+      <main style="padding:2rem;color:white;background:#202020;font-family:sans-serif;max-width:900px;margin:0 auto">
+        <h1>TaskNotch — Notch Interactivo para Mac</h1>
+        <p>TaskNotch (Task Notch) transforma el notch de tu Mac en un centro de productividad. Descarga gratis la app notch para macOS.</p>
+        <h2>Funciones de TaskNotch</h2>
+        <ul>
+          <li>Borrador mágico con IA — elimina objetos de imágenes</li>
+          <li>OCR — Screenshot to Text, extrae texto de la pantalla</li>
+          <li>Traductor de pantalla con IA</li>
+          <li>Reproductor de música en el notch</li>
+          <li>Notas rápidas en el notch</li>
+          <li>Calendario en el notch</li>
+          <li>Conversor de imágenes a WebP</li>
+        </ul>
+        <h2>Otras aplicaciones</h2>
+        <ul>
+          <li><a href="/task-goblin-app">Task Goblin — Automatización para Mac y Windows</a></li>
+          <li><a href="/floaty-app">Floaty — Compañero Virtual para Mac</a></li>
+        </ul>
+      </main>
+    </noscript>
     <TaskNotchLanding client:load />
     <FloatingChat client:load appType="task-notch" />
 
-    <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication, WebSite, Organization) -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         JSON-LD SCHEMA — Google sitelinks + submenus (como Facebook)
+         Incluye: Organization, WebSite + SearchAction, SoftwareApp x3,
+                  ItemList de apps (Task Notch, Task Goblin, Floaty)
+         ═══════════════════════════════════════════════════════════════ -->
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@graph": [
+          /* ── 1. Organization ──────────────────────────────────────── */
+          {
+            "@type": "Organization",
+            "@id": `${SITE}/#organization`,
+            name: "TaskNotch",
+            alternateName: ["Task Notch", "TaskNotch App", "Task Goblin"],
+            url: SITE,
+            logo: {
+              "@type": "ImageObject",
+              "@id": `${SITE}/#logo`,
+              url: `${SITE}/icon/TaskNotch.png`,
+              width: 512,
+              height: 512,
+              caption: "TaskNotch",
+            },
+            sameAs: [
+              "https://apps.apple.com/app/tasknotch",
+            ],
+          },
+
+          /* ── 2. WebSite + SiteLinksSearchBox ─────────────────────── */
           {
             "@type": "WebSite",
-            "@id": "https://task-goblin.com/#website",
-            url: "https://task-goblin.com/",
+            "@id": `${SITE}/#website`,
+            url: `${SITE}/`,
             name: "TaskNotch",
+            alternateName: "Task Notch | Notch Mac App",
             description: description,
-            publisher: {
-              "@type": "Organization",
-              name: "TaskNotch",
-              logo: {
-                "@type": "ImageObject",
-                url: ogImage,
+            inLanguage: ["es-ES", "en-US"],
+            publisher: { "@id": `${SITE}/#organization` },
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: `${SITE}/?q={search_term_string}`,
               },
+              "query-input": "required name=search_term_string",
             },
           },
+
+          /* ── 3. WebPage principal ─────────────────────────────────── */
+          {
+            "@type": "WebPage",
+            "@id": `${SITE}/#webpage`,
+            url: `${SITE}/`,
+            name: title,
+            description: description,
+            inLanguage: ["es-ES", "en-US"],
+            isPartOf: { "@id": `${SITE}/#website` },
+            breadcrumb: {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "TaskNotch",
+                  item: `${SITE}/`,
+                },
+              ],
+            },
+          },
+
+          /* ── 4. SoftwareApplication — TaskNotch ───────────────────── */
           {
             "@type": "SoftwareApplication",
-            "@id": "https://task-goblin.com/#software",
+            "@id": `${SITE}/#software-tasknotch`,
             name: "TaskNotch",
+            alternateName: ["Task Notch", "Notch Mac", "TaskNotch App"],
+            applicationCategory: "UtilitiesApplication",
+            applicationSubCategory: "Productivity",
+            operatingSystem: "macOS 12.0+",
+            description: description,
+            url: `${SITE}/`,
+            image: `${SITE}/icon/TaskNotch.png`,
+            screenshot: `${SITE}/icon/TaskNotch.png`,
+            offers: {
+              "@type": "AggregateOffer",
+              lowPrice: "0",
+              highPrice: "149",
+              priceCurrency: "USD",
+              offerCount: 2,
+              offers: [
+                {
+                  "@type": "Offer",
+                  name: "Free",
+                  price: "0",
+                  priceCurrency: "USD",
+                  description: "Reproductor, Notas y Calendario gratuitos para siempre",
+                },
+                {
+                  "@type": "Offer",
+                  name: "Pro",
+                  price: "149",
+                  priceCurrency: "USD",
+                  description: "Pago único: IA, OCR, Traductor y todas las funciones Pro",
+                },
+              ],
+            },
+            featureList: [
+              "AI Magic Eraser — Borrador mágico IA",
+              "Screenshot to Text OCR",
+              "AI Screen Translator — Traductor de pantalla",
+              "Notch Media Player — Reproductor en el notch",
+              "Quick Notes en el notch",
+              "Calendar Widget",
+              "PDF Tools",
+              "Image to WebP converter",
+              "Answer questions on screen",
+            ],
+            author: { "@id": `${SITE}/#organization` },
+            publisher: { "@id": `${SITE}/#organization` },
+          },
+
+          /* ── 5. SoftwareApplication — Task Goblin ─────────────────── */
+          {
+            "@type": "SoftwareApplication",
+            "@id": `${SITE}/#software-taskgoblin`,
+            name: "Task Goblin",
+            applicationCategory: "UtilitiesApplication",
+            operatingSystem: "macOS, Windows",
+            description: "Task Goblin automatiza tu día a día: auto clicker, WhatsApp programado, OCR, PDF a Word, extractor de colores y más.",
+            url: `${SITE}/task-goblin-app`,
+            image: `${SITE}/icon/TaskGoblin.png`,
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            author: { "@id": `${SITE}/#organization` },
+          },
+
+          /* ── 6. SoftwareApplication — Floaty ─────────────────────── */
+          {
+            "@type": "SoftwareApplication",
+            "@id": `${SITE}/#software-floaty`,
+            name: "Floaty",
             applicationCategory: "UtilitiesApplication",
             operatingSystem: "macOS",
-            description: description,
-            image: ogImage,
+            description: "Floaty es tu compañero virtual de escritorio con animaciones fluidas para Mac.",
+            url: `${SITE}/floaty-app`,
+            image: `${SITE}/icon/floaty.png`,
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            featureList: [
-              "AI Magic Eraser",
-              "Screenshot to Text OCR",
-              "AI Screen Translation",
-              "Local PDF Tools",
-              "Quick settings",
+            author: { "@id": `${SITE}/#organization` },
+          },
+
+          /* ── 7. ItemList — sitelinks Google (como Facebook submenus) ─ */
+          {
+            "@type": "ItemList",
+            "@id": `${SITE}/#app-list`,
+            name: "Aplicaciones de TaskNotch",
+            description: "Suite de apps de productividad para Mac: TaskNotch, Task Goblin y Floaty.",
+            numberOfItems: 3,
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "TaskNotch — Notch Interactivo para Mac",
+                description: "Transforma el notch de tu Mac en un centro de productividad con IA, OCR y más.",
+                url: `${SITE}/`,
+                image: `${SITE}/icon/TaskNotch.png`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Task Goblin — Automatización para Mac y Windows",
+                description: "Auto clicker, WhatsApp programado, PDF a Word, extractor de colores y más herramientas.",
+                url: `${SITE}/task-goblin-app`,
+                image: `${SITE}/icon/TaskGoblin.png`,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: "Floaty — Compañero Virtual de Escritorio",
+                description: "Tu mascota virtual ligera para Mac con animaciones fluidas.",
+                url: `${SITE}/floaty-app`,
+                image: `${SITE}/icon/floaty.png`,
+              },
             ],
           },
         ],

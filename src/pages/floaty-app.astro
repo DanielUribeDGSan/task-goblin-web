@@ -5,10 +5,11 @@ import { FloatingChat } from "../components/FloatingChat";
 import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
-const title = "Floaty — Tu compañero virtual";
-const description = "Floaty es un compañero virtual ligero para tu escritorio. Mantente entretenido mientras trabajas con animaciones fluidas y una experiencia impecable.";
-const ogImage = `/icon/floaty.png`;
+const title = "Floaty — Compañero Virtual para Mac | Mascota Escritorio macOS";
+const description = "Floaty es tu compañero virtual para Mac: una mascota de escritorio con animaciones fluidas que te acompaña mientras trabajas. Ligera, personalizable y gratis.";
+const ogImage = `${Astro.site || 'https://task-goblin.com'}/icon/floaty.png`;
 const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321').toString();
+const SITE = "https://task-goblin.com";
 ---
 
 <html lang="es">
@@ -20,7 +21,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="Floaty, Task Goblin, compañero virtual, mascota virtual, escritorio, animaciones, widget" />
+    <meta name="keywords" content="floaty, floaty mac, mascota virtual mac, compañero virtual escritorio, desktop pet mac, widget mac, animaciones mac, floaty app, Task Goblin, productividad mac" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href={canonical} />
 
     <!-- Open Graph / Facebook -->
@@ -29,7 +31,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:site_name" content="Task Goblin - Floaty" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Floaty - Compañero Virtual para Mac" />
+    <meta property="og:site_name" content="TaskNotch — Floaty" />
     <meta property="og:locale" content="es_ES" />
 
     <!-- Twitter -->
@@ -51,20 +56,46 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'http://localhost:43
     <Dashboard client:load appType="floaty" />
     <FloatingChat client:load appType="floaty" />
 
-    <!-- JSON-LD -->
+    <!-- JSON-LD: Floaty — schema completo con breadcrumb -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebPage",
+          "@id": `${SITE}/floaty-app#webpage`,
+          url: `${SITE}/floaty-app`,
+          name: title,
+          description: description,
+          inLanguage: ["es-ES", "en-US"],
+          isPartOf: { "@id": `${SITE}/#website` },
+          breadcrumb: {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "TaskNotch", item: `${SITE}/` },
+              { "@type": "ListItem", position: 2, name: "Floaty", item: `${SITE}/floaty-app` },
+            ],
+          },
+        },
+        {
           "@type": "SoftwareApplication",
-          "@id": "https://task-goblin.com/floaty-app/#software",
-          "name": "Floaty",
-          "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "macOS, Windows",
-          "description": description,
-          "image": "https://task-goblin.com/icon/floaty.png",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-        }
+          "@id": `${SITE}/#software-floaty`,
+          name: "Floaty",
+          alternateName: "Floaty Mac",
+          applicationCategory: "UtilitiesApplication",
+          applicationSubCategory: "Entertainment",
+          operatingSystem: "macOS",
+          description: description,
+          url: `${SITE}/floaty-app`,
+          image: `${SITE}/icon/floaty.png`,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          featureList: [
+            "Mascota virtual de escritorio",
+            "Animaciones fluidas",
+            "Ligera y sin consumo de recursos",
+            "Personalizable",
+          ],
+          author: { "@type": "Organization", name: "TaskNotch", url: SITE },
+        },
       ]
     })} />
   </body>

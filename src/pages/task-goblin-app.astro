@@ -5,11 +5,12 @@ import { FloatingChat } from "../components/FloatingChat";
 import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
-const title = "Task Goblin — Automatiza tareas en Mac y Windows";
+const title = "Task Goblin — Automatización para Mac y Windows | Herramientas Productividad";
 const description =
-  "Task Goblin es la app que automatiza tu día a día en Mac y Windows: mover el ratón (auto clicker), programar mensajes de WhatsApp, Screenshot to Text (OCR), apagado programado, cerrar todas las apps, convertir PDF a Word, extraer colores, y más. Descárgala ahora.";
+  "Task Goblin automatiza tu día: auto clicker, programar WhatsApp, Screenshot to Text (OCR), apagado programado, cerrar apps, PDF a Word, extractor de colores y más. Descarga gratis Task Goblin para Mac y Windows.";
 const ogImage = `${Astro.site}/icon/TaskGoblin.png`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const SITE = "https://task-goblin.com";
 ---
 
 <html lang="es">
@@ -24,8 +25,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Task Goblin, Nexo, automatización, Mac, Windows, app, mover ratón, WhatsApp programado, PDF a Word, extractor de colores, screenshot to text, utilidades, herramientas, auto clicker"
+      content="task goblin, task goblin app, automatización mac, auto clicker mac, whatsapp programado mac, screenshot to text mac, PDF a Word mac, extractor colores, herramientas mac, utilidades mac, windows automatización, Task Goblin Windows, productividad mac"
     />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href={canonical} />
 
     <!-- Open Graph / Facebook -->
@@ -34,6 +36,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Task Goblin - Automatización para Mac y Windows" />
     <meta property="og:site_name" content="Task Goblin" />
     <meta property="og:locale" content="es_ES" />
 
@@ -59,45 +64,49 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <Dashboard client:load appType="task-goblin" />
     <FloatingChat client:load appType="task-goblin" />
 
-    <!-- JSON-LD: ayuda a Google a mostrar la app en resultados (SoftwareApplication, WebSite, Organization) -->
+    <!-- JSON-LD: Task Goblin — schema completo con breadcrumb y cross-links -->
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "WebSite",
-            "@id": "https://task-goblin.com/#website",
-            url: "https://task-goblin.com/",
-            name: "Task Goblin",
+            "@type": "WebPage",
+            "@id": `${SITE}/task-goblin-app#webpage`,
+            url: `${SITE}/task-goblin-app`,
+            name: title,
             description: description,
-            publisher: {
-              "@type": "Organization",
-              name: "Task Goblin",
-              logo: {
-                "@type": "ImageObject",
-                url: ogImage,
-              },
+            inLanguage: ["es-ES", "en-US"],
+            isPartOf: { "@id": `${SITE}/#website` },
+            breadcrumb: {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "TaskNotch", item: `${SITE}/` },
+                { "@type": "ListItem", position: 2, name: "Task Goblin", item: `${SITE}/task-goblin-app` },
+              ],
             },
           },
           {
             "@type": "SoftwareApplication",
-            "@id": "https://task-goblin.com/#software",
+            "@id": `${SITE}/#software-taskgoblin`,
             name: "Task Goblin",
+            alternateName: "TaskGoblin",
             applicationCategory: "UtilitiesApplication",
             operatingSystem: "macOS, Windows",
             description: description,
-            image: ogImage,
+            url: `${SITE}/task-goblin-app`,
+            image: `${SITE}/icon/TaskGoblin.png`,
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             featureList: [
-              "Auto mouse mover",
-              "WhatsApp scheduler",
+              "Auto mouse mover — auto clicker",
+              "WhatsApp scheduler — programar mensajes",
               "Screenshot to Text OCR",
-              "Schedule shutdown",
+              "Schedule shutdown — apagado programado",
               "Close all apps",
-              "PDF to Word",
+              "PDF to Word converter",
               "Color extractor",
             ],
+            author: { "@type": "Organization", name: "TaskNotch", url: SITE },
           },
         ],
       })}
