@@ -329,10 +329,16 @@ const TaskNotchLandingContent = () => {
           50% { opacity: 0.9; transform: scale(1.05); }
         }
       `}} />
-      {/* Background ambient glows wrapped to prevent overflow scroll height */}
+      {/* Background ambient glows wrapped to prevent overflow scroll height (optimized for performance) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#3b82f6]/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#8b5cf6]/10 rounded-full blur-[120px]" />
+        <div 
+          className="absolute top-[-20%] left-[-20%] w-[70%] h-[70%] rounded-full" 
+          style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0) 70%)' }} 
+        />
+        <div 
+          className="absolute bottom-[-20%] right-[-20%] w-[70%] h-[70%] rounded-full" 
+          style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(139,92,246,0) 70%)' }} 
+        />
       </div>
 
       {/* Main Container simulating an expanded macOS notch card */}
