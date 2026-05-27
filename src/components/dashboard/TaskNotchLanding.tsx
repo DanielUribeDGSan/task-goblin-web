@@ -786,7 +786,7 @@ const TaskNotchLandingContent = () => {
                     <div className="flex items-center gap-1.5">
                       <CheckCircle size={12} className="text-[#3b82f6] shrink-0" />
                       <span className="text-[10px] font-bold uppercase tracking-wider">
-                        {isEn ? "Get answers to your online exams" : "Obtén respuestas a tus exámenes en línea"}
+                        {isEn ? "Image converter & video reduction" : "Convertidor de imágenes y reducción de videos"}
                       </span>
                     </div>
                   </div>
@@ -828,17 +828,26 @@ const TaskNotchLandingContent = () => {
                     </div>
 
                     {/* Divider */}
-                    <div className="w-full max-w-[320px] h-px bg-white/[0.06] my-1" />
+                    <div className="w-full max-w-[320px] h-px bg-white/[0.06] my-2" />
+
+                    {/* Legend */}
+                    <div className="text-center mb-1">
+                      <span className="text-[10px] sm:text-[11px] font-bold text-[#3b82f6] uppercase tracking-wider">
+                        {isEn ? "Get 1 free week of pro features when downloading" : "Al descargar obtienes 1 semana gratis de funciones pro"}
+                      </span>
+                    </div>
 
                     {/* Price */}
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-2xl font-black text-white/30 line-through">
-                        {isEn ? "$12 USD" : "$199 MXN"}
-                      </span>
-                      <span className="text-4xl font-black text-white">
-                        {isEn ? "$8 USD" : "$149 MXN"}
-                      </span>
-                      <span className="text-xs font-bold text-white/40 uppercase tracking-wider self-end pb-1">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-1 sm:gap-3">
+                      <div className="flex items-baseline gap-2 sm:gap-3">
+                        <span className="text-lg sm:text-2xl font-black text-white/30 line-through">
+                          {isEn ? "$12 USD" : "$199 MXN"}
+                        </span>
+                        <span className="text-3xl sm:text-4xl font-black text-white">
+                          {isEn ? "$8 USD" : "$149 MXN"}
+                        </span>
+                      </div>
+                      <span className="text-[9px] sm:text-xs font-bold text-white/40 uppercase tracking-wider sm:self-end sm:pb-1">
                         {isEn ? "one-time · Pro features" : "pago único · funciones Pro"}
                       </span>
                     </div>
