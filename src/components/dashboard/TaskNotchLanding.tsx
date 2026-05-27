@@ -826,8 +826,12 @@ const TaskNotchLandingContent = () => {
 
                     {/* Price */}
                     <div className="flex items-baseline gap-3">
-                      <span className="text-2xl font-black text-white/30 line-through">$199</span>
-                      <span className="text-4xl font-black text-white">$149</span>
+                      <span className="text-2xl font-black text-white/30 line-through">
+                        {isEn ? "$12 USD" : "$199 MXN"}
+                      </span>
+                      <span className="text-4xl font-black text-white">
+                        {isEn ? "$8 USD" : "$149 MXN"}
+                      </span>
                       <span className="text-xs font-bold text-white/40 uppercase tracking-wider self-end pb-1">
                         {isEn ? "one-time · Pro features" : "pago único · funciones Pro"}
                       </span>
