@@ -66,6 +66,7 @@ const SITE = "https://task-goblin.com";
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="preload" as="video" href="/task-notch/home.mp4" type="video/mp4" />
     <ClientRouter />
   </head>
   <body class="antialiased font-sans bg-[#202020]">
@@ -93,7 +94,7 @@ const SITE = "https://task-goblin.com";
       </main>
     </noscript>
     <TaskNotchLanding client:load />
-    <FloatingChat client:load appType="task-notch" />
+    <FloatingChat client:idle appType="task-notch" />
 
     <!-- ═══════════════════════════════════════════════════════════════
          JSON-LD SCHEMA — Google sitelinks + submenus (como Facebook)

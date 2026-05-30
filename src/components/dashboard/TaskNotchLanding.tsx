@@ -664,9 +664,8 @@ const TaskNotchLandingContent = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 1.02 }}
                       transition={{ duration: 0.4 }}
-                      className={`w-full relative bg-transparent overflow-hidden rounded-[24px] shadow-2xl border border-white/[0.06] ${
-                        isVideoLoading ? "min-h-[220px] sm:min-h-[320px]" : "h-auto"
-                      }`}
+                      className="w-full relative bg-[#0c0d0f] overflow-hidden rounded-[24px] shadow-2xl border border-white/[0.06]"
+                      style={{ aspectRatio: "16/10" }}
                     >
                       <video
                         ref={videoRef}
@@ -677,7 +676,7 @@ const TaskNotchLandingContent = () => {
                         muted={isMuted}
                         playsInline
                         onLoadedData={() => setIsVideoLoading(false)}
-                        className="w-full h-auto block bg-transparent"
+                        className="absolute inset-0 w-full h-full object-contain block bg-transparent"
                       />
 
                       {isVideoLoading && (
