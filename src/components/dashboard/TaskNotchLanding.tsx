@@ -48,6 +48,7 @@ interface NotchOption {
   icon: React.ComponentType<any>;
   descEs: string;
   descEn: string;
+  aspectRatio?: string;
   badgeEs?: string;
   badgeEn?: string;
 }
@@ -61,6 +62,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Pin,
     descEs: "Un espacio flotante siempre a mano en tu notch para resolver preguntas, capturar texto de la pantalla, convertir imágenes, subir archivos, traducir texto con capturas de pantalla, reducir el peso de videos, ver películas, y obtener colores y paletas de imágenes.",
     descEn: "A floating space always at hand in your notch to solve questions, capture text from the screen, convert images, upload files, translate text with screenshots, reduce video sizes, watch movies, and extract colors and palettes from images.",
+    aspectRatio: "1340/160",
   },
   {
     id: "tray",
@@ -70,6 +72,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Briefcase,
     descEs: "Una bandeja temporal para arrastrar, soltar e intercambiar archivos entre tus aplicaciones al instante.",
     descEn: "A temporary tray to drag, drop, and exchange files between your applications instantly.",
+    aspectRatio: "1330/856",
   },
   {
     id: "capturar-texto",
@@ -79,6 +82,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: ScanText,
     descEs: "Extrae y copia texto de cualquier imagen, PDF o video en tu pantalla con un solo click.",
     descEn: "Extract and copy text from any image, PDF, or video on your screen with a single click.",
+    aspectRatio: "1912/1006",
   },
   {
     id: "responder-preguntas",
@@ -88,6 +92,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Brain,
     descEs: "Captura una pregunta o examen de tu pantalla y deja que la IA te dé la respuesta y explicación en segundos.",
     descEn: "Capture a question or exam from your screen and let AI give you the answer and explanation in seconds.",
+    aspectRatio: "1912/1006",
   },
   {
     id: "traducir-texto",
@@ -97,6 +102,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Languages,
     descEs: "Traduce cualquier fragmento de texto o imagen en tu pantalla a cualquier idioma de forma inmediata.",
     descEn: "Translate any snippet of text or image on your screen to any language immediately.",
+    aspectRatio: "1912/1006",
   },
   {
     id: "reducir-tamano",
@@ -106,6 +112,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Video,
     descEs: "Comprime, optimiza y procesa tus videos de alta resolución de manera ultra rápida.",
     descEn: "Compress, optimize, and process your high-resolution videos ultra fast.",
+    aspectRatio: "1916/998",
   },
   {
     id: "apagar",
@@ -115,6 +122,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Power,
     descEs: "Programa el apagado, reinicio o suspensión de tu Mac de forma inteligente y automatizada.",
     descEn: "Schedule your Mac's shutdown, restart, or sleep intelligently and automatically.",
+    aspectRatio: "1360/508",
   },
   {
     id: "pdf-ia",
@@ -124,6 +132,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: FileText,
     descEs: "Visualiza, edita, firma y resume tus archivos PDF localmente con potentes herramientas de inteligencia artificial.",
     descEn: "View, edit, sign, and summarize your PDF files locally with powerful artificial intelligence tools.",
+    aspectRatio: "1916/998",
   },
   {
     id: "color",
@@ -133,6 +142,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Pipette,
     descEs: "Extrae cualquier color de tu pantalla en múltiples formatos (HEX, RGB) con una lupa de alta precisión.",
     descEn: "Extract any color from your screen in multiple formats (HEX, RGB) with a high-precision magnifying glass.",
+    aspectRatio: "1916/998",
   },
   {
     id: "borrador-magico",
@@ -142,6 +152,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Eraser,
     descEs: "Elimina elementos, personas o imperfecciones no deseadas de tus fotos en segundos usando IA.",
     descEn: "Remove unwanted elements, people, or imperfections from your photos in seconds using AI.",
+    aspectRatio: "1916/998",
   },
   {
     id: "convertidor",
@@ -151,6 +162,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: RefreshCw,
     descEs: "Convierte imágenes a WebP, comprime archivos y optimiza formatos en segundos directamente desde tu barra.",
     descEn: "Convert images to WebP, compress files, and optimize formats in seconds directly from your bar.",
+    aspectRatio: "1916/998",
   },
   {
     id: "comandos",
@@ -160,6 +172,7 @@ const NOTCH_OPTIONS: NotchOption[] = [
     icon: Terminal,
     descEs: "Accede a una potente terminal integrada en tu notch para ejecutar comandos de forma inmediata.",
     descEn: "Access a powerful terminal integrated into your notch to execute commands immediately.",
+    aspectRatio: "1360/438",
   },
 ];
 
@@ -170,7 +183,7 @@ const TaskNotchLandingContent = () => {
   const [activeOption, setActiveOption] = useState<NotchOption>(NOTCH_OPTIONS[0]);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -231,12 +244,9 @@ const TaskNotchLandingContent = () => {
   const menuScrollRef = useRef<HTMLDivElement>(null);
   const menuScrollRefMobile = useRef<HTMLDivElement>(null);
 
-  // Elegant mounting morph expansion
+  // Elegant mounting morph expansion removed for SEO/Performance (LCP/CLS)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsExpanded(true);
-    }, 1200);
-    return () => clearTimeout(timer);
+    // Notch starts expanded to prevent layout shift and delayed LCP
   }, []);
 
   // Sync video play/pause on src change
@@ -664,8 +674,8 @@ const TaskNotchLandingContent = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 1.02 }}
                       transition={{ duration: 0.4 }}
-                      className="w-full relative bg-[#0c0d0f] overflow-hidden rounded-[24px] shadow-2xl border border-white/[0.06]"
-                      style={{ aspectRatio: "16/10" }}
+                      className="w-full relative bg-transparent overflow-hidden rounded-[24px] shadow-2xl border border-white/[0.06] transition-all duration-300"
+                      style={{ aspectRatio: activeOption.aspectRatio || "16/10" }}
                     >
                       <video
                         ref={videoRef}
@@ -676,7 +686,7 @@ const TaskNotchLandingContent = () => {
                         muted={isMuted}
                         playsInline
                         onLoadedData={() => setIsVideoLoading(false)}
-                        className="absolute inset-0 w-full h-full object-contain block bg-transparent"
+                        className="w-full h-full object-cover block bg-transparent"
                       />
 
                       {isVideoLoading && (
