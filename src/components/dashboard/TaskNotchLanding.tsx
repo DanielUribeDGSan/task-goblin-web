@@ -188,7 +188,7 @@ const TaskNotchLandingContent = () => {
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
-  const [pendingDownloadPlatform, setPendingDownloadPlatform] = useState<DownloadPlatform>("mac-silicon");
+  const pendingDownloadPlatform: DownloadPlatform = "mac-silicon";
 
   const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
   const downloadButtonRef = useRef<HTMLButtonElement>(null);

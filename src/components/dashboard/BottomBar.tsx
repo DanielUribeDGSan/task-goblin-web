@@ -37,7 +37,6 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   // Download modal state
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
-  const [pendingDownload, setPendingDownload] = useState<{ index: number; platform: DownloadPlatform } | null>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = () => {
@@ -84,9 +83,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   };
 
   const handleDownloadConfirm = () => {
-    if (pendingDownload !== null) triggerSecureDownload(pendingDownload.index, appType);
     setDownloadModalOpen(false);
-    setPendingDownload(null);
   };
 
   useEffect(() => {
@@ -383,7 +380,7 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
 
       <DownloadModal
         isOpen={downloadModalOpen}
-        platform={pendingDownload?.platform || "windows"}
+        platform={"windows"}
         appType={appType}
         onClose={() => setDownloadModalOpen(false)}
         onConfirm={handleDownloadConfirm}

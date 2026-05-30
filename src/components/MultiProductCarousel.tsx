@@ -8,7 +8,6 @@ import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
 import { LayoutProvider } from "../contexts/LayoutContext";
 import { VideoLoader } from "./VideoLoader";
 import { Sparkles } from "lucide-react";
-import { PaymentModal } from "./PaymentModal";
 
 const APPS = Object.entries(APP_CONFIGS).map(([id, config]) => ({
   id,
@@ -30,7 +29,6 @@ const CarouselContent = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeApp = APPS[activeIndex] as any;
@@ -98,11 +96,6 @@ const CarouselContent = () => {
         </motion.a>
       </div>
 
-      <PaymentModal 
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        appType={activeApp.id}
-      />
       {/* Language Switcher */}
       <div className="absolute top-2 left-1/2 -translate-x-1/2 sm:left-auto sm:right-8 sm:top-8 z-[100] flex items-center gap-2">
         <Languages size={18} className="text-white/40" />
