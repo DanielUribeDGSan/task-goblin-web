@@ -183,7 +183,6 @@ const TaskNotchLandingContent = () => {
   const [activeOption, setActiveOption] = useState<NotchOption>(NOTCH_OPTIONS[0]);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isExpanded, setIsExpanded] = useState(true);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -352,46 +351,11 @@ const TaskNotchLandingContent = () => {
       </div>
 
       {/* Main Container simulating an expanded macOS notch card */}
-      <motion.div
-        initial={{ width: 320, height: 48, borderRadius: 24, marginTop: 40 }}
-        animate={
-          isExpanded
-            ? { width: "100%", height: "auto", borderRadius: "44px 44px 40px 40px", marginTop: 0 }
-            : { width: 320, height: 48, borderRadius: 24, marginTop: 40 }
-        }
-        transition={{ type: "spring", stiffness: 70, damping: 15 }}
-        className="w-full max-w-[1550px] bg-[#000000] border-b border-x border-white/[0.08] flex flex-col relative shadow-[0_24px_70px_rgba(0,0,0,0.9)] overflow-hidden z-20"
+      <div
+        className="w-full max-w-[1550px] bg-[#000000] border-b border-x border-white/[0.08] flex flex-col relative shadow-[0_24px_70px_rgba(0,0,0,0.9)] overflow-hidden z-20 rounded-t-[44px] rounded-b-[40px] mt-0"
       >
-        <AnimatePresence>
-          {!isExpanded ? (
-            /* COMPACT CLOSED CAMERA NOTCH */
-            <motion.div
-              key="closed-notch"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-between px-6 bg-black rounded-full cursor-pointer"
-              onClick={() => setIsExpanded(true)}
-            >
-              <div className="flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#1e2025] flex items-center justify-center relative">
-                  <div className="w-1 h-1 rounded-full bg-[#3b82f6]/60" />
-                </div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#05c46b] shadow-[0_0_8px_#05c46b] pulse-webcam" />
-              </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50 pl-2">
-                TASKNOTCH
-              </span>
-              <div className="w-6 h-1 bg-white/20 rounded-full" />
-            </motion.div>
-          ) : (
-            /* FULLY EXPANDED DYNAMIC NOTCH ISLAND PREVIEW */
-            <motion.div
-              key="expanded-notch"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.3 } }}
-              className="flex flex-col w-full"
-            >
+        {/* FULLY EXPANDED DYNAMIC NOTCH ISLAND PREVIEW */}
+        <div className="flex flex-col w-full">
               {/* ── TOP BAR WITH REVERSE-NOTCH TABS ─────────────────────────────────── */}
               <div className="relative w-full h-[80px] flex items-center justify-between shrink-0 z-30 border-b border-white/[0.04]">
                 
@@ -926,10 +890,8 @@ const TaskNotchLandingContent = () => {
                   <span>macOS • {isEn ? "Universal App" : "Aplicación Universal"}</span>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Footer copyright */}
       <div className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mt-6 mb-6 select-none z-10">
