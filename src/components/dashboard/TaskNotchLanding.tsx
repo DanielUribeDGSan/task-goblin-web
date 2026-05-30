@@ -184,6 +184,7 @@ const TaskNotchLandingContent = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
@@ -243,9 +244,12 @@ const TaskNotchLandingContent = () => {
   const menuScrollRef = useRef<HTMLDivElement>(null);
   const menuScrollRefMobile = useRef<HTMLDivElement>(null);
 
-  // Elegant mounting morph expansion removed for SEO/Performance (LCP/CLS)
+  // Zero-CLS entrance animation trigger
   useEffect(() => {
-    // Notch starts expanded to prevent layout shift and delayed LCP
+    const timer = setTimeout(() => {
+      setHasAnimated(true);
+    }, 400); // Shorter delay for snappier feel
+    return () => clearTimeout(timer);
   }, []);
 
   // Sync video play/pause on src change
@@ -350,12 +354,51 @@ const TaskNotchLandingContent = () => {
         />
       </div>
 
-      {/* Main Container simulating an expanded macOS notch card */}
-      <div
-        className="w-full max-w-[1550px] bg-[#000000] border-b border-x border-white/[0.08] flex flex-col relative shadow-[0_24px_70px_rgba(0,0,0,0.9)] overflow-hidden z-20 rounded-t-[44px] rounded-b-[40px] mt-0"
+      {/* Main Container simulating an expanded macOS notch card, zero-CLS animation via clip-path */}
+      <motion.div
+        initial={
+          hasAnimated 
+            ? false 
+            : { clipPath: "inset(40px calc(50% - 160px) calc(100% - 88px) calc(50% - 160px) round 24px)", backgroundColor: "#000000" }
+        }
+        animate={{ 
+          clipPath: "inset(0px 0px 0px 0px round 40px)",
+          backgroundColor: "#000000"
+        }}
+        transition={{ type: "spring", stiffness: 75, damping: 18, delay: hasAnimated ? 0 : 0.4 }}
+        className="w-full max-w-[1550px] border-b border-x border-white/[0.08] flex flex-col relative shadow-[0_24px_70px_rgba(0,0,0,0.9)] overflow-hidden z-20 mt-0"
       >
+        <AnimatePresence>
+          {!hasAnimated && (
+            <motion.div
+              key="closed-notch"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-[40px] left-[50%] -translate-x-[50%] w-[320px] h-[48px] flex items-center justify-between px-6 bg-black z-50 rounded-full"
+            >
+              <div className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#1e2025] flex items-center justify-center relative">
+                  <div className="w-1 h-1 rounded-full bg-[#3b82f6]/60" />
+                </div>
+                <div className="w-1.5 h-1.5 rounded-full bg-[#05c46b] shadow-[0_0_8px_#05c46b] pulse-webcam" />
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50 pl-2">
+                TASKNOTCH
+              </span>
+              <div className="w-6 h-1 bg-white/20 rounded-full" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* FULLY EXPANDED DYNAMIC NOTCH ISLAND PREVIEW */}
-        <div className="flex flex-col w-full">
+        <motion.div 
+          initial={hasAnimated ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: hasAnimated ? 0 : 0.5 }}
+          className="flex flex-col w-full bg-[#000000] rounded-t-[44px] rounded-b-[40px]"
+        >
               {/* ── TOP BAR WITH REVERSE-NOTCH TABS ─────────────────────────────────── */}
               <div className="relative w-full h-[80px] flex items-center justify-between shrink-0 z-30 border-b border-white/[0.04]">
                 
@@ -890,8 +933,8 @@ const TaskNotchLandingContent = () => {
                   <span>macOS • {isEn ? "Universal App" : "Aplicación Universal"}</span>
                 </div>
               </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Footer copyright */}
       <div className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mt-6 mb-6 select-none z-10">
