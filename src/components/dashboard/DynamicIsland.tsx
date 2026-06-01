@@ -12,7 +12,7 @@ interface DynamicIslandProps {
 }
 
 export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { isMobile } = useLayout();
   const [isExpanded, setIsExpanded] = useState(false);
   const activeConfig = APP_CONFIGS[activeAppId];
@@ -21,7 +21,7 @@ export const DynamicIsland = ({ activeAppId }: DynamicIslandProps) => {
   const inactiveAppIds = appIds.filter(id => id !== activeAppId);
 
   const activeName = activeAppId === "task-goblin" ? t.appName : activeAppId === "nexo" ? t.nexoAppName : activeAppId === "task-notch" ? "TaskNotch" : t.floatyAppName;
-  const rawDesc = activeAppId === "task-goblin" ? t.modalInfo.subtitle : activeAppId === "nexo" ? t.nexoIntro.split('.')[0] : activeAppId === "task-notch" ? "Tu Mac, ahora con superpoderes." : t.floatyIntro.split('.')[0];
+  const rawDesc = activeAppId === "task-goblin" ? t.modalInfo.subtitle : activeAppId === "nexo" ? t.nexoIntro.split('.')[0] : activeAppId === "task-notch" ? (lang === "en" ? "Your Mac, now with superpowers." : "Tu Mac, ahora con superpoderes.") : t.floatyIntro.split('.')[0];
   
   // Truncate description to 50 chars
   const activeDesc = rawDesc.length > 50 ? `${rawDesc.substring(0, 47)}...` : rawDesc;

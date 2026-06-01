@@ -742,9 +742,9 @@ const TaskNotchLandingContent = () => {
 
                   {/* High-impact Bold Headline */}
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.1] tracking-tight">
-                    Tu Mac, <br />
+                    {isEn ? "Your Mac," : "Tu Mac,"} <br />
                     <span className="bg-gradient-to-r from-[#3b82f6] via-[#8b5cf6] to-[#ec4899] bg-clip-text text-transparent">
-                      Ahora con Superpoderes.
+                      {isEn ? "Now with Superpowers." : "Ahora con Superpoderes."}
                     </span>
                   </h1>
 
