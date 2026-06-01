@@ -34,6 +34,18 @@ export const POST: APIRoute = async ({ request }) => {
 
         if (paymentId) {
             query = query.eq('payment_id', paymentId);
+            
+            // If an email was also provided, update the license to associate it with this email
+            if (email) {
+                const { error: updateError } = await supabase
+                    .from('licenses')
+                    .update({ email: email })
+                    .eq('payment_id', paymentId);
+                
+                if (updateError) {
+                    console.error("Failed to update email for license:", updateError);
+                }
+            }
         } else {
             query = query.eq('email', email);
         }
