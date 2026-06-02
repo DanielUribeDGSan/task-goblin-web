@@ -33,7 +33,9 @@ export const BottomBar = ({ appType = "task-goblin" }: { appType?: "task-goblin"
   const macButtonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownRect, setDropdownRect] = useState<{ top: number; left: number } | null>(null);
-  const showUsd = lang === "en";
+  const isMexicoLocation = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
+  const useMxn = lang === "es" && isMexicoLocation;
+  const showUsd = !useMxn;
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   // Download modal state
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);

@@ -179,6 +179,8 @@ const NOTCH_OPTIONS: NotchOption[] = [
 const TaskNotchLandingContent = () => {
   const { lang, setLang, t } = useLanguage();
   const isEn = lang === "en";
+  const isMexicoLocation = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
+  const useMxn = lang === "es" && isMexicoLocation;
 
   const [activeOption, setActiveOption] = useState<NotchOption>(NOTCH_OPTIONS[0]);
   const [isMuted, setIsMuted] = useState(true);
@@ -841,6 +843,24 @@ const TaskNotchLandingContent = () => {
                           {isEn ? "Calendar — Free" : "Calendario — Gratis"}
                         </span>
                       </div>
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle size={11} className="text-[#05c46b] shrink-0" />
+                        <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
+                          {isEn ? "Color — Free" : "Color — Gratis"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle size={11} className="text-[#05c46b] shrink-0" />
+                        <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
+                          {isEn ? "PDF AI — Free" : "PDF IA — Gratis"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle size={11} className="text-[#05c46b] shrink-0" />
+                        <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
+                          {isEn ? "Shutdown — Free" : "Apagar — Gratis"}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Divider */}
@@ -857,10 +877,10 @@ const TaskNotchLandingContent = () => {
                     <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-1 sm:gap-3">
                       <div className="flex items-baseline gap-2 sm:gap-3">
                         <span className="text-lg sm:text-2xl font-black text-white/30 line-through">
-                          {isEn ? "$12 USD" : "$199 MXN"}
+                          {useMxn ? "$199 MXN" : "$12 USD"}
                         </span>
                         <span className="text-3xl sm:text-4xl font-black text-white">
-                          {isEn ? "$8 USD" : "$149 MXN"}
+                          {useMxn ? "$149 MXN" : "$8 USD"}
                         </span>
                       </div>
                       <span className="text-[9px] sm:text-xs font-bold text-white/40 uppercase tracking-wider sm:self-end sm:pb-1">

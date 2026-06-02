@@ -13,7 +13,7 @@ interface PaymentModalProps {
 }
 
 export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "task-goblin", onClose }) => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
     const { isMobile } = useLayout();
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
@@ -32,8 +32,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
         };
     }, [step]);
     
-    // Simple Mexico detection based on Timezone
-    const isMexico = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
+    // Mexico pricing: only if location is Mexico AND language is Spanish.
+    // If language is English, or location is not Mexico, use USD pricing (and only PayPal).
+    const isMexicoLocation = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
+    const useMxn = lang === "es" && isMexicoLocation;
 
     const isNexo = appType === "nexo";
     const isFloaty = appType === "floaty";
@@ -82,7 +84,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                 },
                 body: JSON.stringify({
                     appType: appType,
-                    isMexico: isMexico
+                    isMexico: useMxn
                 })
             });
 
@@ -159,10 +161,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                         <div className="flex flex-col items-center gap-3 pt-2">
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sh-text-muted line-through text-sm opacity-50">
-                                                    {isMexico ? `$${prices.originalMxn} MXN` : `$${prices.originalUsd} USD`}
+                                                    {useMxn ? `$${prices.originalMxn} MXN` : `$${prices.originalUsd} USD`}
                                                 </span>
                                                 <span className="text-white font-bold text-xl">
-                                                    {isMexico ? `$${prices.mxn} MXN` : `$${prices.usd} USD`}
+                                                    {useMxn ? `$${prices.mxn} MXN` : `$${prices.usd} USD`}
                                                 </span>
                                             </div>
                                             <div className="h-px w-6 rounded-full" style={{ backgroundColor: 'var(--sh-accent)', opacity: 0.3 }} />
@@ -185,7 +187,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                             {t.paymentModal.selectPaymentMethod}
                                         </p>
                                         
-                                        {isMexico && (
+                                        {useMxn && (
                                             <button
                                                 onClick={() => handleCheckout("mercadopago")}
                                                 className="w-full flex items-center justify-between bg-[#009EE3] hover:bg-[#0086c3] text-white font-bold rounded-2xl py-4 px-6 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer group"
@@ -205,7 +207,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
                                             <div className="flex flex-col items-start text-left">
                                                 <span className="text-sm font-medium">{t.paymentModal.paypalButton}</span>
                                                 <span className="text-[10px] uppercase tracking-tighter opacity-60">
-                                                    PayPal {isMexico 
+                                                    PayPal {useMxn 
                                                         ? `${prices.mxn} MXN` 
                                                         : `${prices.usd} USD`}
                                                 </span>

@@ -29,7 +29,8 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
     const actionButtonRef = useRef<HTMLButtonElement>(null);
     const [step, setStep] = useState<"email" | "processing" | "success" | "error">("email");
     const [errorMessage, setErrorMessage] = useState("");
-    const [isMexico, setIsMexico] = useState(false);
+    const isMexicoLocation = typeof Intl !== 'undefined' && Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Mexico");
+    const useMxn = lang === "es" && isMexicoLocation;
 
     // Auto-reset state if it stays processing for more than 5 seconds
     // This handles the case where the user returns from the payment gateway without completing it.
@@ -63,7 +64,7 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
                 },
                 body: JSON.stringify({
                     appType: appType,
-                    isMexico: isMexico
+                    isMexico: useMxn
                 })
             });
 
@@ -117,7 +118,7 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
         originalUsd: 11
     };
 
-    const showUsd = lang === "en";
+    const showUsd = !useMxn;
 
     const checkScroll = () => {
         if (scrollContainerRef.current) {
@@ -125,15 +126,6 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
             setCanScrollDown(scrollHeight - (scrollTop + clientHeight) > 20);
         }
     };
-
-    useEffect(() => {
-        if (typeof Intl !== 'undefined') {
-            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            if (tz.includes("Mexico")) {
-                setIsMexico(true);
-            }
-        }
-    }, []);
 
     useEffect(() => {
         if (isOpen) {
@@ -261,7 +253,7 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
                                                                 {t.paymentModal.selectPaymentMethod}
                                                             </p>
                                                             
-                                                            {isMexico && (
+                                                            {useMxn && (
                                                                 <button
                                                                     onClick={() => handleCheckout("mercadopago")}
                                                                     className="w-full flex items-center justify-between bg-[#009EE3] hover:bg-[#0086c3] text-white font-bold rounded-2xl py-4 px-6 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer group"
@@ -281,7 +273,7 @@ export const PricingInfoModal = ({ isOpen, onClose, appType = "task-goblin" }: {
                                                                 <div className="flex flex-col items-start">
                                                                     <span className="text-sm font-medium">{t.paymentModal.paypalButton}</span>
                                                                     <span className="text-[10px] uppercase tracking-tighter opacity-60">
-                                                                        PayPal {isMexico ? `${prices.mxn} MXN` : `${prices.usd} USD`}
+                                                                        PayPal {useMxn ? `${prices.mxn} MXN` : `${prices.usd} USD`}
                                                                     </span>
                                                                 </div>
                                                                 <div className="flex items-center gap-1">
