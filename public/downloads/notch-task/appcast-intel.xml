@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
     <channel>
         <title>Task Notch Updates (Intel)</title>
-        <item>
-            <title>Version 1.0</title>
-            <sparkle:version>1.0</sparkle:version>
-            <pubDate>Mon, 01 Jun 2026 21:41:07 -0600</pubDate>
+       <item>
+            <title>Version 1.0.1</title>
+            <sparkle:version>1.0.1</sparkle:version>
+            <pubDate>Mon, 01 Jun 2026 22:07:10 -0600</pubDate>
             <enclosure url="https://task-goblin.com/downloads/notch-task/Task_Notch_x64.dmg"
-                sparkle:version="1.0"
+                sparkle:version="1.0.1"
                 type="application/octet-stream"
-                ERROR! Signing key not found for account ed25519. Please run generate_keys tool first or provide key with --ed-key-file <private_key_file> />
+                sparkle:edSignature="2XgZyuD+XgIurZiKM48qwVE+tJ9QVHqVd/Hh6k+teHpGAQKL0qmznewfdfecWhfk9S8hbIo2HFctX70anLI5Aw==" length="33084545" />
         </item>
     </channel>
 </rss>
