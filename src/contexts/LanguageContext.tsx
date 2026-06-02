@@ -23,7 +23,20 @@ export function LanguageProvider({ children }: { readonly children: ReactNode })
   const [lang, setLang] = useState<Lang>(() => {
     if (globalThis.window === undefined) return "es";
     const stored = globalThis.localStorage.getItem(STORAGE_KEY) as Lang | null;
-    return stored === "en" || stored === "es" ? stored : "es";
+    if (stored === "en" || stored === "es") return stored;
+    
+    // Auto-detect if not stored
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+      if (!tz.startsWith("America/")) return "en";
+      
+      const usCanadaRegex = /New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Honolulu|Toronto|Vancouver|Montreal|Winnipeg|Edmonton|Halifax|St_Johns|Detroit|Indiana|Kentucky|Boise|Juneau|Sitka|Yakutat|Nome|Dawson|Regina|Swift_Current|Whitehorse|Inuvik|Iqaluit|Pangnirtung|Resolute|Rankin_Inlet|Cambridge_Bay|Nipigon|Rainy_River|Thunder_Bay|Atikokan|Creston|Dawson_Creek|Fort_Nelson/;
+      if (usCanadaRegex.test(tz)) return "en";
+      
+      return "es";
+    } catch (e) {
+      return "es";
+    }
   });
 
   const updateLang = useCallback((newLang: Lang) => {
@@ -49,6 +62,12 @@ export function LanguageProvider({ children }: { readonly children: ReactNode })
       globalThis.removeEventListener("storage", handleSync);
       globalThis.removeEventListener("storage_sync", handleSync);
     };
+  }, [lang]);
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
   }, [lang]);
 
   const value = useMemo(() => ({
