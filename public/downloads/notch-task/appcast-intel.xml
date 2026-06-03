@@ -3,13 +3,14 @@
     <channel>
         <title>Task Notch Updates (Intel)</title>
         <item>
-            <title>Version 1.0.1</title>
-            <sparkle:version>1.0.1</sparkle:version>
-            <pubDate>Tue, 02 Jun 2026 00:39:06 -0600</pubDate>
+            <title>Version 1.0.2</title>
+            <sparkle:version>1.0.2</sparkle:version>
+            <pubDate>Tue, 02 Jun 2026 20:41:02 -0600</pubDate>
             <enclosure url="https://task-goblin.com/downloads/notch-task/Task_Notch_x64.dmg"
-                sparkle:version="1.0.1"
+                sparkle:version="1.0.2"
                 type="application/octet-stream"
-                sparkle:edSignature="DdFWCRrnWDJ96I7XXMMQyguNFzuVQozSfwW87F4n8JUnEeMjyP+d3ZbbidzPfLq8Ndo8MU5d2L3h8lcJ2ejXCQ==" length="33068262" />
+                sparkle:edSignature="1Owq/f1xkWmuGZS+iEwvkg58mk0wPH8BdhnKJA/XQ41PmgyuA53zoFqPDfUPc1LM0GPb2NVhNhg8FD4xp7ZFDg=="
+                length="33073333" />
         </item>
     </channel>
 </rss>
