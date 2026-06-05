@@ -78,6 +78,7 @@ export const POST: APIRoute = async ({ request }) => {
                 const { error: dbError } = await supabase.from('licenses').insert([
                     {
                         email: userEmail,
+                        email_pay: userEmail,
                         license_key: autoLicenseKey,
                         app: appName
                     }

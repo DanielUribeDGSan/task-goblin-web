@@ -49,6 +49,7 @@ async function activateLicense(userEmail: string, appName: string, transactionId
             const { error: dbError } = await supabase.from('licenses').insert([
                 {
                     email: userEmail,
+                    email_pay: userEmail,
                     license_key: autoLicenseKey,
                     app: appName,
                     payment_id: transactionId.toString()
