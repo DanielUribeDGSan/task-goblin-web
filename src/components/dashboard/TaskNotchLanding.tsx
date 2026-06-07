@@ -880,7 +880,7 @@ const TaskNotchLandingContent = () => {
                           {useMxn ? "$199 MXN" : "$12 USD"}
                         </span>
                         <span className="text-3xl sm:text-4xl font-black text-white">
-                          {useMxn ? "$149 MXN" : "$8 USD"}
+                          {useMxn ? "$149 MXN" : "$9 USD"}
                         </span>
                       </div>
                       <span className="text-[9px] sm:text-xs font-bold text-white/40 uppercase tracking-wider sm:self-end sm:pb-1">
