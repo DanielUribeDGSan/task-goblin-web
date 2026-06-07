@@ -30,7 +30,7 @@ export const logDownloadEvent = (
   appName: string,
   platform: string,
   architecture: string,
-  source: 'bottom_bar' | 'modal'
+  source: 'bottom_bar' | 'modal' | 'dropdown' | 'direct_button'
 ) => {
   if (analytics) {
     logEvent(analytics, 'app_download_click', {
