@@ -47,12 +47,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     const prices = isTaskNotch ? {
         mxn: 149,
         originalMxn: 199,
-        usd: 8,
+        usd: 9,
         originalUsd: 11
     } : isNexo ? {
         mxn: 149,
         originalMxn: 199,
-        usd: 8,
+        usd: 9,
         originalUsd: 11
     } : isFloaty ? {
         mxn: 50,
@@ -62,7 +62,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, appType = "t
     } : {
         mxn: 149,
         originalMxn: 199,
-        usd: 8,
+        usd: 9,
         originalUsd: 11
     };
 
