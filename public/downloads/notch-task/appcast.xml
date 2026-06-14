@@ -6,11 +6,11 @@
             <title>Version 1.0.5</title>
             <sparkle:shortVersionString>1.0.5</sparkle:shortVersionString>
             <sparkle:version>6</sparkle:version>
-            <pubDate>Sun, 14 Jun 2026 02:34:31 -0600</pubDate>
+            <pubDate>Sun, 14 Jun 2026 03:54:20 -0600</pubDate>
             <enclosure url="https://task-goblin.com/downloads/notch-task/Task_Notch_aarch64.dmg"
                 sparkle:shortVersionString="1.0.5" sparkle:version="6" type="application/octet-stream"
-                sparkle:edSignature="X0N5I/cdcE48ev/2gF/SSY2zN28nCxgRfVatpiKmmnEmfbeO8AkL58uwFLdF1K6FnhB0VQPqBtvcIHOtCyPXBg=="
-                length="32325782" />
+                sparkle:edSignature="LX+yD5U20SZbu02H+ixhJ0+aqQiNSBeRZCXWjuhJIIky4nPwMG8t5JALjlk/3GZj0GUxSm7h8S2CsuFgXi6hBw=="
+                length="32340364" />
         </item>
     </channel>
 </rss>
