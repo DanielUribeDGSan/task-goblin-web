@@ -3,14 +3,14 @@
     <channel>
         <title>Task Notch Updates</title>
         <item>
-            <title>Version 1.0.7</title>
-            <sparkle:shortVersionString>1.0.7</sparkle:shortVersionString>
-            <sparkle:version>8</sparkle:version>
-            <pubDate>Wed, 24 Jun 2026 15:23:48 -0600</pubDate>
+            <title>Version 1.0.8</title>
+            <sparkle:shortVersionString>1.0.8</sparkle:shortVersionString>
+            <sparkle:version>9</sparkle:version>
+            <pubDate>Mon, 29 Jun 2026 01:59:45 -0600</pubDate>
             <enclosure url="https://task-goblin.com/downloads/notch-task/Task_Notch_aarch64.dmg"
-                sparkle:shortVersionString="1.0.7" sparkle:version="8" type="application/octet-stream"
-                sparkle:edSignature="bc1WAyeeplj3jPbEnvO7iYCCBcZ4s/8wINuYUfBGg6aFVnJPMkIT1UO55X4UJYurJ2/1e6i75DaxDgX8fyRMAA=="
-                length="32633352" />
+                sparkle:shortVersionString="1.0.8" sparkle:version="9" type="application/octet-stream"
+                sparkle:edSignature="Q588jNUmKwnSZRkbBDq51v5zb9Hqti03paAlG9I2a/lrbFGdS8BCaZHlsJ2RQebBQsJgw2RiRZHJbyU1prxxBw=="
+                length="32669374" />
         </item>
     </channel>
 </rss>
