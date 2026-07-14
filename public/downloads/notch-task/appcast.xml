@@ -5,12 +5,12 @@
         <item>
             <title>Version 1.0.9</title>
             <sparkle:shortVersionString>1.0.9</sparkle:shortVersionString>
-            <sparkle:version>10</sparkle:version>
-            <pubDate>Wed, 01 Jul 2026 11:06:39 -0600</pubDate>
+            <sparkle:version>8</sparkle:version>
+            <pubDate>Tue, 14 Jul 2026 02:22:27 -0600</pubDate>
             <enclosure url="https://task-goblin.com/downloads/notch-task/Task_Notch_aarch64.dmg"
-                sparkle:shortVersionString="1.0.9" sparkle:version="10" type="application/octet-stream"
-                sparkle:edSignature="ARmucKmNJNYxkWoXVPRtY65RsRk5LHblMieDXpI1ZWehVkb3pU9sJGnjJw4kFyo7M7lkozsGRCgEJqoJcJwyAA=="
-                length="32654250" />
+                sparkle:shortVersionString="1.0.9" sparkle:version="8" type="application/octet-stream"
+                sparkle:edSignature="A31zatk24q8sMpCyNKGYDvD5ThlgD82iCcQJmHoKk3G0s1tmgIO+HXnLIPYIqsm2XTNJnU9Y/23FTchAhZ4CBQ=="
+                length="32688755" />
         </item>
     </channel>
 </rss>
