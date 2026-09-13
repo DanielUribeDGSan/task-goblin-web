@@ -1,11 +1,11 @@
 version: 1.16.0
 files:
   - url: Pair Bot-1.16.0-mac.zip
-    sha512: Ritn/fbYZArKo4nN8SA9OuLNqlHbNxKkzfRAlGNVx7iVapYwsfp6rlyxw6vvQbvCwRN1QVa478sxIcH1k7IRig==
-    size: 210327351
+    sha512: Rod8w48MVjW2ILYVSmrU6ECWBNDN6sLcgfWIVK1BRZSjp/FYiBpFQ+Ct5TAm1RdQDOutsx4n2l0H3E34AdTpww==
+    size: 210328158
   - url: Pair-Bot-1.16.0-x64.dmg
-    sha512: 6jzuVNMa9rq8pc2qaNyKX+ytGDvQzJH8FOk63LKZsD+zcCX9kYZybWukf3TWsgQda8bqd4pqqdNdsIztVmd7eg==
-    size: 209518989
+    sha512: uUNf/1baYOfDpop7jP1Kd5iR3Hq7njpyaonOeIz+RwA0cA3EgkonBaEvgP192B7mjIgD509F+RwzxojVFFHoxg==
+    size: 209517086
 path: Pair Bot-1.16.0-mac.zip
-sha512: Ritn/fbYZArKo4nN8SA9OuLNqlHbNxKkzfRAlGNVx7iVapYwsfp6rlyxw6vvQbvCwRN1QVa478sxIcH1k7IRig==
-releaseDate: '2026-09-13T08:35:05.052Z'
+sha512: Rod8w48MVjW2ILYVSmrU6ECWBNDN6sLcgfWIVK1BRZSjp/FYiBpFQ+Ct5TAm1RdQDOutsx4n2l0H3E34AdTpww==
+releaseDate: '2026-09-13T10:01:32.859Z'
