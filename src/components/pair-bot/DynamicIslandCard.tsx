@@ -33,8 +33,8 @@ export const DynamicIslandCard: React.FC<DynamicIslandCardProps> = ({
 
   const width = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["70%", "80%", "90%", "100%"]);
   
-  const heightDesktop = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["500px", "600px", "700px", "800px"]);
-  const heightMobile = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["400px", "450px", "520px", "600px"]);
+  const heightDesktop = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["500px", "650px", "800px", "900px"]);
+  const heightMobile = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["400px", "500px", "600px", "700px"]);
   const height = isMobile ? heightMobile : heightDesktop;
   
   const borderRadius = useTransform(scrollYProgress, [0, 0.7, 1], ["30px", "24px", "24px"]);
@@ -42,7 +42,7 @@ export const DynamicIslandCard: React.FC<DynamicIslandCardProps> = ({
   const isInView = useInView(containerRef, { once: false, amount: 0.4 });
 
   return (
-    <div ref={containerRef} className="w-full flex justify-center py-8 min-h-[650px] md:min-h-[850px] items-center relative z-10">
+    <div ref={containerRef} className="w-full flex justify-center py-8 min-h-[750px] md:min-h-[950px] items-center relative z-10">
       <motion.div 
         style={{ 
           width, 
@@ -56,7 +56,7 @@ export const DynamicIslandCard: React.FC<DynamicIslandCardProps> = ({
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
-          className="flex-1 flex flex-col w-full h-full p-6 md:p-12 gap-6 md:gap-8 items-center justify-start overflow-y-auto overflow-x-hidden no-scrollbar"
+          className="flex-1 flex flex-col w-full h-full p-6 md:p-12 gap-6 md:gap-8 items-center justify-start"
         >
           <div className="w-full flex flex-col text-center space-y-4 shrink-0">
             <h3 className="text-4xl md:text-5xl font-semibold text-[#fafafa] tracking-tight">
@@ -66,7 +66,7 @@ export const DynamicIslandCard: React.FC<DynamicIslandCardProps> = ({
               {description}
             </p>
           </div>
-          <div className="w-full flex-1 relative flex items-center justify-center px-4 group">
+          <div className="w-full flex-1 relative flex items-center justify-center px-4 group min-h-0">
             <img 
               src={imageSrc} 
               alt={title} 
