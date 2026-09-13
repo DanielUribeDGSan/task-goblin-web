@@ -8,6 +8,7 @@ const content = {
     heroTitle: 'Experience liftoff with the next-gen agent platform',
     download: 'Download App',
     explore: 'Explore use cases',
+    freeBadge: '100% Free',
     downloads: {
       macSilicon: 'Mac (Apple Silicon)',
       macSiliconDesc: 'For Macs with M1 to M6 and Neo chips',
@@ -58,6 +59,7 @@ const content = {
     heroTitle: 'Tu compañero de pair programming impulsado por IA.',
     download: 'Descargar la App',
     explore: 'Explorar casos de uso',
+    freeBadge: 'Totalmente Gratis',
     downloads: {
       macSilicon: 'Mac (Apple Silicon)',
       macSiliconDesc: 'Para Macs con chip M1 a M6 y Neo',
@@ -150,11 +152,22 @@ export const PairBotLanding: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.1 }}
+          className="mb-6 inline-block px-4 py-1.5 rounded-full border border-[#34d399]/30 bg-[#34d399]/10 text-[#34d399] text-sm font-semibold tracking-wide"
+        >
+          {t.freeBadge}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
           className="flex items-center space-x-4 mb-8"
         >
           <img src="/pair-bot-logo.svg" alt="Pair Bot Logo" className="w-14 h-14 rounded-md object-contain shadow-lg" />
-          <span className="text-3xl font-medium tracking-wide">Pair Bot</span>
+          <span className="text-3xl font-medium tracking-wide">
+            Pair Bot - Built with <a href="https://docs.openhands.dev/" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#34d399] transition-colors">OpenHands</a>
+          </span>
         </motion.div>
         
         <motion.h1 
