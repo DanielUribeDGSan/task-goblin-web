@@ -146,7 +146,7 @@ export const PairBotLanding: React.FC = () => {
       </div>
 
       {/* Hero Section */}
-      <div className="relative z-50 flex flex-col items-center justify-center min-h-[90vh] px-4 text-center">
+      <div className="relative z-50 flex flex-col items-center justify-center min-h-[70vh] md:min-h-[90vh] px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

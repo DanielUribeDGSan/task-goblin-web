@@ -34,7 +34,7 @@ export const DynamicIslandCard: React.FC<DynamicIslandCardProps> = ({
   const width = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["70%", "80%", "90%", "100%"]);
   
   const heightDesktop = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["500px", "650px", "800px", "900px"]);
-  const heightMobile = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["400px", "500px", "600px", "700px"]);
+  const heightMobile = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], ["350px", "400px", "450px", "520px"]);
   const height = isMobile ? heightMobile : heightDesktop;
   
   const borderRadius = useTransform(scrollYProgress, [0, 0.7, 1], ["30px", "24px", "24px"]);
@@ -42,7 +42,7 @@ export const DynamicIslandCard: React.FC<DynamicIslandCardProps> = ({
   const isInView = useInView(containerRef, { once: false, amount: 0.4 });
 
   return (
-    <div ref={containerRef} className="w-full flex justify-center py-8 min-h-[750px] md:min-h-[950px] items-center relative z-10">
+    <div ref={containerRef} className="w-full flex justify-center py-4 md:py-8 min-h-[550px] md:min-h-[950px] items-center relative z-10">
       <motion.div 
         style={{ 
           width, 
