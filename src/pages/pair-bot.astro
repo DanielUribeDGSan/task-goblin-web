@@ -1,0 +1,25 @@
+---
+import { PairBotLanding } from '../components/pair-bot/PairBotLanding';
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Pair Bot - Experience liftoff</title>
+    <meta name="description" content="Next-gen agent platform for AI pair programming with OpenHands." />
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#050505] text-[#fafafa] m-0 p-0 overflow-x-hidden antialiased">
+    <PairBotLanding client:only="react" />
+  </body>
+</html>
