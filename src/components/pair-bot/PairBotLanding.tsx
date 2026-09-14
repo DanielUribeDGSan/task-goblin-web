@@ -135,7 +135,8 @@ export const PairBotLanding: React.FC = () => {
           const res = await fetch(url);
           if (res.ok) {
             const text = await res.text();
-            const match = text.match(/path:\s+([^\r\n]+)/);
+            // Buscar explícitamente el archivo .dmg o .exe en vez del archivo en "path:" (que suele ser el .zip)
+            const match = text.match(/url:\s+([^\r\n]+\.(?:dmg|exe))/i);
             if (match && match[1]) {
               return `/downloads/pair-bot/${folder}/${match[1]}`;
             }
