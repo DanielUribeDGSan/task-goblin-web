@@ -1,8 +1,8 @@
 version: 1.16.0
 files:
   - url: Pair-Bot-Setup-1.16.0.exe
-    sha512: psIBOQ+mvcW/H1tN4JMkrm97bJcVTrApmqa7xt4WSVY6Uq5wmT4lBrZuAUvsqSYFVVPVl4Bm/1PMGCsFMKrDxw==
-    size: 160905562
+    sha512: TRwWGU4nW74k5R22ToLfXTeNGzr5/90iCIxeLyKH31pWkNO1nkRC4eWdwvUH68M2fjGD7xJSvtz9mbT49tqgpw==
+    size: 160907110
 path: Pair-Bot-Setup-1.16.0.exe
-sha512: psIBOQ+mvcW/H1tN4JMkrm97bJcVTrApmqa7xt4WSVY6Uq5wmT4lBrZuAUvsqSYFVVPVl4Bm/1PMGCsFMKrDxw==
-releaseDate: '2026-09-14T03:03:41.769Z'
+sha512: TRwWGU4nW74k5R22ToLfXTeNGzr5/90iCIxeLyKH31pWkNO1nkRC4eWdwvUH68M2fjGD7xJSvtz9mbT49tqgpw==
+releaseDate: '2026-09-14T04:37:52.353Z'
