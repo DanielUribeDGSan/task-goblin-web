@@ -108,9 +108,16 @@ const content = {
   }
 };
 
+import { PAIR_BOT_VERSION } from './constants';
+
 export const PairBotLanding: React.FC = () => {
   const [lang, setLang] = useState<'es' | 'en'>('es');
   const [showDownloads, setShowDownloads] = useState(false);
+  const [links, setLinks] = useState({
+    macSilicon: `/downloads/pair-bot/mac-arm64/Pair-Bot-${PAIR_BOT_VERSION}-arm64.dmg`,
+    macIntel: `/downloads/pair-bot/mac-x64/Pair-Bot-${PAIR_BOT_VERSION}-x64.dmg`,
+    windows: `/downloads/pair-bot/win-x64/Pair-Bot-Setup-${PAIR_BOT_VERSION}.exe`
+  });
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -120,6 +127,39 @@ export const PairBotLanding: React.FC = () => {
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
+
+    // Fetch latest versions dynamically
+    const fetchLatestLinks = async () => {
+      try {
+        const fetchYml = async (url: string, folder: string) => {
+          const res = await fetch(url);
+          if (res.ok) {
+            const text = await res.text();
+            const match = text.match(/path:\s+([^\r\n]+)/);
+            if (match && match[1]) {
+              return `/downloads/pair-bot/${folder}/${match[1]}`;
+            }
+          }
+          return null;
+        };
+
+        const [macArm, macX64, winX64] = await Promise.all([
+          fetchYml('/downloads/pair-bot/mac-arm64/latest-mac.yml', 'mac-arm64'),
+          fetchYml('/downloads/pair-bot/mac-x64/latest-mac.yml', 'mac-x64'),
+          fetchYml('/downloads/pair-bot/win-x64/latest.yml', 'win-x64')
+        ]);
+
+        setLinks(prev => ({
+          macSilicon: macArm || prev.macSilicon,
+          macIntel: macX64 || prev.macIntel,
+          windows: winX64 || prev.windows
+        }));
+      } catch (e) {
+        console.error('Error fetching latest versions:', e);
+      }
+    };
+    fetchLatestLinks();
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
@@ -202,15 +242,15 @@ export const PairBotLanding: React.FC = () => {
 
             {showDownloads && (
               <div className="absolute top-full mt-3 w-full bg-[#171717] border border-[#3a3a3a] rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
-                <a href="/downloads/pair-bot/mac-arm64/Pair-Bot-1.16.0-arm64.dmg" download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col group">
+                <a href={links.macSilicon} download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col group">
                   <span className="font-medium text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.macSilicon}</span>
                   <span className="text-xs text-[#8c8c8c]">{t.downloads.macSiliconDesc}</span>
                 </a>
-                <a href="/downloads/pair-bot/mac-x64/Pair-Bot-1.16.0-x64.dmg" download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
+                <a href={links.macIntel} download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
                   <span className="font-medium text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.macIntel}</span>
                   <span className="text-xs text-[#8c8c8c]">{t.downloads.macIntelDesc}</span>
                 </a>
-                <a href="/downloads/pair-bot/windows-x64/Pair-Bot-Setup-1.16.0.exe" download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
+                <a href={links.windows} download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
                   <span className="font-medium text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.windows}</span>
                   <span className="text-xs text-[#8c8c8c]">{t.downloads.windowsDesc}</span>
                 </a>
