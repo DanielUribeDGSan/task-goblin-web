@@ -1,1 +1,2 @@
-export const PAIR_BOT_VERSION = "1.20.0";
+// Constants for Pair Bot Landing
+export const PAIR_BOT_VERSION = "1.21.0";
