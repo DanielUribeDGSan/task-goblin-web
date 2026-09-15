@@ -1,1 +1,1 @@
-export const PAIR_BOT_VERSION = "1.19.0";
+export const PAIR_BOT_VERSION = "1.20.0";
