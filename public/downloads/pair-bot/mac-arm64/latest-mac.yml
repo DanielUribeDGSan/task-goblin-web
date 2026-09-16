@@ -1,11 +1,11 @@
-version: 1.22.0
+version: 1.23.0
 files:
-  - url: Pair Bot-1.22.0-arm64-mac.zip
-    sha512: NpoF4hvPIKLM6Ch+iyRAqTEgzFZUsL/6MvOqHh0mK7WMV6z19zVXHsgt9eiGnPzsMnSbIZBYFAvTLHY0JU83mg==
-    size: 202008527
-  - url: Pair-Bot-1.22.0-arm64.dmg
-    sha512: RHKaOgA3vELQCwiqh2knUHx5oKI3tGlqjexLANId1wZ1Vi1v37GVcPmp4Tj4z3NMGf4+lUicDkLoPvEBXSxg0w==
-    size: 200917131
-path: Pair Bot-1.22.0-arm64-mac.zip
-sha512: NpoF4hvPIKLM6Ch+iyRAqTEgzFZUsL/6MvOqHh0mK7WMV6z19zVXHsgt9eiGnPzsMnSbIZBYFAvTLHY0JU83mg==
-releaseDate: '2026-09-16T07:22:59.970Z'
+  - url: Pair Bot-1.23.0-arm64-mac.zip
+    sha512: MbDEPH9rLtYp3p/F4b6INgSSQxky28j5sl6KqP5jyNbKe1r4Wx9rlOvs2cpcccveP+0k6+YbdiCeyXdd27o17g==
+    size: 201978602
+  - url: Pair-Bot-1.23.0-arm64.dmg
+    sha512: 2oPVg7+ZWbvV6sHqqn1u719Jg2zGrLboLUfY9pOZmAtN+JzkqGzsegZ93OPED/amAR8yemTuH5rpXrbtxLV6fA==
+    size: 200897760
+path: Pair Bot-1.23.0-arm64-mac.zip
+sha512: MbDEPH9rLtYp3p/F4b6INgSSQxky28j5sl6KqP5jyNbKe1r4Wx9rlOvs2cpcccveP+0k6+YbdiCeyXdd27o17g==
+releaseDate: '2026-09-16T10:27:04.027Z'
