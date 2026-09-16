@@ -1,8 +1,8 @@
-version: 1.21.0
+version: 1.22.0
 files:
-  - url: Pair-Bot-Setup-1.21.0.exe
-    sha512: cBI7g1jOiwj96viFxPfZDZfyb1pjaysz5p51iwOQWsQk2qiP4+Pumymd6KAmbOAdsSKFcI6zD9RYd8/K5XR8CQ==
-    size: 160823126
-path: Pair-Bot-Setup-1.21.0.exe
-sha512: cBI7g1jOiwj96viFxPfZDZfyb1pjaysz5p51iwOQWsQk2qiP4+Pumymd6KAmbOAdsSKFcI6zD9RYd8/K5XR8CQ==
-releaseDate: '2026-09-15T09:12:46.012Z'
+  - url: Pair-Bot-Setup-1.22.0.exe
+    sha512: VvUEnzoAdb4LyTy6e9UG4dbf8sVW7OJKHUWyismhsau8Ql84gJ41S9fYDU1StM3Bg+Kal7B4Xnr9/3oljDO4jw==
+    size: 160819585
+path: Pair-Bot-Setup-1.22.0.exe
+sha512: VvUEnzoAdb4LyTy6e9UG4dbf8sVW7OJKHUWyismhsau8Ql84gJ41S9fYDU1StM3Bg+Kal7B4Xnr9/3oljDO4jw==
+releaseDate: '2026-09-16T07:29:19.247Z'
