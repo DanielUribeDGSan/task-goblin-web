@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Drawer } from 'vaul';
-import { Smartphone, Download, Database, Settings, Github, X, ChevronDown } from 'lucide-react';
+import { Smartphone, Download, Database, Settings, Github, X, ChevronDown, Copy, Check } from 'lucide-react';
 
 interface MobileSetupGuideProps {
   open: boolean;
@@ -12,37 +12,64 @@ export function MobileSetupGuide({ open, onOpenChange }: MobileSetupGuideProps) 
   const step1Ref = useRef<HTMLLIElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!open) {
-      setShowScrollHint(true);
-      return;
-    }
-    
-    // Pequeño timeout para asegurar que el DOM está listo en el bottom sheet
-    const timeoutId = setTimeout(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setShowScrollHint(false);
-          } else {
-            // Reaparecer si hacemos scroll muy hacia arriba
-            setShowScrollHint(true);
-          }
-        },
-        {
-          root: scrollContainerRef.current,
-          threshold: 0.1,
-        }
-      );
+  const [copied, setCopied] = useState(false);
 
-      if (step1Ref.current) {
-        observer.observe(step1Ref.current);
-      }
-      return () => observer.disconnect();
-    }, 100);
-    
-    return () => clearTimeout(timeoutId);
-  }, [open]);
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (e.currentTarget.scrollTop > 50) {
+      setShowScrollHint(false);
+    } else {
+      setShowScrollHint(true);
+    }
+  };
+
+  const sqlCode = `-- Habilitar extensión para UUIDs
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Tabla de Workspaces
+CREATE TABLE IF NOT EXISTS workspaces (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    path TEXT NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Tabla de Agent Commands
+CREATE TABLE IF NOT EXISTS agent_commands (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    prompt TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'pending',
+    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Tabla de Agent Messages
+CREATE TABLE IF NOT EXISTS agent_messages (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    command_id UUID REFERENCES agent_commands(id) ON DELETE CASCADE,
+    sender TEXT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Tabla de Agent Command Logs
+CREATE TABLE IF NOT EXISTS agent_command_logs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    command_id UUID REFERENCES agent_commands(id) ON DELETE CASCADE,
+    log TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Desactivar Row Level Security para acceso público sin restricciones
+ALTER TABLE workspaces DISABLE ROW LEVEL SECURITY;
+ALTER TABLE agent_commands DISABLE ROW LEVEL SECURITY;
+ALTER TABLE agent_messages DISABLE ROW LEVEL SECURITY;
+ALTER TABLE agent_command_logs DISABLE ROW LEVEL SECURITY;`;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(sqlCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleScrollClick = () => {
     if (step1Ref.current) {
@@ -60,7 +87,7 @@ export function MobileSetupGuide({ open, onOpenChange }: MobileSetupGuideProps) 
           <div className="p-4 bg-[#111] rounded-t-[20px] flex-1 flex flex-col min-h-0">
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-600 mb-6" />
             
-            <div ref={scrollContainerRef} className="max-w-2xl mx-auto w-full flex-1 overflow-y-auto pb-20 px-2">
+            <div ref={scrollContainerRef} onScroll={handleScroll} className="max-w-2xl mx-auto w-full flex-1 overflow-y-auto pb-20 px-2">
               <div className="flex justify-between items-center mb-6">
                 <div>
                   <Drawer.Title className="font-semibold text-2xl text-white mb-2">
@@ -141,6 +168,21 @@ export function MobileSetupGuide({ open, onOpenChange }: MobileSetupGuideProps) 
                         <li>Supabase Anon Key</li>
                         <li>Storage Bucket Name</li>
                       </ul>
+
+                      <div className="mt-4 pt-4 border-t border-[#333]">
+                        <p className="mb-2 text-white font-medium">Ejecuta este SQL en Supabase para crear las tablas necesarias:</p>
+                        <div className="relative group">
+                          <button 
+                            onClick={copyToClipboard}
+                            className="absolute right-2 top-2 p-1.5 bg-[#222] text-gray-400 hover:text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                          </button>
+                          <pre className="bg-[#111] p-3 rounded-lg overflow-x-auto text-xs text-gray-400 font-mono border border-[#333]">
+                            {sqlCode}
+                          </pre>
+                        </div>
+                      </div>
                     </div>
                   </li>
 
