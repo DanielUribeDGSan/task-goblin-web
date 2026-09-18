@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { GalaxyBackground } from './GalaxyBackground';
 import { DynamicIslandCard } from './DynamicIslandCard';
 import { motion } from 'framer-motion';
+import { MobileSetupGuide } from './MobileSetupGuide';
 
 const content = {
   en: {
     heroTitle: 'Experience liftoff with the next-gen agent platform',
     download: 'Download App',
     explore: 'Explore use cases',
+    connectMobile: 'Connect Mobile App',
     freeBadge: '100% Free',
     downloads: {
       macSilicon: 'Mac (Apple Silicon)',
@@ -59,6 +61,7 @@ const content = {
     heroTitle: 'Tu compañero de pair programming impulsado por IA.',
     download: 'Descargar la App',
     explore: 'Explorar casos de uso',
+    connectMobile: 'Conectar App Móvil',
     freeBadge: 'Totalmente Gratis',
     downloads: {
       macSilicon: 'Mac (Apple Silicon)',
@@ -113,6 +116,7 @@ import { PAIR_BOT_VERSION } from './constants';
 export const PairBotLanding: React.FC = () => {
   const [lang, setLang] = useState<'es' | 'en'>('es');
   const [showDownloads, setShowDownloads] = useState(false);
+  const [isMobileGuideOpen, setIsMobileGuideOpen] = useState(false);
   const [links, setLinks] = useState({
     macSilicon: `/downloads/pair-bot/mac-arm64/Pair-Bot-${PAIR_BOT_VERSION}-arm64.dmg`,
     macIntel: `/downloads/pair-bot/mac-x64/Pair-Bot-${PAIR_BOT_VERSION}-x64.dmg`,
@@ -265,6 +269,13 @@ export const PairBotLanding: React.FC = () => {
           >
             {t.explore}
           </button>
+          
+          <button 
+            onClick={() => setIsMobileGuideOpen(true)}
+            className="cursor-pointer px-8 py-4 rounded-full bg-transparent text-[#34d399] border border-[#34d399]/30 hover:bg-[#34d399]/10 transition-all font-medium whitespace-nowrap"
+          >
+            {t.connectMobile}
+          </button>
         </motion.div>
       </div>
 
@@ -280,6 +291,8 @@ export const PairBotLanding: React.FC = () => {
           />
         ))}
       </div>
+      
+      <MobileSetupGuide open={isMobileGuideOpen} onOpenChange={setIsMobileGuideOpen} />
     </div>
   );
 };
