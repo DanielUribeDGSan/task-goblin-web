@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GalaxyBackground } from './GalaxyBackground';
-import { DynamicIslandCard } from './DynamicIslandCard';
+import { FeaturesOverview } from './FeaturesOverview';
 import { motion } from 'framer-motion';
 import { MobileSetupGuide } from './MobileSetupGuide';
 
@@ -171,7 +171,7 @@ export const PairBotLanding: React.FC = () => {
   const t = content[lang];
 
   return (
-    <div className="relative min-h-screen bg-[#181818] text-[#fafafa] selection:bg-[#34d399] selection:text-[#050505] font-sans">
+    <div className="relative min-h-screen bg-black text-[#fafafa] selection:bg-[#34d399] selection:text-[#050505] font-sans">
       <GalaxyBackground />
       
       {/* Header / Language Toggle */}
@@ -228,16 +228,16 @@ export const PairBotLanding: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center gap-4 relative"
+          className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 relative"
         >
           <div 
-            className="relative" 
+            className="relative w-fit" 
             ref={menuRef}
             onMouseEnter={() => setShowDownloads(true)}
           >
             <button 
               onClick={() => setShowDownloads(!showDownloads)}
-              className="px-8 py-4 rounded-full bg-[#171717] hover:bg-[#242424] border border-[#3a3a3a] transition-all flex items-center gap-3 shadow-lg shadow-[#000000]"
+              className="justify-center px-6 py-3 md:px-7 md:py-3 rounded-full bg-[#171717] hover:bg-[#242424] border border-[#3a3a3a] transition-all flex items-center gap-2 shadow-lg shadow-[#000000] text-[0.9375rem] md:text-base"
             >
               <span>{t.download}</span>
               <svg className={`w-4 h-4 transition-transform duration-300 ${showDownloads ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -246,17 +246,17 @@ export const PairBotLanding: React.FC = () => {
             </button>
 
             {showDownloads && (
-              <div className="absolute top-full mt-3 w-full bg-[#171717] border border-[#3a3a3a] rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
-                <a href={links.macSilicon} download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col group">
-                  <span className="font-medium text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.macSilicon}</span>
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-max min-w-full bg-[#171717] border border-[#3a3a3a] rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
+                <a href={links.macSilicon} download className="cursor-pointer px-5 py-3 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col group">
+                  <span className="font-medium text-sm text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.macSilicon}</span>
                   <span className="text-xs text-[#8c8c8c]">{t.downloads.macSiliconDesc}</span>
                 </a>
-                <a href={links.macIntel} download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
-                  <span className="font-medium text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.macIntel}</span>
+                <a href={links.macIntel} download className="cursor-pointer px-5 py-3 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
+                  <span className="font-medium text-sm text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.macIntel}</span>
                   <span className="text-xs text-[#8c8c8c]">{t.downloads.macIntelDesc}</span>
                 </a>
-                <a href={links.windows} download className="cursor-pointer px-6 py-4 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
-                  <span className="font-medium text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.windows}</span>
+                <a href={links.windows} download className="cursor-pointer px-5 py-3 hover:bg-[#2a2a2a] transition-colors text-left flex flex-col border-t border-[#2a2a2a] group">
+                  <span className="font-medium text-sm text-[#fafafa] group-hover:text-white transition-colors">{t.downloads.windows}</span>
                   <span className="text-xs text-[#8c8c8c]">{t.downloads.windowsDesc}</span>
                 </a>
               </div>
@@ -265,31 +265,23 @@ export const PairBotLanding: React.FC = () => {
           
           <button 
             onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-            className="cursor-pointer px-8 py-4 rounded-full bg-[#fafafa] text-[#050505] hover:bg-[#e5e5e5] transition-all font-medium"
+            className="cursor-pointer px-6 py-3 md:px-7 md:py-3 rounded-full bg-[#fafafa] text-[#050505] hover:bg-[#e5e5e5] transition-all font-medium text-[0.9375rem] md:text-base"
           >
             {t.explore}
           </button>
           
           <button 
             onClick={() => setIsMobileGuideOpen(true)}
-            className="cursor-pointer px-8 py-4 rounded-full bg-transparent text-[#34d399] border border-[#34d399]/30 hover:bg-[#34d399]/10 transition-all font-medium whitespace-nowrap"
+            className="cursor-pointer px-6 py-3 md:px-7 md:py-3 rounded-full bg-transparent text-[#34d399] border border-[#34d399]/30 hover:bg-[#34d399]/10 transition-all font-medium whitespace-nowrap text-[0.9375rem] md:text-base"
           >
             {t.connectMobile}
           </button>
         </motion.div>
       </div>
 
-      {/* Features Section with Dynamic Island Cards */}
-      <div id="features" className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-32 flex flex-col gap-8">
-        {t.features.map((feature, idx) => (
-          <DynamicIslandCard 
-            key={feature.title}
-            title={feature.title}
-            description={feature.description}
-            imageSrc={feature.image}
-            reverse={idx % 2 !== 0}
-          />
-        ))}
+      {/* Features — sticky scrollytelling (estilo ChatGPT overview) */}
+      <div id="features">
+        <FeaturesOverview features={t.features} />
       </div>
       
       <MobileSetupGuide open={isMobileGuideOpen} onOpenChange={setIsMobileGuideOpen} />

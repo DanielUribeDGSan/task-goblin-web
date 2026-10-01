@@ -1,8 +1,8 @@
-version: 1.28.0
+version: 1.29.0
 files:
-  - url: Pair-Bot-Setup-1.28.0.exe
-    sha512: 3XGtFCH1BDjL2Wwfl3CDF2IA2QFiszD4ljOcR8iLu3QnNCUPYHFq0jI6NlvcUVwgHyy9ohr1FCDwU+v9JdF+Hg==
-    size: 161270492
-path: Pair-Bot-Setup-1.28.0.exe
-sha512: 3XGtFCH1BDjL2Wwfl3CDF2IA2QFiszD4ljOcR8iLu3QnNCUPYHFq0jI6NlvcUVwgHyy9ohr1FCDwU+v9JdF+Hg==
-releaseDate: '2026-09-18T09:29:51.623Z'
+  - url: Pair-Bot-Setup-1.29.0.exe
+    sha512: yRbt263WoJOyuJk8O3hOk+kWjAbIiY6IkceQDuyxC4VgE/KX2hmPzAsxdZu3cBRnk0dp/TldBCxVoNjDcFUVmQ==
+    size: 161444988
+path: Pair-Bot-Setup-1.29.0.exe
+sha512: yRbt263WoJOyuJk8O3hOk+kWjAbIiY6IkceQDuyxC4VgE/KX2hmPzAsxdZu3cBRnk0dp/TldBCxVoNjDcFUVmQ==
+releaseDate: '2026-10-01T07:28:58.276Z'

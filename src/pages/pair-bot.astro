@@ -3,7 +3,7 @@ import { PairBotLanding } from '../components/pair-bot/PairBotLanding';
 import "../styles/global.css";
 ---
 
-<html lang="en">
+<html lang="en" class="pair-bot-page">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -18,8 +18,15 @@ import "../styles/global.css";
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- overflow-x:hidden en body/html rompe position:sticky del scrollytelling -->
+    <style is:global>
+      html.pair-bot-page,
+      html.pair-bot-page body {
+        overflow-x: visible;
+      }
+    </style>
   </head>
-  <body class="bg-[#050505] text-[#fafafa] m-0 p-0 overflow-x-hidden antialiased">
+  <body class="bg-[#050505] text-[#fafafa] m-0 p-0 antialiased">
     <PairBotLanding client:only="react" />
   </body>
 </html>

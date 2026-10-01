@@ -1,170 +1,274 @@
 import React, { useEffect, useRef } from 'react';
 
-interface Particle {
-  id: number;
-  initialAngle: number;
-  distance: number;
+type Star = {
+  theta: number;
+  radius: number;
+  z: number;
   size: number;
-  color: string;
-  repelOffsetX: number;
-  repelOffsetY: number;
-}
+  brightness: number;
+  twinkleSpeed: number;
+  twinklePhase: number;
+  /** rgb base — blanco / azul suave / naranja suave / amarillo */
+  r: number;
+  g: number;
+  b: number;
+  /** Offset de rechazo del mouse (se esparcen al pasar) */
+  ox: number;
+  oy: number;
+};
 
-const colors = [
-  '#A3A3A3', // muted
-  '#737373', // secondary
-  '#242424', // border
-  '#F3CE49', // primary/accent
-  '#3a3a3a', // icon
-  '#34d399', // toggle active
+const PALETTE: Array<[number, number, number]> = [
+  [255, 255, 255], // blanco
+  [220, 230, 255], // blanco frío
+  [180, 200, 255], // azul suave
+  [255, 220, 180], // cálido
+  [255, 190, 140], // naranja suave
+  [255, 235, 160], // amarillo suave
+  [200, 210, 240], // gris azulado
 ];
 
+/**
+ * Universo estilo OpenAI: puntos de color (sin Sol/Luna, sin spikes).
+ * Giro lento y cinematográfico.
+ */
 export const GalaxyBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouseRef = useRef({ x: -1000, y: -1000 });
+  // Posición del mouse en px (para rechazo local)
+  const mouseRef = useRef({ x: -9999, y: -9999, active: false });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    // Handle Resize
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let stars: Star[] = [];
+    let animationFrameId = 0;
+    let rotation = 0;
+    let lastTs = performance.now();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Más lento que OpenAI percibido — antes 0.035 se sentía rápido
+    const ROTATION_SPEED = 0.008;
+
+    const rand = (min: number, max: number) => min + Math.random() * (max - min);
+
+    const pickColor = (): [number, number, number] => {
+      const roll = Math.random();
+      if (roll < 0.45) return PALETTE[0];
+      if (roll < 0.62) return PALETTE[1];
+      if (roll < 0.75) return PALETTE[2];
+      if (roll < 0.85) return PALETTE[3];
+      if (roll < 0.92) return PALETTE[4];
+      if (roll < 0.97) return PALETTE[5];
+      return PALETTE[6];
+    };
+
+    const buildStars = () => {
+      const area = width * height;
+      // Densidad tipo OpenAI: muchos puntos, con espacio negro visible
+      const count = Math.min(2200, Math.max(1100, Math.floor(area / 650)));
+      stars = [];
+
+      for (let i = 0; i < count; i++) {
+        const radius = Math.pow(Math.random(), 0.5);
+        const z = Math.pow(Math.random(), 1.15);
+        const near = z > 0.82;
+        const mid = z > 0.5 && z <= 0.82;
+        const [r, g, b] = pickColor();
+
+        // Mezcla: mayoría chicos, algunos medianos, pocos grandes tipo bokeh
+        let size: number;
+        const sizeRoll = Math.random();
+        if (near && sizeRoll < 0.12) {
+          size = rand(2.8, 5.5); // grandes suaves
+        } else if (mid || sizeRoll < 0.35) {
+          size = rand(1.1, 2.2);
+        } else {
+          size = rand(0.35, 0.95); // puntos chicos
+        }
+
+        stars.push({
+          theta: Math.random() * Math.PI * 2,
+          radius,
+          z,
+          size,
+          brightness: near ? rand(0.55, 0.95) : mid ? rand(0.3, 0.65) : rand(0.12, 0.4),
+          twinkleSpeed: rand(0.25, 0.9),
+          twinklePhase: rand(0, Math.PI * 2),
+          r,
+          g,
+          b,
+          ox: 0,
+          oy: 0,
+        });
+      }
+    };
+
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      // Multiply by devicePixelRatio for retina display sharpness
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.scale(dpr, dpr);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      buildStars();
     };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current.x = e.clientX;
+      mouseRef.current.y = e.clientY;
+      mouseRef.current.active = true;
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.active = false;
+      mouseRef.current.x = -9999;
+      mouseRef.current.y = -9999;
+    };
+
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.documentElement.addEventListener('mouseleave', handleMouseLeave);
 
-    // Track Mouse
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-    const handleMouseLeave = () => {
-      mouseRef.current = { x: -1000, y: -1000 };
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
+    const REPEL_RADIUS = 160;
+    const REPEL_STRENGTH = 95;
 
-    // Initialize Particles
-    const particles: Particle[] = [];
-    const numParticles = 800;
-    
-    for (let i = 0; i < numParticles; i++) {
-      particles.push({
-        id: i,
-        initialAngle: Math.random() * Math.PI * 2,
-        distance: Math.pow(Math.random(), 0.9) * 120, // 120 viewport units max
-        size: Math.random() * 3 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        repelOffsetX: 0,
-        repelOffsetY: 0,
-      });
-    }
+    const render = (ts: number) => {
+      const dt = Math.min(0.05, (ts - lastTs) / 1000);
+      lastTs = ts;
 
-    // Animation Loop
-    let animationFrameId: number;
-    let time = 0;
+      if (!reducedMotion) {
+        rotation += ROTATION_SPEED * dt;
+      }
 
-    const render = () => {
-      time += 16; // approx 60fps delta
-      ctx.clearRect(0, 0, width, height);
-
-      const centerX = width / 2;
-      const centerY = height / 2;
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
+      const mouseOn = mouseRef.current.active;
 
-      particles.forEach((p) => {
-        // 1. Calculate natural rotating position
-        const speed = 0.00005 * (p.distance > 0 ? (60 / Math.max(p.distance, 10)) : 1); 
-        const currentAngle = p.initialAngle + (time * speed);
-        
-        // p.distance is in abstract "viewport units" percentage, map to pixels
-        // using width for vw and height for vh
-        const vwPx = (p.distance * width) / 100;
-        const vhPx = (p.distance * height) / 100;
-        
-        const basePx = centerX + (Math.cos(currentAngle) * vwPx);
-        const basePy = centerY + (Math.sin(currentAngle) * vhPx);
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, width, height);
 
-        // 2. Mouse Repulsion Force
-        const dx = basePx - mx;
-        const dy = basePy - my;
-        const distanceToMouse = Math.sqrt(dx * dx + dy * dy);
+      const cx = width * 0.5;
+      const cy = height * 0.48;
+      const maxR = Math.hypot(width, height) * 0.72;
 
-        const maxDistance = 250;
-        let targetRepelX = 0;
-        let targetRepelY = 0;
+      // Atmosfera muy sutil
+      const haze = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.8);
+      haze.addColorStop(0, 'rgba(255,255,255,0.018)');
+      haze.addColorStop(0.5, 'rgba(255,255,255,0.006)');
+      haze.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = haze;
+      ctx.fillRect(0, 0, width, height);
 
-        if (distanceToMouse < maxDistance && distanceToMouse > 0) {
-          const force = Math.pow((maxDistance - distanceToMouse) / maxDistance, 2);
-          targetRepelX = (dx / distanceToMouse) * force * 150;
-          targetRepelY = (dy / distanceToMouse) * force * 150;
+      const t = ts / 1000;
+
+      for (const star of stars) {
+        const layerSpeed = 0.5 + star.z * 0.55;
+        const angle = star.theta + rotation * layerSpeed;
+
+        const rx = star.radius * maxR;
+        const ry = star.radius * maxR * (height / Math.max(width, 1)) * 1.05 + star.radius * maxR * 0.35;
+
+        const baseX = cx + Math.cos(angle) * rx;
+        const baseY = cy + Math.sin(angle) * ry;
+
+        // Rechazo: se esparcen donde pasa el mouse y vuelven suave
+        let targetOx = 0;
+        let targetOy = 0;
+        if (mouseOn) {
+          const dx = baseX + star.ox - mx;
+          const dy = baseY + star.oy - my;
+          const dist = Math.hypot(dx, dy);
+          if (dist < REPEL_RADIUS && dist > 0.001) {
+            const force = Math.pow((REPEL_RADIUS - dist) / REPEL_RADIUS, 2);
+            const push = force * REPEL_STRENGTH * (0.65 + star.z * 0.55);
+            targetOx = (dx / dist) * push;
+            targetOy = (dy / dist) * push;
+          }
         }
 
-        // Lerp
-        p.repelOffsetX += (targetRepelX - p.repelOffsetX) * 0.1;
-        p.repelOffsetY += (targetRepelY - p.repelOffsetY) * 0.1;
+        star.ox += (targetOx - star.ox) * Math.min(1, 0.14 + dt * 4);
+        star.oy += (targetOy - star.oy) * Math.min(1, 0.14 + dt * 4);
 
-        const finalX = basePx + p.repelOffsetX;
-        const finalY = basePy + p.repelOffsetY;
+        const x = baseX + star.ox;
+        const y = baseY + star.oy;
 
-        // Draw particle
+        if (x < -12 || y < -12 || x > width + 12 || y > height + 12) continue;
+
+        const twinkle = reducedMotion
+          ? 1
+          : 0.82 + 0.18 * Math.sin(t * star.twinkleSpeed + star.twinklePhase);
+        const alpha = star.brightness * twinkle;
+        const { r, g, b } = star;
+
+        // Bokeh / glow en puntos más grandes
+        if (star.size > 1.6) {
+          const glowR = star.size * 3.2;
+          const glow = ctx.createRadialGradient(x, y, 0, x, y, glowR);
+          glow.addColorStop(0, `rgba(${r},${g},${b},${alpha * 0.55})`);
+          glow.addColorStop(0.35, `rgba(${r},${g},${b},${alpha * 0.18})`);
+          glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(x, y, glowR, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (star.size > 0.9) {
+          const glowR = star.size * 2.2;
+          const glow = ctx.createRadialGradient(x, y, 0, x, y, glowR);
+          glow.addColorStop(0, `rgba(${r},${g},${b},${alpha * 0.35})`);
+          glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(x, y, glowR, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.beginPath();
-        ctx.arc(finalX, finalY, p.size / 2, 0, Math.PI * 2);
-        
-        // Calculate opacity based on distance from center (fade out at edges)
-        const opacity = Math.max(0.15, 1 - (p.distance / 70));
-        
-        // Add glow
-        ctx.shadowBlur = p.size * 2;
-        ctx.shadowColor = p.color;
-        
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = opacity;
+        ctx.arc(x, y, Math.max(0.3, star.size / 2), 0, Math.PI * 2);
         ctx.fill();
-        ctx.globalAlpha = 1.0;
-        ctx.shadowBlur = 0;
-      });
+        ctx.globalAlpha = 1;
+      }
+
+      const vignette = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        Math.min(width, height) * 0.22,
+        width / 2,
+        height / 2,
+        Math.max(width, height) * 0.78
+      );
+      vignette.addColorStop(0, 'rgba(0,0,0,0)');
+      vignette.addColorStop(1, 'rgba(0,0,0,0.55)');
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, width, height);
 
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
-    <div 
-      className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-[#050505]"
-      style={{
-        background: 'radial-gradient(circle at center, #171717 0%, #050505 100%)'
-      }}
-    >
-      <canvas 
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-      />
-      
-      {/* Overlay to create depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/60 to-[#050505] z-10" />
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-black">
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/65 z-10" />
     </div>
   );
 };
