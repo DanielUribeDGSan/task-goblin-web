@@ -318,14 +318,25 @@ const TaskNotchLandingContent = () => {
   const [donatingGateway, setDonatingGateway] = useState<
     "paypal" | "mercadopago" | null
   >(null);
+  const [donationAmount, setDonationAmount] = useState<number>(isEn ? 3 : 50);
+  const [customDonationInput, setCustomDonationInput] = useState<string>("");
+  const [isCustomDonation, setIsCustomDonation] = useState(false);
+
+  useEffect(() => {
+    if (!isCustomDonation) {
+      setDonationAmount(isEn ? 3 : 50);
+    }
+  }, [isEn, isCustomDonation]);
 
   const handleDonate = async (gateway: "paypal" | "mercadopago") => {
     setDonatingGateway(gateway);
+    const minVal = isEn ? 2 : 30;
+    const finalVal = Math.max(minVal, donationAmount || (isEn ? 3 : 50));
     try {
       let res = await fetch(`/api/checkout/donation/${gateway}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isMexico: true, lang: isEn ? "en" : "es" }),
+        body: JSON.stringify({ isMexico: !isEn, amount: finalVal, lang: isEn ? "en" : "es" }),
       });
       if (!res.ok) {
         res = await fetch(`/api/checkout/${gateway}`, {
@@ -334,7 +345,8 @@ const TaskNotchLandingContent = () => {
           body: JSON.stringify({
             email: "donante@task-goblin.com",
             appType: "floaty",
-            isMexico: true,
+            isMexico: !isEn,
+            amount: finalVal,
             platform: "mac-silicon",
           }),
         });
@@ -1161,39 +1173,121 @@ const TaskNotchLandingContent = () => {
                   </p>
                 </div>
 
+                {/* Amount Selector */}
+                <div className="w-full max-w-[480px] flex flex-col items-center gap-2.5 pt-1">
+                  <div className="flex items-center justify-between w-full px-1">
+                    <span className="text-[11px] font-bold text-white/60 uppercase tracking-wider">
+                      {isEn
+                        ? "Select or enter amount:"
+                        : "Selecciona o ingresa un monto:"}
+                    </span>
+                    <span className="text-[10px] text-[#f59e0b] font-semibold">
+                      {isEn ? "Min $2 USD" : "Mínimo $30 MXN"}
+                    </span>
+                  </div>
+
+                  {/* Preset Pills */}
+                  <div className="grid grid-cols-4 gap-2 w-full">
+                    {(isEn ? [2, 3, 5, 10] : [30, 50, 100, 200]).map(
+                      (preset) => {
+                        const isSelected =
+                          !isCustomDonation && donationAmount === preset;
+                        return (
+                          <button
+                            key={preset}
+                            type="button"
+                            onClick={() => {
+                              setIsCustomDonation(false);
+                              setDonationAmount(preset);
+                              setCustomDonationInput("");
+                            }}
+                            className={`py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                              isSelected
+                                ? "bg-[#f59e0b] text-black border-[#f59e0b] shadow-[0_0_12px_rgba(245,158,11,0.4)] scale-[1.02]"
+                                : "bg-white/5 hover:bg-white/10 text-white/80 border-white/10"
+                            }`}
+                          >
+                            {isEn ? `$${preset} USD` : `$${preset} MXN`}
+                          </button>
+                        );
+                      },
+                    )}
+                  </div>
+
+                  {/* Custom Amount Input */}
+                  <div className="relative w-full">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-white/40 text-xs font-bold">
+                      {isEn ? "$ USD" : "$ MXN"}
+                    </div>
+                    <input
+                      type="number"
+                      min={isEn ? 2 : 30}
+                      step={isEn ? 1 : 10}
+                      placeholder={
+                        isEn
+                          ? "Other amount (e.g. 15, 25...)"
+                          : "Otro monto (ej. 75, 120...)"
+                      }
+                      value={customDonationInput}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setCustomDonationInput(val);
+                        setIsCustomDonation(true);
+                        const num = parseFloat(val);
+                        if (!isNaN(num)) {
+                          setDonationAmount(num);
+                        }
+                      }}
+                      className="w-full pl-18 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 hover:border-white/20 focus:border-[#f59e0b] focus:outline-none text-xs text-white placeholder-white/30 transition-all"
+                    />
+                  </div>
+                </div>
+
                 {/* Donation Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-[480px] pt-2">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-[480px] pt-1">
                   <button
                     onClick={() => handleDonate("mercadopago")}
-                    disabled={donatingGateway !== null}
+                    disabled={
+                      donatingGateway !== null ||
+                      donationAmount < (isEn ? 2 : 30)
+                    }
                     className="w-full sm:w-1/2 flex items-center justify-center gap-2 bg-[#009ee3]/20 hover:bg-[#009ee3]/30 border border-[#009ee3]/50 text-white font-bold py-3 px-4 rounded-xl text-xs active:scale-[0.98] transition-all cursor-pointer shadow-lg disabled:opacity-50"
                   >
                     {donatingGateway === "mercadopago" ? (
-                      <Loader2 size={16} className="animate-spin text-[#009ee3]" />
+                      <Loader2
+                        size={16}
+                        className="animate-spin text-[#009ee3]"
+                      />
                     ) : (
                       <Coffee size={16} className="text-[#009ee3]" />
                     )}
                     <span>
                       {isEn
-                        ? "Mercado Pago ($50 MXN)"
-                        : "Mercado Pago ($50 MXN)"}
+                        ? `Mercado Pago ($${donationAmount || 3} MXN)`
+                        : `Mercado Pago ($${donationAmount || 50} MXN)`}
                     </span>
                   </button>
 
                   <button
                     onClick={() => handleDonate("paypal")}
-                    disabled={donatingGateway !== null}
+                    disabled={
+                      donatingGateway !== null ||
+                      donationAmount < (isEn ? 2 : 30)
+                    }
                     className="w-full sm:w-1/2 flex items-center justify-center gap-2 bg-[#ffc439]/20 hover:bg-[#ffc439]/30 border border-[#ffc439]/50 text-white font-bold py-3 px-4 rounded-xl text-xs active:scale-[0.98] transition-all cursor-pointer shadow-lg disabled:opacity-50"
                   >
                     {donatingGateway === "paypal" ? (
-                      <Loader2 size={16} className="animate-spin text-[#ffc439]" />
+                      <Loader2
+                        size={16}
+                        className="animate-spin text-[#ffc439]"
+                      />
                     ) : (
                       <Coffee size={16} className="text-[#ffc439]" />
                     )}
                     <span>
                       {isEn
-                        ? "PayPal ($3 USD)"
-                        : "PayPal ($3 USD / $50 MXN)"}
+                        ? `PayPal ($${donationAmount || 3} USD)`
+                        : `PayPal ($${donationAmount || 50} MXN)`}
                     </span>
                   </button>
                 </div>

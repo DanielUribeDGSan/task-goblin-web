@@ -6,6 +6,11 @@ export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const body = await request.json().catch(() => ({}));
+    const requestedAmount = Number(body.amount);
+    const minAmount = 30;
+    const finalAmount = !isNaN(requestedAmount) && requestedAmount >= minAmount ? Math.round(requestedAmount) : 50;
+
     const accessToken = APP_CONFIG.MERCADO_PAGO_IS_PROD
       ? import.meta.env.ACCESS_TOKEN_PRODUCCION
       : import.meta.env.ACCESS_TOKEN_PRUEBAS;
@@ -18,7 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
         items: [{
           id: 'donation-task-notch',
           title: 'Donar un café a Task Notch',
-          unit_price: 50,
+          unit_price: finalAmount,
           quantity: 1,
           currency_id: 'MXN',
           category_id: 'software',

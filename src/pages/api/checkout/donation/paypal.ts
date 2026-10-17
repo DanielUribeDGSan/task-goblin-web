@@ -31,11 +31,17 @@ async function accessToken() {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { isMexico = false } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const isMexico = Boolean(body.isMexico);
+    const minAmount = isMexico ? 30 : 2;
+    const defaultAmount = isMexico ? 50 : 3;
+    const requestedAmount = Number(body.amount);
+    const finalAmount = !isNaN(requestedAmount) && requestedAmount >= minAmount ? requestedAmount : defaultAmount;
+
     const token = await accessToken();
     const origin = new URL(request.url).origin;
     const currency = isMexico ? 'MXN' : 'USD';
-    const value = isMexico ? '50.00' : '3.00';
+    const value = finalAmount.toFixed(2);
 
     const response = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
       method: 'POST',
