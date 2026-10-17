@@ -25,7 +25,109 @@ import {
   Volume2,
   ChevronDown,
   Search,
+  Coffee,
+  Heart,
+  Loader2,
 } from "lucide-react";
+
+const ALL_APP_FEATURES = [
+  {
+    nameEs: "Notch Interactivo (Nook)",
+    nameEn: "Interactive Notch (Nook)",
+    descEs: "Espacio flotante multifunción en tu notch con widgets y atajos",
+    descEn: "Floating multifunction space in your notch with widgets",
+  },
+  {
+    nameEs: "Reproductor en el Notch",
+    nameEn: "Notch Media Player",
+    descEs: "Controla Spotify, Apple Music y YouTube directamente",
+    descEn: "Control Spotify, Apple Music and YouTube directly",
+  },
+  {
+    nameEs: "Captura OCR (Screen to Text)",
+    nameEn: "Screen OCR (Text Grabber)",
+    descEs: "Extrae texto de cualquier imagen, video o pantalla al portapapeles",
+    descEn: "Extract text from any image, video, or screen to clipboard",
+  },
+  {
+    nameEs: "Borrador Mágico IA",
+    nameEn: "AI Magic Eraser",
+    descEs: "Elimina objetos, textos o personas no deseadas de fotos",
+    descEn: "Remove unwanted objects, text, or people from photos",
+  },
+  {
+    nameEs: "Traductor en Pantalla",
+    nameEn: "Screen Translator",
+    descEs: "Traduce selecciones visuales en tiempo real a cualquier idioma",
+    descEn: "Translate visual screen selections in real time to any language",
+  },
+  {
+    nameEs: "Resolver Preguntas con IA",
+    nameEn: "Solve Questions with AI",
+    descEs: "Captura dudas o exámenes y obtén explicaciones paso a paso",
+    descEn: "Capture questions or exams and get step-by-step explanations",
+  },
+  {
+    nameEs: "Bandeja Temporal (Tray)",
+    nameEn: "Temporary Tray",
+    descEs: "Arrastra y suelta archivos entre aplicaciones al instante",
+    descEn: "Drag and drop files between applications instantly",
+  },
+  {
+    nameEs: "Convertidor de Imágenes",
+    nameEn: "Image Converter",
+    descEs: "Convierte a WebP, PNG, JPG y optimiza el peso de fotos",
+    descEn: "Convert to WebP, PNG, JPG and optimize photo file size",
+  },
+  {
+    nameEs: "Compresor de Video IA",
+    nameEn: "Video AI Compressor",
+    descEs: "Reduce el peso de videos en segundos sin perder calidad",
+    descEn: "Compress videos in seconds without losing quality",
+  },
+  {
+    nameEs: "Lector y Resumen PDF IA",
+    nameEn: "PDF AI Tools",
+    descEs: "Visualiza, resume, edita y firma archivos PDF con IA",
+    descEn: "View, summarize, edit, and sign PDF files with AI",
+  },
+  {
+    nameEs: "Extractor de Color (Pipeta)",
+    nameEn: "Color Loupe (HEX / RGB)",
+    descEs: "Copia códigos de color de pantalla con lupa de alta precisión",
+    descEn: "Sample screen colors with a precision magnifying loupe",
+  },
+  {
+    nameEs: "Temporizador de Apagado",
+    nameEn: "Smart Shutdown Timer",
+    descEs: "Programa apagado, reinicio o suspensión automática de tu Mac",
+    descEn: "Schedule automatic Mac shutdown, restart, or sleep",
+  },
+  {
+    nameEs: "Terminal de Comandos",
+    nameEn: "Terminal in the Notch",
+    descEs: "Ejecuta comandos de shell y scripts rápidos desde el notch",
+    descEn: "Run shell commands and quick scripts directly from the notch",
+  },
+  {
+    nameEs: "Notas Rápidas",
+    nameEn: "Quick Notes",
+    descEs: "Bloc de notas flotante siempre listo para anotar ideas al vuelo",
+    descEn: "Floating scratchpad always ready to jot down thoughts",
+  },
+  {
+    nameEs: "Calendario Integrado",
+    nameEn: "Built-in Calendar",
+    descEs: "Consulta fechas y eventos rápidamente sin cambiar de ventana",
+    descEn: "Quickly check dates and events without switching windows",
+  },
+  {
+    nameEs: "Atajos Globales de Teclado",
+    nameEn: "Global Shortcuts",
+    descEs: "Accede a cada herramienta con combinaciones de teclas nativas",
+    descEn: "Access any tool instantly with native macOS keybindings",
+  },
+];
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { LayoutProvider } from "../../contexts/LayoutContext";
 import { triggerSecureDownload } from "../../utils/download";
@@ -213,6 +315,44 @@ const TaskNotchLandingContent = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [donatingGateway, setDonatingGateway] = useState<
+    "paypal" | "mercadopago" | null
+  >(null);
+
+  const handleDonate = async (gateway: "paypal" | "mercadopago") => {
+    setDonatingGateway(gateway);
+    try {
+      let res = await fetch(`/api/checkout/donation/${gateway}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isMexico: true, lang: isEn ? "en" : "es" }),
+      });
+      if (!res.ok) {
+        res = await fetch(`/api/checkout/${gateway}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: "donante@task-goblin.com",
+            appType: "floaty",
+            isMexico: true,
+            platform: "mac-silicon",
+          }),
+        });
+      }
+      const data = await res.json();
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        window.location.href = `/donate?status=error`;
+      }
+    } catch (err) {
+      console.error("Donation error:", err);
+      window.location.href = `/donate?status=error`;
+    } finally {
+      setDonatingGateway(null);
+    }
+  };
+
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const pendingDownloadPlatform: DownloadPlatform = "mac-silicon";
 
@@ -920,213 +1060,183 @@ const TaskNotchLandingContent = () => {
                 </button>
               </div>
 
-              <a
-                href="/license"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white mb-6 cursor-pointer"
-              >
-                <Search size={16} className="text-white/70" />
-                <span>
-                  {isEn ? "Check your license" : "Consultar tu licencia"}
-                </span>
-              </a>
-
               {/* Dynamic feature description */}
               <p className="text-xs sm:text-sm text-white/60 leading-relaxed max-w-[650px] whitespace-pre-line">
                 {isEn ? activeOption.descEn : activeOption.descEs}
               </p>
 
-              {/* Highlights Horizontal Row */}
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 pt-2 text-white/80">
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle size={12} className="text-[#3b82f6] shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">
-                    {isEn ? "Instant OCR" : "OCR de pantalla"}
-                  </span>
+              {/* Free Forever Banner */}
+              <div
+                className="flex items-center gap-2 px-4 py-2 rounded-full mt-3 mb-1"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(5, 196, 107, 0.15), rgba(0, 232, 119, 0.25))",
+                  border: "1px solid rgba(5, 196, 107, 0.4)",
+                  boxShadow: "0 0 20px 2px rgba(5, 196, 107, 0.25)",
+                }}
+              >
+                <Sparkles size={14} className="text-[#05c46b]" />
+                <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-[#05c46b]">
+                  {isEn
+                    ? "🎉 100% Completely Free Forever · No Subscriptions"
+                    : "🎉 100% Totalmente Gratis para Siempre · Sin Suscripciones"}
+                </span>
+              </div>
+
+              {/* Full Features Grid */}
+              <div className="w-full max-w-[920px] mt-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between mb-4 px-2 gap-2 text-center sm:text-left">
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+                      <span>
+                        {isEn
+                          ? "All Features Included"
+                          : "Todas las Funciones Incluidas"}
+                      </span>
+                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#05c46b]/20 text-[#05c46b] px-2.5 py-0.5 rounded-full border border-[#05c46b]/40">
+                        {isEn ? "FREE" : "GRATIS"}
+                      </span>
+                    </h3>
+                    <p className="text-xs text-white/50">
+                      {isEn
+                        ? "Everything is unlocked from day one. No trial period, no paywalls."
+                        : "Todo está desbloqueado desde el primer momento. Sin periodos de prueba ni límites."}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle size={12} className="text-[#3b82f6] shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">
-                    {isEn ? "AI Magic Eraser" : "Borrador mágico"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle size={12} className="text-[#3b82f6] shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">
-                    {isEn ? "Dynamic Island" : "Notch interactivo"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle size={12} className="text-[#3b82f6] shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">
-                    {isEn
-                      ? "Image converter & video reduction"
-                      : "Convertidor de imágenes y reducción de videos"}
-                  </span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+                  {ALL_APP_FEATURES.map((feat, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.15] transition-all duration-200 flex flex-col justify-between gap-2 group"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="text-xs font-bold text-white group-hover:text-[#3b82f6] transition-colors leading-snug">
+                          {isEn ? feat.nameEn : feat.nameEs}
+                        </span>
+                        <CheckCircle
+                          size={14}
+                          className="text-[#05c46b] shrink-0 mt-0.5"
+                        />
+                      </div>
+                      <p className="text-[11px] text-white/50 leading-relaxed">
+                        {isEn ? feat.descEn : feat.descEs}
+                      </p>
+                      <div className="flex items-center gap-1.5 pt-1 border-t border-white/[0.04]">
+                        <span className="text-[9px] font-black uppercase tracking-wider text-[#05c46b]">
+                          ✓ {isEn ? "100% Free" : "100% Gratis"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Pricing Block */}
-              <div className="flex flex-col items-center gap-2 pt-2">
-                {/* Free Nook badge */}
-                <div
-                  className="flex items-center gap-2 px-4 py-1.5 rounded-full mb-1"
-                  style={{
-                    background: "linear-gradient(135deg, #05c46b22, #00e87733)",
-                    border: "1px solid #05c46b55",
-                    boxShadow: "0 0 18px 2px #05c46b33",
-                  }}
-                >
-                  <span
-                    className="text-[11px] font-black uppercase tracking-widest"
-                    style={{ color: "#05c46b" }}
+              {/* Coffee Donation Section */}
+              <div
+                id="donar-cafe"
+                className="w-full max-w-[720px] mt-6 p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#181512]/90 to-[#0e0c0a]/90 border border-[#f59e0b]/25 shadow-[0_10px_35px_rgba(245,158,11,0.1)] flex flex-col items-center gap-4 text-center relative overflow-hidden"
+              >
+                <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#f59e0b]/10 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-12 -left-12 w-36 h-36 bg-[#ffc439]/10 rounded-full blur-2xl pointer-events-none" />
+
+                <div className="w-14 h-14 rounded-2xl bg-[#f59e0b]/15 border border-[#f59e0b]/30 flex items-center justify-center text-2xl shadow-inner">
+                  ☕
+                </div>
+
+                <div className="space-y-2 max-w-[540px]">
+                  <h3 className="text-xl sm:text-2xl font-black text-white flex items-center justify-center gap-2">
+                    <span>
+                      {isEn
+                        ? "Enjoying Task Notch? Support with a Coffee"
+                        : "¿Te gusta Task Notch? Apóyame con un café"}
+                    </span>
+                    <Heart size={18} className="text-red-500 fill-red-500" />
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
+                    {isEn
+                      ? "Task Notch is completely free. If it saves you time and improves your workflow, you can voluntarily donate a coffee to support its ongoing development and updates."
+                      : "Task Notch es completamente gratuito. Si la app te ahorra tiempo en tu Mac y disfrutas usarla, puedes invitarme un café voluntario para apoyar las próximas actualizaciones."}
+                  </p>
+                </div>
+
+                {/* Donation Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-[480px] pt-2">
+                  <button
+                    onClick={() => handleDonate("mercadopago")}
+                    disabled={donatingGateway !== null}
+                    className="w-full sm:w-1/2 flex items-center justify-center gap-2 bg-[#009ee3]/20 hover:bg-[#009ee3]/30 border border-[#009ee3]/50 text-white font-bold py-3 px-4 rounded-xl text-xs active:scale-[0.98] transition-all cursor-pointer shadow-lg disabled:opacity-50"
                   >
-                    🎉{" "}
-                    {isEn
-                      ? "The Nook — 100% Free forever"
-                      : "El Nook principal — 100% Gratis para siempre"}
-                  </span>
-                </div>
-                {/* Free features info */}
-                <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 mt-1">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle
-                      size={11}
-                      className="text-[#05c46b] shrink-0"
-                    />
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
-                      {isEn ? "Media player — Free" : "Reproductor — Gratis"}
+                    {donatingGateway === "mercadopago" ? (
+                      <Loader2 size={16} className="animate-spin text-[#009ee3]" />
+                    ) : (
+                      <Coffee size={16} className="text-[#009ee3]" />
+                    )}
+                    <span>
+                      {isEn
+                        ? "Mercado Pago ($50 MXN)"
+                        : "Mercado Pago ($50 MXN)"}
                     </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle
-                      size={11}
-                      className="text-[#05c46b] shrink-0"
-                    />
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
-                      {isEn ? "Notes — Free" : "Notas — Gratis"}
+                  </button>
+
+                  <button
+                    onClick={() => handleDonate("paypal")}
+                    disabled={donatingGateway !== null}
+                    className="w-full sm:w-1/2 flex items-center justify-center gap-2 bg-[#ffc439]/20 hover:bg-[#ffc439]/30 border border-[#ffc439]/50 text-white font-bold py-3 px-4 rounded-xl text-xs active:scale-[0.98] transition-all cursor-pointer shadow-lg disabled:opacity-50"
+                  >
+                    {donatingGateway === "paypal" ? (
+                      <Loader2 size={16} className="animate-spin text-[#ffc439]" />
+                    ) : (
+                      <Coffee size={16} className="text-[#ffc439]" />
+                    )}
+                    <span>
+                      {isEn
+                        ? "PayPal ($3 USD)"
+                        : "PayPal ($3 USD / $50 MXN)"}
                     </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle
-                      size={11}
-                      className="text-[#05c46b] shrink-0"
-                    />
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
-                      {isEn ? "Calendar — Free" : "Calendario — Gratis"}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle
-                      size={11}
-                      className="text-[#05c46b] shrink-0"
-                    />
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
-                      {isEn ? "Color — Free" : "Color — Gratis"}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle
-                      size={11}
-                      className="text-[#05c46b] shrink-0"
-                    />
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
-                      {isEn ? "PDF AI — Free" : "PDF IA — Gratis"}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle
-                      size={11}
-                      className="text-[#05c46b] shrink-0"
-                    />
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
-                      {isEn ? "Shutdown — Free" : "Apagar — Gratis"}
-                    </span>
-                  </div>
+                  </button>
                 </div>
 
-                {/* Divider */}
-                <div className="w-full max-w-[320px] h-px bg-white/[0.06] my-2" />
-
-                {/* Legend */}
-                <div className="text-center mb-1">
-                  <span className="text-[10px] sm:text-[11px] font-bold text-[#3b82f6] uppercase tracking-wider">
-                    {isEn
-                      ? "Get 1 free week of pro features when downloading"
-                      : "Al descargar obtienes 1 semana gratis de funciones pro"}
-                  </span>
-                </div>
-
-                {/* Price */}
-                <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-1 sm:gap-3">
-                  <div className="flex items-baseline gap-2 sm:gap-3">
-                    <span className="text-lg sm:text-2xl font-black text-white/30 line-through">
-                      {useMxn ? "$199 MXN" : "$12 USD"}
-                    </span>
-                    <span className="text-3xl sm:text-4xl font-black text-white">
-                      {useMxn ? "$149 MXN" : "$9 USD"}
-                    </span>
-                  </div>
-                  <span className="text-[9px] sm:text-xs font-bold text-white/40 uppercase tracking-wider sm:self-end sm:pb-1">
-                    {isEn
-                      ? "one-time · Pro features"
-                      : "pago único · funciones Pro"}
-                  </span>
-                </div>
+                <span className="text-[10px] text-white/40 tracking-wider">
+                  {isEn
+                    ? "100% voluntary · Thank you for your support!"
+                    : "100% voluntario · ¡Muchas gracias por tu apoyo!"}
+                </span>
               </div>
 
-              {/* Quick Actions Buttons */}
-              <div className="flex flex-wrap items-center justify-center gap-4 pt-2.5">
-                <button
-                  onClick={() => setIsPaymentModalOpen(true)}
-                  className="bg-white/5 hover:bg-white/10 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white flex items-center gap-2 cursor-pointer shadow-lg"
-                >
-                  <Sparkles size={14} className="text-yellow-400" />
-                  <span>
-                    {isEn ? "Unlock Pro Version" : "Desbloquear Versión Pro"}
-                  </span>
-                </button>
-              </div>
-
-              {/* Other Apps Section */}
-              <div className="w-full flex flex-col items-center gap-4 pt-4">
+              {/* Other Apps Section: Pair Bot only */}
+              <div className="w-full flex flex-col items-center gap-4 pt-6">
                 <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-[0.2em]">
                   {isEn ? "Try my other apps" : "Prueba mis otras aplicaciones"}
                 </span>
-                <div className="flex flex-wrap items-center justify-center gap-8">
-                  {/* Task Goblin */}
-                  <a
-                    href="/task-goblin-app"
-                    className="flex flex-col items-center gap-2 group cursor-pointer"
-                  >
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(151,130,255,0.2)] group-hover:shadow-[0_4px_30px_rgba(151,130,255,0.5)] group-hover:border-[#9782ff]/50 transition-all duration-300 group-hover:scale-110">
-                      <img
-                        src="/icon/TaskGoblin.png"
-                        className="w-full h-full object-cover"
-                        alt="Task Goblin"
-                      />
+                <a
+                  href="/pair-bot"
+                  className="group flex flex-col sm:flex-row items-center gap-4 px-6 py-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-white/20 transition-all duration-300 hover:scale-[1.02] shadow-xl max-w-[440px] w-full"
+                >
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden p-2 bg-black/60 border border-white/10 group-hover:border-white/30 transition-all shrink-0 flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                    <img
+                      src="/pair-bot-logo.svg"
+                      className="w-full h-full object-contain"
+                      alt="Pair Bot"
+                    />
+                  </div>
+                  <div className="flex flex-col items-center sm:items-start text-center sm:text-left gap-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-white group-hover:text-white transition-colors">
+                        Pair Bot
+                      </span>
+                      <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                        {isEn ? "Totalmente Gratis" : "Totalmente Gratis"}
+                      </span>
                     </div>
-                    <span className="text-[10px] sm:text-[11px] font-bold text-white/60 group-hover:text-white transition-colors duration-200 uppercase tracking-wider">
-                      Task Goblin
-                    </span>
-                  </a>
-
-                  {/* Floaty */}
-                  <a
-                    href="/floaty-app"
-                    className="flex flex-col items-center gap-2 group cursor-pointer"
-                  >
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_4px_20px_rgba(43,228,106,0.15)] group-hover:shadow-[0_4px_30px_rgba(43,228,106,0.4)] group-hover:border-[#2BE46A]/50 transition-all duration-300 group-hover:scale-110">
-                      <img
-                        src="/icon/floaty.png"
-                        className="w-full h-full object-cover"
-                        alt="Floaty"
-                      />
-                    </div>
-                    <span className="text-[10px] sm:text-[11px] font-bold text-white/60 group-hover:text-white transition-colors duration-200 uppercase tracking-wider">
-                      Floaty
-                    </span>
-                  </a>
-                </div>
+                    <p className="text-xs text-white/60 leading-relaxed">
+                      {isEn
+                        ? "Your AI-powered pair programming companion built with OpenHands."
+                        : "Tu compañero de pair programming impulsado por IA."}
+                    </p>
+                  </div>
+                </a>
               </div>
             </div>
           </div>

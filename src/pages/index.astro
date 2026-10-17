@@ -88,8 +88,7 @@ const SITE = "https://task-goblin.com";
         </ul>
         <h2>Otras aplicaciones</h2>
         <ul>
-          <li><a href="/task-goblin-app">Task Goblin — Automatización para Mac y Windows</a></li>
-          <li><a href="/floaty-app">Floaty — Compañero Virtual para Mac</a></li>
+          <li><a href="/pair-bot">Pair Bot — Tu compañero de pair programming impulsado por IA</a></li>
         </ul>
       </main>
     </noscript>
@@ -193,14 +192,7 @@ const SITE = "https://task-goblin.com";
                   name: "Free",
                   price: "0",
                   priceCurrency: "USD",
-                  description: "Reproductor, Notas y Calendario gratuitos para siempre",
-                },
-                {
-                  "@type": "Offer",
-                  name: "Pro",
-                  price: "149",
-                  priceCurrency: "USD",
-                  description: "Pago único: IA, OCR, Traductor y todas las funciones Pro",
+                  description: "Totalmente gratis para siempre sin suscripciones ni pagos ocultos",
                 },
               ],
             },
@@ -211,73 +203,54 @@ const SITE = "https://task-goblin.com";
               "Notch Media Player — Reproductor en el notch",
               "Quick Notes en el notch",
               "Calendar Widget",
-              "PDF Tools",
+              "PDF Tools & AI Summary",
               "Image to WebP converter",
+              "Video AI Compressor",
+              "Terminal in Notch",
+              "Color Loupe Extractor",
               "Answer questions on screen",
             ],
             author: { "@id": `${SITE}/#organization` },
             publisher: { "@id": `${SITE}/#organization` },
           },
 
-          /* ── 5. SoftwareApplication — Task Goblin ─────────────────── */
+          /* ── 5. SoftwareApplication — Pair Bot ─────────────────────── */
           {
             "@type": "SoftwareApplication",
-            "@id": `${SITE}/#software-taskgoblin`,
-            name: "Task Goblin",
-            applicationCategory: "UtilitiesApplication",
-            operatingSystem: "macOS, Windows",
-            description: "Task Goblin automatiza tu día a día: auto clicker, WhatsApp programado, OCR, PDF a Word, extractor de colores y más.",
-            url: `${SITE}/task-goblin-app`,
-            image: `${SITE}/icon/TaskGoblin.png`,
+            "@id": `${SITE}/#software-pairbot`,
+            name: "Pair Bot",
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "macOS, Web, Linux",
+            description: "Pair Bot: tu compañero de pair programming impulsado por IA con OpenHands.",
+            url: `${SITE}/pair-bot`,
+            image: `${SITE}/pair-bot-logo.svg`,
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             author: { "@id": `${SITE}/#organization` },
           },
 
-          /* ── 6. SoftwareApplication — Floaty ─────────────────────── */
-          {
-            "@type": "SoftwareApplication",
-            "@id": `${SITE}/#software-floaty`,
-            name: "Floaty",
-            applicationCategory: "UtilitiesApplication",
-            operatingSystem: "macOS",
-            description: "Floaty es tu compañero virtual de escritorio con animaciones fluidas para Mac.",
-            url: `${SITE}/floaty-app`,
-            image: `${SITE}/icon/floaty.png`,
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            author: { "@id": `${SITE}/#organization` },
-          },
-
-          /* ── 7. ItemList — sitelinks Google (como Facebook submenus) ─ */
+          /* ── 6. ItemList — sitelinks Google (como Facebook submenus) ─ */
           {
             "@type": "ItemList",
             "@id": `${SITE}/#app-list`,
             name: "Aplicaciones de TaskNotch",
-            description: "Suite de apps de productividad para Mac: TaskNotch, Task Goblin y Floaty.",
-            numberOfItems: 3,
+            description: "Apps de productividad para Mac: TaskNotch y Pair Bot.",
+            numberOfItems: 2,
             itemListElement: [
               {
                 "@type": "ListItem",
                 position: 1,
                 name: "TaskNotch — Notch Interactivo para Mac",
-                description: "Transforma el notch de tu Mac en un centro de productividad con IA, OCR y más.",
+                description: "Transforma el notch de tu Mac en un centro de productividad con IA, OCR y más. 100% gratis.",
                 url: `${SITE}/`,
                 image: `${SITE}/icon/TaskNotch.png`,
               },
               {
                 "@type": "ListItem",
                 position: 2,
-                name: "Task Goblin — Automatización para Mac y Windows",
-                description: "Auto clicker, WhatsApp programado, PDF a Word, extractor de colores y más herramientas.",
-                url: `${SITE}/task-goblin-app`,
-                image: `${SITE}/icon/TaskGoblin.png`,
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: "Floaty — Compañero Virtual de Escritorio",
-                description: "Tu mascota virtual ligera para Mac con animaciones fluidas.",
-                url: `${SITE}/floaty-app`,
-                image: `${SITE}/icon/floaty.png`,
+                name: "Pair Bot — Pair Programming con IA",
+                description: "Tu compañero de pair programming impulsado por IA con soporte multi-modelo.",
+                url: `${SITE}/pair-bot`,
+                image: `${SITE}/pair-bot-logo.svg`,
               },
             ],
           },

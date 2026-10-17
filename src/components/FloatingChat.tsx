@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Home, Bot, Search, Lock, Download, HelpCircle, CreditCard, Clock, Mail, ArrowLeft, Sparkles } from "lucide-react";
+import { MessageCircle, X, Home, Bot, Search, Lock, Download, HelpCircle, CreditCard, Clock, Mail, ArrowLeft, Sparkles, Coffee } from "lucide-react";
 import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
 import { LayoutProvider } from "../contexts/LayoutContext";
 import { PaymentModal } from "./PaymentModal";
@@ -209,9 +209,9 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
     const isFloaty = appType === "floaty";
     const isNexo = appType === "nexo";
     const isTaskNotch = appType === "task-notch";
-    const accentColor = isTaskNotch ? "#3b82f6" : isFloaty ? "#2BE46A" : isNexo ? "#C693FA" : "#9782ff";
+    const accentColor = isTaskNotch ? "#f59e0b" : isFloaty ? "#2BE46A" : isNexo ? "#C693FA" : "#9782ff";
     const accentShadow = isTaskNotch
-        ? "rgba(59, 130, 246, 0.3)"
+        ? "rgba(245, 158, 11, 0.4)"
         : isFloaty 
             ? "rgba(43, 228, 106, 0.3)" 
             : isNexo 
@@ -227,15 +227,33 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
                     animate={{ opacity: 1, x: 0 }}
                     whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setIsPaymentModalOpen(true)}
-                    className="group flex items-center gap-3 text-black font-bold py-3 px-5 rounded-3xl shadow-2xl cursor-pointer transition-all border border-white/20"
+                    onClick={() => {
+                        if (isTaskNotch) {
+                            const el = document.getElementById("donar-cafe");
+                            if (el) {
+                                el.scrollIntoView({ behavior: "smooth" });
+                                return;
+                            }
+                        }
+                        setIsPaymentModalOpen(true);
+                    }}
+                    className="group flex items-center gap-2.5 text-black font-bold py-3 px-5 rounded-3xl shadow-2xl cursor-pointer transition-all border border-white/20"
                     style={{ 
                         backgroundColor: accentColor,
                         boxShadow: `0 10px 25px -5px ${accentShadow}`
                     }}
                 >
-                    <Sparkles size={20} className="animate-pulse" />
-                    <span className="text-sm whitespace-nowrap">{t.bottomBar.buyLicense}</span>
+                    {isTaskNotch ? (
+                        <>
+                            <Coffee size={18} className="text-black" />
+                            <span className="text-sm whitespace-nowrap">{lang === "en" ? "Donate a Coffee" : "Donar un café"}</span>
+                        </>
+                    ) : (
+                        <>
+                            <Sparkles size={20} className="animate-pulse" />
+                            <span className="text-sm whitespace-nowrap">{t.bottomBar.buyLicense}</span>
+                        </>
+                    )}
                 </motion.button>
             )}
 
