@@ -31,102 +31,22 @@ import {
 } from "lucide-react";
 
 const ALL_APP_FEATURES = [
-  {
-    nameEs: "Notch Interactivo (Nook)",
-    nameEn: "Interactive Notch (Nook)",
-    descEs: "Espacio flotante multifunción en tu notch con widgets y atajos",
-    descEn: "Floating multifunction space in your notch with widgets",
-  },
-  {
-    nameEs: "Reproductor en el Notch",
-    nameEn: "Notch Media Player",
-    descEs: "Controla Spotify, Apple Music y YouTube directamente",
-    descEn: "Control Spotify, Apple Music and YouTube directly",
-  },
-  {
-    nameEs: "Captura OCR (Screen to Text)",
-    nameEn: "Screen OCR (Text Grabber)",
-    descEs: "Extrae texto de cualquier imagen, video o pantalla al portapapeles",
-    descEn: "Extract text from any image, video, or screen to clipboard",
-  },
-  {
-    nameEs: "Borrador Mágico IA",
-    nameEn: "AI Magic Eraser",
-    descEs: "Elimina objetos, textos o personas no deseadas de fotos",
-    descEn: "Remove unwanted objects, text, or people from photos",
-  },
-  {
-    nameEs: "Traductor en Pantalla",
-    nameEn: "Screen Translator",
-    descEs: "Traduce selecciones visuales en tiempo real a cualquier idioma",
-    descEn: "Translate visual screen selections in real time to any language",
-  },
-  {
-    nameEs: "Resolver Preguntas con IA",
-    nameEn: "Solve Questions with AI",
-    descEs: "Captura dudas o exámenes y obtén explicaciones paso a paso",
-    descEn: "Capture questions or exams and get step-by-step explanations",
-  },
-  {
-    nameEs: "Bandeja Temporal (Tray)",
-    nameEn: "Temporary Tray",
-    descEs: "Arrastra y suelta archivos entre aplicaciones al instante",
-    descEn: "Drag and drop files between applications instantly",
-  },
-  {
-    nameEs: "Convertidor de Imágenes",
-    nameEn: "Image Converter",
-    descEs: "Convierte a WebP, PNG, JPG y optimiza el peso de fotos",
-    descEn: "Convert to WebP, PNG, JPG and optimize photo file size",
-  },
-  {
-    nameEs: "Compresor de Video IA",
-    nameEn: "Video AI Compressor",
-    descEs: "Reduce el peso de videos en segundos sin perder calidad",
-    descEn: "Compress videos in seconds without losing quality",
-  },
-  {
-    nameEs: "Lector y Resumen PDF IA",
-    nameEn: "PDF AI Tools",
-    descEs: "Visualiza, resume, edita y firma archivos PDF con IA",
-    descEn: "View, summarize, edit, and sign PDF files with AI",
-  },
-  {
-    nameEs: "Extractor de Color (Pipeta)",
-    nameEn: "Color Loupe (HEX / RGB)",
-    descEs: "Copia códigos de color de pantalla con lupa de alta precisión",
-    descEn: "Sample screen colors with a precision magnifying loupe",
-  },
-  {
-    nameEs: "Temporizador de Apagado",
-    nameEn: "Smart Shutdown Timer",
-    descEs: "Programa apagado, reinicio o suspensión automática de tu Mac",
-    descEn: "Schedule automatic Mac shutdown, restart, or sleep",
-  },
-  {
-    nameEs: "Terminal de Comandos",
-    nameEn: "Terminal in the Notch",
-    descEs: "Ejecuta comandos de shell y scripts rápidos desde el notch",
-    descEn: "Run shell commands and quick scripts directly from the notch",
-  },
-  {
-    nameEs: "Notas Rápidas",
-    nameEn: "Quick Notes",
-    descEs: "Bloc de notas flotante siempre listo para anotar ideas al vuelo",
-    descEn: "Floating scratchpad always ready to jot down thoughts",
-  },
-  {
-    nameEs: "Calendario Integrado",
-    nameEn: "Built-in Calendar",
-    descEs: "Consulta fechas y eventos rápidamente sin cambiar de ventana",
-    descEn: "Quickly check dates and events without switching windows",
-  },
-  {
-    nameEs: "Atajos Globales de Teclado",
-    nameEn: "Global Shortcuts",
-    descEs: "Accede a cada herramienta con combinaciones de teclas nativas",
-    descEn: "Access any tool instantly with native macOS keybindings",
-  },
+  { icon: "🏝️", nameEs: "Notch Interactivo (Nook)", nameEn: "Interactive Notch (Nook)" },
+  { icon: "🎵", nameEs: "Reproductor en el Notch", nameEn: "Notch Media Player" },
+  { icon: "🔍", nameEs: "Captura OCR (Screen to Text)", nameEn: "Screen OCR (Text Grabber)" },
+  { icon: "✨", nameEs: "Borrador Mágico IA", nameEn: "AI Magic Eraser" },
+  { icon: "🌐", nameEs: "Traductor en Pantalla", nameEn: "Screen Translator" },
+  { icon: "🧠", nameEs: "Resolver Preguntas IA", nameEn: "Solve Questions with AI" },
+  { icon: "📥", nameEs: "Bandeja de Archivos (Tray)", nameEn: "Temporary Tray" },
+  { icon: "🔄", nameEs: "Convertidor de Imágenes", nameEn: "Image Converter" },
+  { icon: "🎬", nameEs: "Compresor de Video IA", nameEn: "Video AI Compressor" },
+  { icon: "📄", nameEs: "Lector y Resumen PDF IA", nameEn: "PDF AI Tools" },
+  { icon: "🎨", nameEs: "Extractor de Color (Pipeta)", nameEn: "Color Loupe (HEX / RGB)" },
+  { icon: "⏱️", nameEs: "Temporizador de Apagado", nameEn: "Smart Shutdown Timer" },
+  { icon: "💻", nameEs: "Terminal en el Notch", nameEn: "Terminal in the Notch" },
+  { icon: "📝", nameEs: "Notas Rápidas", nameEn: "Quick Notes" },
+  { icon: "📅", nameEs: "Calendario Integrado", nameEn: "Built-in Calendar" },
+  { icon: "⌨️", nameEs: "Atajos de Teclado", nameEn: "Global Shortcuts" },
 ];
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { LayoutProvider } from "../../contexts/LayoutContext";
@@ -1095,51 +1015,26 @@ const TaskNotchLandingContent = () => {
                 </span>
               </div>
 
-              {/* Full Features Grid */}
-              <div className="w-full max-w-[920px] mt-4">
-                <div className="flex flex-col sm:flex-row items-center justify-between mb-4 px-2 gap-2 text-center sm:text-left">
-                  <div>
-                    <h3 className="text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
-                      <span>
-                        {isEn
-                          ? "All Features Included"
-                          : "Todas las Funciones Incluidas"}
-                      </span>
-                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#05c46b]/20 text-[#05c46b] px-2.5 py-0.5 rounded-full border border-[#05c46b]/40">
-                        {isEn ? "FREE" : "GRATIS"}
-                      </span>
-                    </h3>
-                    <p className="text-xs text-white/50">
-                      {isEn
-                        ? "Everything is unlocked from day one. No trial period, no paywalls."
-                        : "Todo está desbloqueado desde el primer momento. Sin periodos de prueba ni límites."}
-                    </p>
-                  </div>
-                </div>
+              {/* Lluvia de ideas / Tag Cloud compacto */}
+              <div className="w-full max-w-[760px] mt-2 mb-2 flex flex-col items-center gap-3">
+                <span className="text-[11px] font-bold text-white/50 uppercase tracking-[0.18em]">
+                  {isEn
+                    ? "Everything included without restrictions"
+                    : "Todo lo que incluye sin restricciones"}
+                </span>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+                <div className="flex flex-wrap items-center justify-center gap-2 max-w-[720px]">
                   {ALL_APP_FEATURES.map((feat, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.15] transition-all duration-200 flex flex-col justify-between gap-2 group"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 transition-all duration-200 cursor-default group shadow-sm hover:scale-105"
                     >
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="text-xs font-bold text-white group-hover:text-[#3b82f6] transition-colors leading-snug">
-                          {isEn ? feat.nameEn : feat.nameEs}
-                        </span>
-                        <CheckCircle
-                          size={14}
-                          className="text-[#05c46b] shrink-0 mt-0.5"
-                        />
-                      </div>
-                      <p className="text-[11px] text-white/50 leading-relaxed">
-                        {isEn ? feat.descEn : feat.descEs}
-                      </p>
-                      <div className="flex items-center gap-1.5 pt-1 border-t border-white/[0.04]">
-                        <span className="text-[9px] font-black uppercase tracking-wider text-[#05c46b]">
-                          ✓ {isEn ? "100% Free" : "100% Gratis"}
-                        </span>
-                      </div>
+                      <span className="text-xs group-hover:scale-110 transition-transform">
+                        {feat.icon}
+                      </span>
+                      <span className="text-[11px] font-semibold text-white/80 group-hover:text-white transition-colors">
+                        {isEn ? feat.nameEn : feat.nameEs}
+                      </span>
                     </div>
                   ))}
                 </div>
