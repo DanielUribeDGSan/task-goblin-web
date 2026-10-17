@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaApple, FaMugHot } from "react-icons/fa6";
 import {
-  Apple,
   Terminal,
   ScanText,
   Sparkles,
@@ -25,28 +25,40 @@ import {
   Volume2,
   ChevronDown,
   Search,
-  Coffee,
   Heart,
   Loader2,
+  Layers,
+  Music,
+  Wand2,
+  FolderDown,
+  FileEdit,
+  Calendar,
+  Keyboard,
 } from "lucide-react";
 
-const ALL_APP_FEATURES = [
-  { icon: "🏝️", nameEs: "Notch Interactivo (Nook)", nameEn: "Interactive Notch (Nook)" },
-  { icon: "🎵", nameEs: "Reproductor en el Notch", nameEn: "Notch Media Player" },
-  { icon: "🔍", nameEs: "Captura OCR (Screen to Text)", nameEn: "Screen OCR (Text Grabber)" },
-  { icon: "✨", nameEs: "Borrador Mágico IA", nameEn: "AI Magic Eraser" },
-  { icon: "🌐", nameEs: "Traductor en Pantalla", nameEn: "Screen Translator" },
-  { icon: "🧠", nameEs: "Resolver Preguntas IA", nameEn: "Solve Questions with AI" },
-  { icon: "📥", nameEs: "Bandeja de Archivos (Tray)", nameEn: "Temporary Tray" },
-  { icon: "🔄", nameEs: "Convertidor de Imágenes", nameEn: "Image Converter" },
-  { icon: "🎬", nameEs: "Compresor de Video IA", nameEn: "Video AI Compressor" },
-  { icon: "📄", nameEs: "Lector y Resumen PDF IA", nameEn: "PDF AI Tools" },
-  { icon: "🎨", nameEs: "Extractor de Color (Pipeta)", nameEn: "Color Loupe (HEX / RGB)" },
-  { icon: "⏱️", nameEs: "Temporizador de Apagado", nameEn: "Smart Shutdown Timer" },
-  { icon: "💻", nameEs: "Terminal en el Notch", nameEn: "Terminal in the Notch" },
-  { icon: "📝", nameEs: "Notas Rápidas", nameEn: "Quick Notes" },
-  { icon: "📅", nameEs: "Calendario Integrado", nameEn: "Built-in Calendar" },
-  { icon: "⌨️", nameEs: "Atajos de Teclado", nameEn: "Global Shortcuts" },
+interface FeatureItem {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  nameEs: string;
+  nameEn: string;
+}
+
+const ALL_APP_FEATURES: FeatureItem[] = [
+  { icon: Layers, nameEs: "Notch Interactivo (Nook)", nameEn: "Interactive Notch (Nook)" },
+  { icon: Music, nameEs: "Reproductor en el Notch", nameEn: "Notch Media Player" },
+  { icon: ScanText, nameEs: "Captura OCR (Screen to Text)", nameEn: "Screen OCR (Text Grabber)" },
+  { icon: Wand2, nameEs: "Borrador Mágico IA", nameEn: "AI Magic Eraser" },
+  { icon: Languages, nameEs: "Traductor en Pantalla", nameEn: "Screen Translator" },
+  { icon: Brain, nameEs: "Resolver Preguntas IA", nameEn: "Solve Questions with AI" },
+  { icon: FolderDown, nameEs: "Bandeja de Archivos (Tray)", nameEn: "Temporary Tray" },
+  { icon: RefreshCw, nameEs: "Convertidor de Imágenes", nameEn: "Image Converter" },
+  { icon: Video, nameEs: "Compresor de Video IA", nameEn: "Video AI Compressor" },
+  { icon: FileText, nameEs: "Lector y Resumen PDF IA", nameEn: "PDF AI Tools" },
+  { icon: Pipette, nameEs: "Extractor de Color (Pipeta)", nameEn: "Color Loupe (HEX / RGB)" },
+  { icon: Power, nameEs: "Temporizador de Apagado", nameEn: "Smart Shutdown Timer" },
+  { icon: Terminal, nameEs: "Terminal en el Notch", nameEn: "Terminal in the Notch" },
+  { icon: FileEdit, nameEs: "Notas Rápidas", nameEn: "Quick Notes" },
+  { icon: Calendar, nameEs: "Calendario Integrado", nameEn: "Built-in Calendar" },
+  { icon: Keyboard, nameEs: "Atajos de Teclado", nameEn: "Global Shortcuts" },
 ];
 import { LanguageProvider, useLanguage } from "../../contexts/LanguageContext";
 import { LayoutProvider } from "../../contexts/LayoutContext";
@@ -970,9 +982,9 @@ const TaskNotchLandingContent = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full mt-6 mb-4">
                 <button
                   onClick={() => handleDownloadClick("mac-silicon")}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer"
                 >
-                  <Apple size={16} />
+                  <FaApple size={16} className="shrink-0 -mt-0.5" />
                   <span>
                     {isEn
                       ? "Download for Mac (M Chip / Apple Silicon)"
@@ -981,9 +993,9 @@ const TaskNotchLandingContent = () => {
                 </button>
                 <button
                   onClick={() => handleDownloadClick("mac-intel")}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white cursor-pointer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-white/10 hover:bg-white/20 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white cursor-pointer"
                 >
-                  <Apple size={16} />
+                  <FaApple size={16} className="shrink-0 -mt-0.5" />
                   <span>
                     {isEn
                       ? "Download for Mac (Intel)"
@@ -1010,8 +1022,8 @@ const TaskNotchLandingContent = () => {
                 <Sparkles size={14} className="text-[#05c46b]" />
                 <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-[#05c46b]">
                   {isEn
-                    ? "🎉 100% Completely Free Forever · No Subscriptions"
-                    : "🎉 100% Totalmente Gratis para Siempre · Sin Suscripciones"}
+                    ? "100% Completely Free Forever · No Subscriptions"
+                    : "100% Totalmente Gratis para Siempre · Sin Suscripciones"}
                 </span>
               </div>
 
@@ -1024,19 +1036,23 @@ const TaskNotchLandingContent = () => {
                 </span>
 
                 <div className="flex flex-wrap items-center justify-center gap-2 max-w-[720px]">
-                  {ALL_APP_FEATURES.map((feat, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 transition-all duration-200 cursor-default group shadow-sm hover:scale-105"
-                    >
-                      <span className="text-xs group-hover:scale-110 transition-transform">
-                        {feat.icon}
-                      </span>
-                      <span className="text-[11px] font-semibold text-white/80 group-hover:text-white transition-colors">
-                        {isEn ? feat.nameEn : feat.nameEs}
-                      </span>
-                    </div>
-                  ))}
+                  {ALL_APP_FEATURES.map((feat, idx) => {
+                    const IconComp = feat.icon;
+                    return (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 transition-all duration-200 cursor-default group shadow-sm hover:scale-105"
+                      >
+                        <IconComp
+                          size={12}
+                          className="text-white/60 group-hover:text-white transition-colors shrink-0"
+                        />
+                        <span className="text-[11px] font-semibold text-white/80 group-hover:text-white transition-colors">
+                          {isEn ? feat.nameEn : feat.nameEs}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -1048,8 +1064,8 @@ const TaskNotchLandingContent = () => {
                 <div className="absolute -top-12 -right-12 w-36 h-36 bg-[#f59e0b]/10 rounded-full blur-2xl pointer-events-none" />
                 <div className="absolute -bottom-12 -left-12 w-36 h-36 bg-[#ffc439]/10 rounded-full blur-2xl pointer-events-none" />
 
-                <div className="w-14 h-14 rounded-2xl bg-[#f59e0b]/15 border border-[#f59e0b]/30 flex items-center justify-center text-2xl shadow-inner">
-                  ☕
+                <div className="w-14 h-14 rounded-2xl bg-[#f59e0b]/15 border border-[#f59e0b]/30 flex items-center justify-center shadow-inner">
+                  <FaMugHot size={24} className="text-[#f59e0b]" />
                 </div>
 
                 <div className="space-y-2 max-w-[540px]">
@@ -1154,7 +1170,7 @@ const TaskNotchLandingContent = () => {
                         className="animate-spin text-[#009ee3]"
                       />
                     ) : (
-                      <Coffee size={16} className="text-[#009ee3]" />
+                      <FaMugHot size={15} className="text-[#009ee3]" />
                     )}
                     <span>
                       {isEn
@@ -1177,7 +1193,7 @@ const TaskNotchLandingContent = () => {
                         className="animate-spin text-[#ffc439]"
                       />
                     ) : (
-                      <Coffee size={16} className="text-[#ffc439]" />
+                      <FaMugHot size={15} className="text-[#ffc439]" />
                     )}
                     <span>
                       {isEn
@@ -1234,7 +1250,7 @@ const TaskNotchLandingContent = () => {
           <div className="relative w-full h-[60px] flex items-center justify-center shrink-0 px-8 select-none z-20 border-t border-white/[0.04] bg-[#000000]/50 backdrop-blur-xs rounded-b-[35px] sm:rounded-b-[43px]">
             {/* OS Badge */}
             <div className="flex items-center gap-2 text-white/40 text-xs">
-              <Apple size={14} />
+              <FaApple size={14} />
               <span>
                 macOS • {isEn ? "Universal App" : "Aplicación Universal"}
               </span>

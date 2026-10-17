@@ -14,7 +14,7 @@ export default function Greeting({ name = 'Task Goblin' }: GreetingProps) {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-6">
         <Box className="flex flex-col items-center gap-6 max-w-md w-full">
           <h1 className="text-4xl font-bold text-slate-800 tracking-tight">
-            ¡Hola, {name}! 👋
+            ¡Hola, {name}!
           </h1>
           <p className="text-slate-600 text-center">
             Tailwind CSS + Material UI listos para usar.

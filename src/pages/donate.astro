@@ -27,11 +27,26 @@ const copy = lang === 'en'
       :root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
       body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #070707; color: white; }
       main { width: min(420px, calc(100% - 40px)); text-align: center; padding: 38px; border: 1px solid #ffffff18; border-radius: 24px; background: #ffffff0a; box-sizing: border-box; }
-      .cup { font-size: 48px; }
+      .cup { display: flex; justify-content: center; margin-bottom: 8px; }
       h1 { margin: 16px 0 10px; font-size: 28px; }
       p { color: #aaa; line-height: 1.5; }
       a { display: inline-block; margin-top: 12px; color: #ffad42; text-decoration: none; font-weight: 700; }
     </style>
   </head>
-  <body><main><div class="cup">☕</div><h1>{copy.title}</h1><p>{copy.text}</p><a href="/">{copy.back}</a></main></body>
+  <body>
+    <main>
+      <div class="cup">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffad42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+          <line x1="6" y1="2" x2="6" y2="4"></line>
+          <line x1="10" y1="2" x2="10" y2="4"></line>
+          <line x1="14" y1="2" x2="14" y2="4"></line>
+        </svg>
+      </div>
+      <h1>{copy.title}</h1>
+      <p>{copy.text}</p>
+      <a href="/">{copy.back}</a>
+    </main>
+  </body>
 </html>

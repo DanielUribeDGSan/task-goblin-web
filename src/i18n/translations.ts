@@ -75,9 +75,9 @@ export const translations = {
       subtitle: "The multitask app that automates the small tasks of your day",
       intro:
         "TaskGoblin is a productivity app for macOS and Windows that brings together useful tools in one place to automate common tasks, save time, and work more efficiently.",
-      featuresTitle: "🚀 Main features",
-      compatibleWith: "✅ Compatible with",
-      compatibleItems: ["✔ macOS (Intel and Apple Silicon)", "✔ Windows"],
+      featuresTitle: "Main features",
+      compatibleWith: "Compatible with",
+      compatibleItems: ["macOS (Intel and Apple Silicon)", "Windows"],
       moreOptionsComing: "More options coming soon.",
       features: [
         {
@@ -389,9 +389,9 @@ export const translations = {
         "La app multitarea que automatiza las pequeñas tareas de tu día a día",
       intro:
         "TaskGoblin es una aplicación de productividad para macOS y Windows que reúne en un solo lugar herramientas útiles para automatizar tareas comunes, ahorrar tiempo y trabajar de forma más eficiente.",
-      featuresTitle: "🚀 Funciones principales",
-      compatibleWith: "✅ Compatible con",
-      compatibleItems: ["✔ macOS (Intel y Apple Silicon)", "✔ Windows"],
+      featuresTitle: "Funciones principales",
+      compatibleWith: "Compatible con",
+      compatibleItems: ["macOS (Intel y Apple Silicon)", "Windows"],
       moreOptionsComing: "Se agregarán más opciones próximamente.",
       features: [
         {

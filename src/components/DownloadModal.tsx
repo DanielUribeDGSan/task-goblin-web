@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, AlertTriangle, Download, Apple, Monitor, ChevronDown, ChevronUp } from "lucide-react";
+import { FaApple } from "react-icons/fa6";
+import { X, AlertTriangle, Download, Monitor, ChevronDown, ChevronUp, Check, Info } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { logDownloadEvent } from "../firebase/firebase";
 
@@ -39,10 +40,15 @@ const StatusBadge = ({ status, label }: { status: string; label: string }) => {
     partial: "bg-blue-500/15 text-blue-400 border border-blue-500/30",
     bad: "bg-red-500/15    text-red-400    border border-red-500/30",
   };
-  const icons: Record<string, string> = { ok: "✅", warn: "⚠️", partial: "🔵", bad: "❌" };
+  const iconComponents: Record<string, React.ReactNode> = {
+    ok: <Check size={11} className="shrink-0" />,
+    warn: <AlertTriangle size={11} className="shrink-0" />,
+    partial: <Info size={11} className="shrink-0" />,
+    bad: <X size={11} className="shrink-0" />,
+  };
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${styles[status]}`}>
-      {icons[status]} {label}
+      {iconComponents[status]} {label}
     </span>
   );
 };
@@ -134,7 +140,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 </div>
               </div>
 
-              {/* ⚠️ Browser security alert */}
+              {/* Browser security alert */}
               <div className="glass bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 flex gap-3 mb-6">
                 <AlertTriangle size={18} className="text-amber-400 shrink-0 mt-0.5" />
                 <p className="text-xs text-white/75 leading-relaxed">
@@ -143,7 +149,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 </p>
               </div>
 
-              {/* 🍏 Mac App Store Alert */}
+              {/* Mac App Store Alert */}
               {!isWindows && (
                 <div className="glass bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
                   <div className="flex gap-3">
@@ -167,7 +173,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 </div>
               )}
 
-              {/* 🛡️ Windows SmartScreen Reassurance */}
+              {/* Windows SmartScreen Reassurance */}
               {isWindows && (
                 <div className="glass bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
                   <div className="flex gap-3">
@@ -205,11 +211,11 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
                 </div>
               )}
 
-              {/* 🍎 Mac Permissions Alert */}
+              {/* Mac Permissions Alert */}
               {!isWindows && appType !== "floaty" && (
                 <div className="glass bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 flex flex-col gap-3 mb-6">
                   <div className="flex gap-3">
-                    <Apple size={18} className="text-blue-400 shrink-0 mt-0.5" />
+                    <FaApple size={18} className="text-blue-400 shrink-0 mt-0.5" />
                     <div className="flex flex-col gap-2">
                       <p className="text-xs text-white/75 leading-relaxed">
                         {/* @ts-ignore */}
