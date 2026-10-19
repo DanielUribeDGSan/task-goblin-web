@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   ChevronRight,
   Sparkles,
+  X,
 } from "lucide-react";
 import { APP_CONFIGS, type MediaSlide, type RoomCardAspectRatio } from "../../constants/app_data";
 import { PaymentModal } from "../PaymentModal";

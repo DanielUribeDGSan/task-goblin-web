@@ -85,7 +85,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({
   };
 
   const alertMsg = isWindows ? dm.securityAlertWin : dm.securityAlertMac;
-  const PlatformIcon = isWindows ? Monitor : Apple;
+  const PlatformIcon = isWindows ? Monitor : FaApple;
 
   return (
     <AnimatePresence>
