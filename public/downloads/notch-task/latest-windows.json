@@ -1,0 +1,14 @@
+{
+  "version": "1.0.12",
+  "notes": "Primera versión de Task Notch para Windows con actualizaciones automáticas.",
+  "notes_es": "Primera versión de Task Notch para Windows con actualizaciones automáticas.",
+  "notes_en": "First Windows release of Task Notch with automatic updates.",
+  "pub_date": "2026-10-26T22:50:29.297Z",
+  "download_url": "https://task-goblin.com/downloads/notch-task/Task%20Notch_1.0.4_x64-setup.exe",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMWIyQ1I4dHZydU90ZytYdnRJcXRDU1VhNWw1bEI2aDdzeFhnNTIyUEt6bWJjL1JUMVp4Zi9tUzdWa1B3dnUvRzlJWnlLek1VbStXU0dZL21pbzM5QjJvbU5WYm9ycHc0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMDU1MDI4CWZpbGU6VGFzayBOb3RjaF8xLjAuMTJfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjEuMC4xMgpMNnpuUUE2Nlo0bE4wWSt6L3pqdWFuNU1ObjFhdFBqVUxLeW92MTFSUkluemFRV3JQRFp1dTR3ZlZWNU1tbmQyTm56U1hvS1hyUXZNWkc1K3h4eDFCUT09Cg==",
+      "url": "https://task-goblin.com/downloads/notch-task/Task%20Notch_1.0.4_x64-setup.exe"
+    }
+  }
+}
