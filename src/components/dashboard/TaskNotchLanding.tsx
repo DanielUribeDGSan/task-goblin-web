@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaApple, FaMugHot } from "react-icons/fa6";
+import { FaApple, FaMugHot, FaWindows } from "react-icons/fa6";
 import {
   Terminal,
   ScanText,
@@ -298,7 +298,8 @@ const TaskNotchLandingContent = () => {
   };
 
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
-  const pendingDownloadPlatform: DownloadPlatform = "mac-silicon";
+  const [pendingDownloadPlatform, setPendingDownloadPlatform] =
+    useState<DownloadPlatform>("mac-silicon");
 
   const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
   const downloadButtonRef = useRef<HTMLButtonElement>(null);
@@ -1002,6 +1003,17 @@ const TaskNotchLandingContent = () => {
                       : "Descargar para Mac (Intel)"}
                   </span>
                 </button>
+                <button
+                  onClick={() => handleDownloadClick("windows")}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-white/10 hover:bg-white/20 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white cursor-pointer"
+                >
+                  <FaWindows size={15} className="shrink-0 -mt-0.5" />
+                  <span>
+                    {isEn
+                      ? "Download for Windows"
+                      : "Descargar para Windows"}
+                  </span>
+                </button>
               </div>
 
               {/* Dynamic feature description */}
@@ -1320,6 +1332,18 @@ const TaskNotchLandingContent = () => {
               }}
             >
               {t.bottomBar.intel}
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              className="block w-full text-left px-4 py-2.5 text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              onClick={() => {
+                handleDownloadClick("windows", "dropdown");
+                setDownloadMenuOpen(false);
+                setActiveButtonType(null);
+              }}
+            >
+              {t.bottomBar.windows}
             </button>
           </div>,
           document.body,

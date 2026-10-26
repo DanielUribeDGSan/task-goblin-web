@@ -16,7 +16,7 @@ export const triggerSecureDownload = (
   
   const u = urls[index];
   const a = document.createElement("a");
-  a.href = u;
+  a.href = encodeURI(u);
   a.download = "";
   a.rel = "noopener noreferrer";
   a.target = "_blank";

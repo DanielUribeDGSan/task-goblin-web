@@ -380,7 +380,7 @@ export const APP_CONFIGS = {
 export const TASK_NOTCH_URLS = [
   "/downloads/notch-task/Task_Notch_aarch64.dmg",
   "/downloads/notch-task/Task_Notch_x64.dmg",
-  "/downloads/task-notch/TaskNotch_x64-setup.exe",
+  "/downloads/notch-task/Task Notch_1.0.4_x64-setup.exe",
 ];
 
 export const TASK_GOBLIN_URLS = [

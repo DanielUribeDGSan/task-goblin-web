@@ -6,4 +6,6 @@ public/models/*.bin filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 public/downloads/notch-task/Task_Notch_aarch64.dmg -filter -diff -merge
 public/downloads/notch-task/Task_Notch_x64.dmg -filter -diff -merge
+"public/downloads/notch-task/Task Notch_1.0.4_x64-setup.exe" -filter -diff -merge
+public/downloads/notch-task/*.exe -filter -diff -merge
 
