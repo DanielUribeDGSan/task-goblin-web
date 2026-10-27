@@ -21,19 +21,20 @@ interface ChatOption {
 interface FloatingChatProps {
     appType?: "task-goblin" | "floaty" | "nexo" | "task-notch";
     hideBuyButton?: boolean;
+    hideChat?: boolean;
 }
 
-export const FloatingChat: React.FC<FloatingChatProps> = ({ appType = "task-goblin", hideBuyButton = false }) => {
+export const FloatingChat: React.FC<FloatingChatProps> = ({ appType = "task-goblin", hideBuyButton = false, hideChat = false }) => {
     return (
         <LanguageProvider>
             <LayoutProvider>
-                <FloatingChatContent appType={appType} hideBuyButton={hideBuyButton} />
+                <FloatingChatContent appType={appType} hideBuyButton={hideBuyButton} hideChat={hideChat} />
             </LayoutProvider>
         </LanguageProvider>
     );
 };
 
-const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-goblin", hideBuyButton = false }) => {
+const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-goblin", hideBuyButton = false, hideChat = false }) => {
     const { t, lang } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -219,7 +220,7 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
                 : "rgba(151, 130, 255, 0.3)";
 
     return (
-        <div className="fixed bottom-10 lg:bottom-35 right-4 sm:right-6 z-9999 font-sans flex flex-col items-end gap-3">
+        <div className={`fixed ${hideChat ? "bottom-6 sm:bottom-8" : "bottom-10 lg:bottom-35"} right-4 sm:right-6 z-9999 font-sans flex flex-col items-end gap-3`}>
 
             {!hideBuyButton && (
                 <motion.button
@@ -257,8 +258,9 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
                 </motion.button>
             )}
 
-            <AnimatePresence>
-                {isOpen && (
+            {!hideChat && (
+                <AnimatePresence>
+                    {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, y: 20, scale: 0.9, transformOrigin: "bottom right" }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -384,37 +386,40 @@ const FloatingChatContent: React.FC<FloatingChatProps> = ({ appType = "task-gobl
                     </motion.div>
                 )}
             </AnimatePresence>
+            )}
 
             {/* Toggle Button */}
-            <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 rounded-3xl bg-[#151515] shadow-2xl shadow-[#9782ff]/40 flex items-center justify-center text-white cursor-pointer group relative overflow-hidden"
-            >
-                <div className="absolute inset-0 bg-linear-to-tr from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <AnimatePresence mode="wait">
-                    {isOpen ? (
-                        <motion.div
-                            key="close"
-                            initial={{ rotate: -90, opacity: 0 }}
-                            animate={{ rotate: 0, opacity: 1 }}
-                            exit={{ rotate: 90, opacity: 0 }}
-                        >
-                            <X size={28} />
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="chat"
-                            initial={{ rotate: 90, opacity: 0 }}
-                            animate={{ rotate: 0, opacity: 1 }}
-                            exit={{ rotate: -90, opacity: 0 }}
-                        >
-                            <MessageCircle size={30} />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.button>
+            {!hideChat && (
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="w-14 h-14 rounded-3xl bg-[#151515] shadow-2xl shadow-[#9782ff]/40 flex items-center justify-center text-white cursor-pointer group relative overflow-hidden"
+                >
+                    <div className="absolute inset-0 bg-linear-to-tr from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <AnimatePresence mode="wait">
+                        {isOpen ? (
+                            <motion.div
+                                key="close"
+                                initial={{ rotate: -90, opacity: 0 }}
+                                animate={{ rotate: 0, opacity: 1 }}
+                                exit={{ rotate: 90, opacity: 0 }}
+                            >
+                                <X size={28} />
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="chat"
+                                initial={{ rotate: 90, opacity: 0 }}
+                                animate={{ rotate: 0, opacity: 1 }}
+                                exit={{ rotate: -90, opacity: 0 }}
+                            >
+                                <MessageCircle size={30} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.button>
+            )}
 
             <PaymentModal
                 isOpen={isPaymentModalOpen}

@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import { TaskNotchLanding } from "../components/dashboard/TaskNotchLanding";
+import { FloatingChat } from "../components/FloatingChat";
 import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
@@ -95,6 +96,7 @@ const SITE = "https://task-goblin.com";
       </main>
     </noscript>
     <TaskNotchLanding client:load />
+    <FloatingChat client:idle appType="task-notch" hideChat={true} />
 
     <!-- ═══════════════════════════════════════════════════════════════
          JSON-LD SCHEMA — Google sitelinks + submenus (como Facebook)
