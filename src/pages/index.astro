@@ -5,9 +5,9 @@ import { FloatingChat } from "../components/FloatingChat";
 import { GlobalLoader } from "../components/GlobalLoader";
 import "../styles/global.css";
 
-const title = "TaskNotch — Notch Interactivo para Mac | Task Notch App";
+const title = "TaskNotch — Notch Interactivo y Productividad para Mac y Windows | Task Notch App";
 const description =
-  "TaskNotch transforma el notch de tu Mac en un centro de productividad: borrador mágico IA, OCR, traductor de pantalla, reproductor, notas y calendario. Descarga gratis TaskNotch para macOS.";
+  "TaskNotch transforma el notch o pantalla en Mac y Windows en un centro de productividad con IA: borrador mágico, OCR, traductor de pantalla, reproductor, notas y calendario. Descarga gratis TaskNotch para macOS y Windows.";
 const ogImage = `${Astro.site}/icon/TaskNotch.png`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const SITE = "https://task-goblin.com";
@@ -22,13 +22,13 @@ const SITE = "https://task-goblin.com";
 
     <!-- ═══════════════════════════════════════════
          SEO PRIMARY: Title + Description + Keywords
-         Targets: task notch · tasknotch · notch mac
+         Targets: task notch · tasknotch · notch mac · notch windows
          ═══════════════════════════════════════════ -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="task notch, tasknotch, notch mac, notch interactivo, notch app, task notch app, TaskNotch, notch macOS, mac notch app, barra notch mac, Task Goblin, Floaty, borrador mágico IA, OCR mac, screenshot to text, traductor pantalla mac, reproductor notch, notas mac, herramientas mac, utilidades mac, productividad mac"
+      content="task notch, tasknotch, notch mac, notch windows, task notch windows, tasknotch windows, notch pc, notch interactivo, dynamic island windows, notch app, task notch app, TaskNotch, notch macOS, mac notch app, windows notch app, barra notch mac, barra notch windows, Task Goblin, Floaty, borrador mágico IA, OCR mac, OCR windows, screenshot to text, traductor pantalla mac, traductor pantalla windows, reproductor notch, notas mac, notas windows, herramientas mac, herramientas windows, productividad mac, productividad windows, descargar tasknotch windows, descargar tasknotch mac"
     />
     <link rel="canonical" href={canonical} />
 
@@ -43,7 +43,7 @@ const SITE = "https://task-goblin.com";
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="TaskNotch - Notch Interactivo para Mac" />
+    <meta property="og:image:alt" content="TaskNotch - Notch Interactivo y Productividad para Mac y Windows" />
     <meta property="og:site_name" content="TaskNotch" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:locale:alternate" content="en_US" />
@@ -54,7 +54,7 @@ const SITE = "https://task-goblin.com";
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="TaskNotch - Notch Interactivo para Mac" />
+    <meta name="twitter:image:alt" content="TaskNotch - Notch Interactivo y Productividad para Mac y Windows" />
 
     <!-- Sitemap para buscadores -->
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -70,22 +70,25 @@ const SITE = "https://task-goblin.com";
     <ClientRouter />
   </head>
   <body class="antialiased font-sans bg-[#202020]">
-    <!-- SEO: Contenido visible para crawlers (task notch, notch mac, tasknotch) -->
-    <!-- Google renderiza JS pero este fallback ayuda con indexación inmediata  -->
+    <!-- SEO: Contenido visible para crawlers e indexación de IA (Google Gemini, Copilot, Perplexity) -->
     <noscript>
       <main style="padding:2rem;color:white;background:#202020;font-family:sans-serif;max-width:900px;margin:0 auto">
-        <h1>TaskNotch — Notch Interactivo para Mac</h1>
-        <p>TaskNotch (Task Notch) transforma el notch de tu Mac en un centro de productividad. Descarga gratis la app notch para macOS.</p>
-        <h2>Funciones de TaskNotch</h2>
+        <h1>TaskNotch — Notch Interactivo y Barra de Productividad para Mac y Windows</h1>
+        <p>TaskNotch (Task Notch) transforma el notch o barra de tu Mac y PC con Windows en un centro de productividad inteligente. Descarga gratis la app para macOS (Apple Silicon e Intel) y Windows 10/11.</p>
+        <h2>Funciones de TaskNotch en macOS y Windows</h2>
         <ul>
-          <li>Borrador mágico con IA — elimina objetos de imágenes</li>
-          <li>OCR — Screenshot to Text, extrae texto de la pantalla</li>
-          <li>Traductor de pantalla con IA</li>
-          <li>Reproductor de música en el notch</li>
-          <li>Notas rápidas en el notch</li>
-          <li>Calendario en el notch</li>
-          <li>Conversor de imágenes a WebP</li>
+          <li>Borrador mágico con IA — elimina objetos no deseados de imágenes al instante</li>
+          <li>OCR en pantalla — Screenshot to Text, extrae texto de cualquier captura en Mac y PC</li>
+          <li>Traductor de pantalla con IA en tiempo real</li>
+          <li>Reproductor multimedia en el notch o barra superior</li>
+          <li>Notas rápidas y atajos de productividad</li>
+          <li>Calendario y vista de eventos</li>
+          <li>Conversor de imágenes a formato WebP optimizado</li>
+          <li>Compresor de video asistido por IA</li>
+          <li>Preguntas e interacción con IA sobre capturas de pantalla</li>
         </ul>
+        <h2>Compatibilidad multiplataforma</h2>
+        <p>Disponible para macOS (macOS 12.0 o superior, Apple Silicon M1/M2/M3/M4 y Mac Intel) y para Windows (Windows 10 y Windows 11 de 64 bits). 100% gratuito sin suscripciones.</p>
         <h2>Otras aplicaciones</h2>
         <ul>
           <li><a href="/pair-bot">Pair Bot — Tu compañero de pair programming impulsado por IA</a></li>
@@ -131,7 +134,7 @@ const SITE = "https://task-goblin.com";
             "@id": `${SITE}/#website`,
             url: `${SITE}/`,
             name: "TaskNotch",
-            alternateName: "Task Notch | Notch Mac App",
+            alternateName: "Task Notch | Notch & Productivity App para Mac y Windows",
             description: description,
             inLanguage: ["es-ES", "en-US"],
             publisher: { "@id": `${SITE}/#organization` },
@@ -172,10 +175,10 @@ const SITE = "https://task-goblin.com";
             "@type": "SoftwareApplication",
             "@id": `${SITE}/#software-tasknotch`,
             name: "TaskNotch",
-            alternateName: ["Task Notch", "Notch Mac", "TaskNotch App"],
+            alternateName: ["Task Notch", "Notch Mac", "TaskNotch App", "TaskNotch Windows", "Task Notch Windows", "Notch Windows"],
             applicationCategory: "UtilitiesApplication",
             applicationSubCategory: "Productivity",
-            operatingSystem: "macOS 12.0+",
+            operatingSystem: "macOS 12.0+, Windows 10, Windows 11",
             description: description,
             url: `${SITE}/`,
             image: `${SITE}/icon/TaskNotch.png`,
@@ -183,25 +186,25 @@ const SITE = "https://task-goblin.com";
             offers: {
               "@type": "AggregateOffer",
               lowPrice: "0",
-              highPrice: "149",
+              highPrice: "0",
               priceCurrency: "USD",
-              offerCount: 2,
+              offerCount: 1,
               offers: [
                 {
                   "@type": "Offer",
-                  name: "Free",
+                  name: "Free for macOS & Windows",
                   price: "0",
                   priceCurrency: "USD",
-                  description: "Totalmente gratis para siempre sin suscripciones ni pagos ocultos",
+                  description: "Totalmente gratis para siempre para macOS y Windows, sin suscripciones ni pagos ocultos",
                 },
               ],
             },
             featureList: [
               "AI Magic Eraser — Borrador mágico IA",
-              "Screenshot to Text OCR",
+              "Screenshot to Text OCR (macOS & Windows)",
               "AI Screen Translator — Traductor de pantalla",
-              "Notch Media Player — Reproductor en el notch",
-              "Quick Notes en el notch",
+              "Notch Media Player — Reproductor en el notch / barra",
+              "Quick Notes",
               "Calendar Widget",
               "PDF Tools & AI Summary",
               "Image to WebP converter",
@@ -233,14 +236,14 @@ const SITE = "https://task-goblin.com";
             "@type": "ItemList",
             "@id": `${SITE}/#app-list`,
             name: "Aplicaciones de TaskNotch",
-            description: "Apps de productividad para Mac: TaskNotch y Pair Bot.",
+            description: "Apps de productividad para Mac y Windows: TaskNotch y Pair Bot.",
             numberOfItems: 2,
             itemListElement: [
               {
                 "@type": "ListItem",
                 position: 1,
-                name: "TaskNotch — Notch Interactivo para Mac",
-                description: "Transforma el notch de tu Mac en un centro de productividad con IA, OCR y más. 100% gratis.",
+                name: "TaskNotch — Notch Interactivo para Mac y Windows",
+                description: "Transforma el notch de tu Mac y tu pantalla en Windows en un centro de productividad con IA, OCR y más. 100% gratis.",
                 url: `${SITE}/`,
                 image: `${SITE}/icon/TaskNotch.png`,
               },

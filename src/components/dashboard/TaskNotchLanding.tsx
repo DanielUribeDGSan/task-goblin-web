@@ -963,17 +963,35 @@ const TaskNotchLandingContent = () => {
           <div className="pt-8 px-6 sm:px-12 pb-14 flex flex-col items-center justify-start text-center max-w-[1000px] mx-auto w-full gap-8 z-10">
             {/* TEXT INFO CONTAINER */}
             <div className="flex flex-col items-center space-y-5 max-w-[850px] select-text">
+              {/* Free Forever Banner (Moved to top of intro badge) */}
+              <div
+                className="flex items-center gap-2 px-4 py-2 rounded-full mb-2"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(5, 196, 107, 0.15), rgba(0, 232, 119, 0.25))",
+                  border: "1px solid rgba(5, 196, 107, 0.4)",
+                  boxShadow: "0 0 20px 2px rgba(5, 196, 107, 0.25)",
+                }}
+              >
+                <Sparkles size={14} className="text-[#05c46b]" />
+                <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-[#05c46b]">
+                  {isEn
+                    ? "100% Completely Free Forever · No Subscriptions"
+                    : "100% Totalmente Gratis para Siempre · Sin Suscripciones"}
+                </span>
+              </div>
+
               {/* Pill Intro Badge */}
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] shadow-inner">
+              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] shadow-inner mt-4 mb-4 sm:mb-6">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] animate-ping" />
                 <span className="text-[10px] font-black uppercase tracking-wider text-white/70">
-                  {isEn ? "Designed for macOS" : "Diseñado para macOS"}
+                  {isEn ? "Designed for macOS & Windows" : "Diseñado para macOS y Windows"}
                 </span>
               </div>
 
               {/* High-impact Bold Headline */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.1] tracking-tight">
-                {isEn ? "Your Mac," : "Tu Mac,"} <br />
+                {isEn ? "Your Mac & PC," : "Tu Mac y PC,"} <br />
                 <span className="bg-gradient-to-r from-[#3b82f6] via-[#8b5cf6] to-[#ec4899] bg-clip-text text-transparent">
                   {isEn ? "Now with Superpowers." : "Ahora con Superpoderes."}
                 </span>
@@ -983,7 +1001,7 @@ const TaskNotchLandingContent = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full mt-6 mb-4">
                 <button
                   onClick={() => handleDownloadClick("mac-silicon")}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-[#0084ff] hover:brightness-110 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-black text-white shadow-[0_4px_12px_rgba(0,132,255,0.25)] cursor-pointer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-white/10 hover:bg-white/20 border border-white/10 active:scale-[0.98] transition-all px-5 py-3 rounded-xl text-xs font-bold text-white cursor-pointer"
                 >
                   <FaApple size={16} className="shrink-0 -mt-0.5" />
                   <span>
@@ -1020,24 +1038,6 @@ const TaskNotchLandingContent = () => {
               <p className="text-xs sm:text-sm text-white/60 leading-relaxed max-w-[650px] whitespace-pre-line">
                 {isEn ? activeOption.descEn : activeOption.descEs}
               </p>
-
-              {/* Free Forever Banner */}
-              <div
-                className="flex items-center gap-2 px-4 py-2 rounded-full mt-3 mb-1"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(5, 196, 107, 0.15), rgba(0, 232, 119, 0.25))",
-                  border: "1px solid rgba(5, 196, 107, 0.4)",
-                  boxShadow: "0 0 20px 2px rgba(5, 196, 107, 0.25)",
-                }}
-              >
-                <Sparkles size={14} className="text-[#05c46b]" />
-                <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-[#05c46b]">
-                  {isEn
-                    ? "100% Completely Free Forever · No Subscriptions"
-                    : "100% Totalmente Gratis para Siempre · Sin Suscripciones"}
-                </span>
-              </div>
 
               {/* Lluvia de ideas / Tag Cloud compacto */}
               <div className="w-full max-w-[760px] mt-2 mb-2 flex flex-col items-center gap-3">
@@ -1092,7 +1092,7 @@ const TaskNotchLandingContent = () => {
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
                     {isEn
                       ? "Task Notch is completely free. If it saves you time and improves your workflow, you can voluntarily donate a coffee to support its ongoing development and updates."
-                      : "Task Notch es completamente gratuito. Si la app te ahorra tiempo en tu Mac y disfrutas usarla, puedes invitarme un café voluntario para apoyar las próximas actualizaciones."}
+                      : "Task Notch es completamente gratuito. Si la app te ahorra tiempo en tu Mac o PC y disfrutas usarla, puedes invitarme un café voluntario para apoyar las próximas actualizaciones."}
                   </p>
                 </div>
 
@@ -1263,8 +1263,9 @@ const TaskNotchLandingContent = () => {
             {/* OS Badge */}
             <div className="flex items-center gap-2 text-white/40 text-xs">
               <FaApple size={14} />
+              <FaWindows size={13} />
               <span>
-                macOS • {isEn ? "Universal App" : "Aplicación Universal"}
+                macOS & Windows • {isEn ? "Universal App" : "Aplicación Universal"}
               </span>
             </div>
           </div>
