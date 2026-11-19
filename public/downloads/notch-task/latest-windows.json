@@ -1,13 +1,13 @@
 {
   "version": "1.0.14",
-  "notes": "Meeting e Isla IA: nuevo botón de ojo para mostrarlas u ocultarlas al compartir pantalla, cierre más suave y corrección de las islas que se ocultaban solas.",
-  "notes_es": "Meeting e Isla IA: nuevo botón de ojo para mostrarlas u ocultarlas al compartir pantalla, cierre más suave y corrección de las islas que se ocultaban solas.",
-  "notes_en": "Meeting and AI Island: new eye button to show or hide them when sharing your screen, smoother closing and a fix for islands hiding by themselves.",
-  "pub_date": "2026-11-19T13:20:18.773Z",
+  "notes": "Meeting e Isla IA: nuevo botón de ojo para mostrarlas u ocultarlas al compartir pantalla, cierre más suave y corrección de las islas que se ocultaban o reaparecían solas.",
+  "notes_es": "Meeting e Isla IA: nuevo botón de ojo para mostrarlas u ocultarlas al compartir pantalla, cierre más suave y corrección de las islas que se ocultaban o reaparecían solas.",
+  "notes_en": "Meeting and AI Island: new eye button to show or hide them when sharing your screen, smoother closing and a fix for islands hiding or coming back by themselves.",
+  "pub_date": "2026-11-19T14:28:32.287Z",
   "download_url": "https://task-goblin.com/downloads/notch-task/Task%20Notch_1.0.4_x64-setup.exe",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMWIyQ1I4dHZydUlsbHN1ZHE5N0laVXZGcnQ5eDJoazJSM2pPR05SZEo2bDV0eGRkN0w4RWljWEE0SU5OUHFUMkxyTFVDU3ZrU04vYUZ5RXFLYVlHdjl3aHNYWmNwRGdFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MDk0NDE4CWZpbGU6VGFzayBOb3RjaF8xLjAuMTRfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjEuMC4xNAprZTN0MVpnZ0lOZGx1cXlmSlZrYnNaaHp4L3BZanc2RTZ5UFVHUGJVVlBjOXlPTmV5V1dtMTBCMkVMWUE3bmVyMXFvYi9tY1haUFZnVFRPeU9CdTJBQT09Cg==",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMWIyQ1I4dHZydUYrMFhBa0NodXhTWnk3NDhWUkFkZkpkcGJlTDV1OTgxai9DWUhLNWRwZXB3QXRrT29SUXJXUUJHd25tMGhGNWNxMi9TbGQvTjFIN3BjZXhMQ2RwQ3dJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MDk4NTEwCWZpbGU6VGFzayBOb3RjaF8xLjAuMTRfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjEuMC4xNApOeURLWmxiWVdRendteVB0Z0M0c3lBaVFWcWZoK0k1L1drTGM0OUtHbThMMDlReEtYdElndHJWVmdpR09PYWNzczZ1M0hUblpPL1pXdlRuZklUY3JCZz09Cg==",
       "url": "https://task-goblin.com/downloads/notch-task/Task%20Notch_1.0.4_x64-setup.exe"
     }
   }
