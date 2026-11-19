@@ -1,13 +1,13 @@
 {
-  "version": "1.0.13",
-  "notes": "Nuevas secciones Meeting e Isla IA: copiloto de IA para tus reuniones y respuestas al texto que seleccionas en cualquier app. Configura tu propia IA (OpenAI, Anthropic, Gemini, OpenRouter, Groq, Ollama, LM Studio y más) en Configuración › IA.",
-  "notes_es": "Nuevas secciones Meeting e Isla IA: copiloto de IA para tus reuniones y respuestas al texto que seleccionas en cualquier app. Configura tu propia IA (OpenAI, Anthropic, Gemini, OpenRouter, Groq, Ollama, LM Studio y más) en Configuración › IA.",
-  "notes_en": "New Meeting and AI Island sections: an AI copilot for your meetings and answers to the text you select in any app. Set up your own AI (OpenAI, Anthropic, Gemini, OpenRouter, Groq, Ollama, LM Studio and more) in Settings › AI.",
-  "pub_date": "2026-11-19T12:45:50.786Z",
+  "version": "1.0.14",
+  "notes": "Meeting e Isla IA: nuevo botón de ojo para mostrarlas u ocultarlas al compartir pantalla, cierre más suave y corrección de las islas que se ocultaban solas.",
+  "notes_es": "Meeting e Isla IA: nuevo botón de ojo para mostrarlas u ocultarlas al compartir pantalla, cierre más suave y corrección de las islas que se ocultaban solas.",
+  "notes_en": "Meeting and AI Island: new eye button to show or hide them when sharing your screen, smoother closing and a fix for islands hiding by themselves.",
+  "pub_date": "2026-11-19T13:20:18.773Z",
   "download_url": "https://task-goblin.com/downloads/notch-task/Task%20Notch_1.0.4_x64-setup.exe",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMWIyQ1I4dHZydURqcE81bnowNXJBUGdVazlPckFCK3lzT3kycitNZDByQWR1OXdzTFlJWG9DOFdaMW9kRXJXU2I5cXNPRk8vYmNDeWhmRDFLMEtoMGZvcWhDaTBEcEFFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MDkyMzUwCWZpbGU6VGFzayBOb3RjaF8xLjAuMTNfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjEuMC4xMwo4dlhqbXNjYm5udGNBZEZrZ0dWZTZaWk4wMzZ0TE9BamVreUVYU3V3WGZGaWpCU0dwWFU5VkQxZ0IvMVJ2NWRUajZ6WnhxWUdPL1hjeE5ZQlQrbkJCZz09Cg==",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMWIyQ1I4dHZydUlsbHN1ZHE5N0laVXZGcnQ5eDJoazJSM2pPR05SZEo2bDV0eGRkN0w4RWljWEE0SU5OUHFUMkxyTFVDU3ZrU04vYUZ5RXFLYVlHdjl3aHNYWmNwRGdFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MDk0NDE4CWZpbGU6VGFzayBOb3RjaF8xLjAuMTRfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjEuMC4xNAprZTN0MVpnZ0lOZGx1cXlmSlZrYnNaaHp4L3BZanc2RTZ5UFVHUGJVVlBjOXlPTmV5V1dtMTBCMkVMWUE3bmVyMXFvYi9tY1haUFZnVFRPeU9CdTJBQT09Cg==",
       "url": "https://task-goblin.com/downloads/notch-task/Task%20Notch_1.0.4_x64-setup.exe"
     }
   }
